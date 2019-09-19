@@ -1,10 +1,61 @@
 #include <iostream>
+#include <string>
 #include <direct.h>
 #include <stdlib.h>
 #include <windows.h>
 #include <tchar.h>
 
+using namespace std;
+
 #	define GCC_NEW new(_NORMAL_BLOCK,__FILE__, __LINE__)
+
+
+DWORD ReadCPUSpeed()
+{
+	DWORD BufSize = sizeof(DWORD);
+	DWORD dwMHz = 0;
+	DWORD type = REG_DWORD;
+	HKEY hKey;
+
+	long lError = RegOpenKeyEx(HKEY_LOCAL_MACHINE,
+		"HARDWARE\\DESCRIPTION\\System\\CentralProcessor\\0",
+		0, KEY_READ, &hKey);
+
+	if (lError == ERROR_SUCCESS)
+	{
+		RegQueryValueEx(hKey, "~MHz", NULL, &type, (LPBYTE)& dwMHz, &BufSize);
+	}
+	int temp = (int)dwMHz;
+	char* s = new char[10];
+	sprintf_s(s, 10, "%d", temp);
+	MessageBox(NULL,
+		_T(s),
+		_T("CPU Speed"),
+		NULL);
+
+	return dwMHz;
+}
+string ReadCPUArchitecture()
+{
+	char CPUName[255];
+	DWORD BufSize2 = sizeof(CPUName);
+	DWORD type2 = REG_SZ;
+	HKEY hKey2;
+
+	long lError2 = RegOpenKeyEx(HKEY_LOCAL_MACHINE,
+		"HARDWARE\\DESCRIPTION\\System\\CentralProcessor\\0",
+		0, KEY_READ, &hKey2);
+
+	if (lError2 == ERROR_SUCCESS)
+	{
+		RegQueryValueEx(hKey2, "ProcessorNameString", NULL, &type2, (LPBYTE)& CPUName, &BufSize2);
+	}
+	MessageBox(NULL,
+		_T(CPUName),
+		_T("CPU Architecture"),
+		NULL);
+	return CPUName;
+}
 
 // CHECK FOR INSTANCE
 bool IsOnlyInstance(LPCTSTR gameTitle)
@@ -127,7 +178,8 @@ int WINAPI WinMain(HINSTANCE currentInstance, HINSTANCE previousInstance, PSTR c
 		{
 			if (CheckStorage(314572800))
 			{
-
+				ReadCPUSpeed();
+				ReadCPUArchitecture();
 				// CREATE WINDOW
 				CreateWindow(CLASS_NAME, "Fire Spear",
 					WS_OVERLAPPEDWINDOW | WS_VISIBLE, // WINDOW STYLE
@@ -136,7 +188,6 @@ int WINAPI WinMain(HINSTANCE currentInstance, HINSTANCE previousInstance, PSTR c
 					NULL, NULL, NULL, NULL);
 			}
 		}
-
 	}
 
 
@@ -163,4 +214,5 @@ LRESULT CALLBACK WindowProcessMessages(HWND hwnd, UINT msg, WPARAM param, LPARAM
 		return DefWindowProc(hwnd, msg, param, lparam);
 	}
 }
+
 
