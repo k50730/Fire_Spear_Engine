@@ -178,7 +178,8 @@ int WINAPI WinMain(HINSTANCE currentInstance, HINSTANCE previousInstance, PSTR c
 		{
 			if (CheckStorage(314572800))
 			{
-
+				ReadCPUSpeed();
+				ReadCPUArchitecture();
 				// CREATE WINDOW
 				CreateWindow(CLASS_NAME, "Fire Spear",
 					WS_OVERLAPPEDWINDOW | WS_VISIBLE, // WINDOW STYLE
@@ -187,11 +188,7 @@ int WINAPI WinMain(HINSTANCE currentInstance, HINSTANCE previousInstance, PSTR c
 					NULL, NULL, NULL, NULL);
 			}
 		}
-
 	}
-
-	ReadCPUSpeed();
-	ReadCPUArchitecture();
 
 
 	// WINDOW LOOP
