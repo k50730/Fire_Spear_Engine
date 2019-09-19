@@ -27,6 +27,31 @@ bool IsOnlyInstance(LPCTSTR gameTitle)
 	return true;
 }
 
+
+bool CheckStorage(const DWORDLONG diskSpaceNeeded)
+{
+	int const drive = _getdrive();
+	struct _diskfree_t diskfree;
+	_getdiskfree(drive, &diskfree);
+
+	unsigned __int64 const neededClusters = diskSpaceNeeded / ((diskfree.sectors_per_cluster) * diskfree.bytes_per_sector);
+	if (diskfree.avail_clusters < neededClusters) 
+	{
+		MessageBox(NULL,
+			_T("CheckStorage Failure: Not enough physical storage."), // THE MESSAGE INSIDE THE WINDOW
+			_T("Check Storage Failed"), // THE MESSAGE ON THE TOP
+			NULL);
+		return false;
+	}
+	MessageBox(NULL,
+		_T("CheckStorage Success"), // THE MESSAGE INSIDE THE WINDOW
+		_T("Check Storage Successful"), // THE MESSAGE ON THE TOP
+		NULL);
+	return true;
+}
+
+
+
 bool CheckMemory(const DWORDLONG physicalRAMNeeded, const DWORDLONG virtualRAMNeeded)
 {
 
@@ -72,7 +97,10 @@ bool CheckMemory(const DWORDLONG physicalRAMNeeded, const DWORDLONG virtualRAMNe
 
 		return false;
 	}
-
+	MessageBox(NULL,
+		_T("Enough memory!"),
+		_T("CheckMemory Success"),
+		NULL);
 	return true;
 }
 
@@ -97,12 +125,16 @@ int WINAPI WinMain(HINSTANCE currentInstance, HINSTANCE previousInstance, PSTR c
 
 		if (CheckMemory(3000, 3000))
 		{
-			// CREATE WINDOW
-			CreateWindow(CLASS_NAME, "Fire Spear",
-				WS_OVERLAPPEDWINDOW | WS_VISIBLE, // WINDOW STYLE
-				CW_USEDEFAULT, CW_USEDEFAULT, // WINDOW INITIAL POSITION
-				800, 800, // WINDOW SIZE
-				NULL, NULL, NULL, NULL);
+			if (CheckStorage(314572800))
+			{
+
+				// CREATE WINDOW
+				CreateWindow(CLASS_NAME, "Fire Spear",
+					WS_OVERLAPPEDWINDOW | WS_VISIBLE, // WINDOW STYLE
+					CW_USEDEFAULT, CW_USEDEFAULT, // WINDOW INITIAL POSITION
+					800, 800, // WINDOW SIZE
+					NULL, NULL, NULL, NULL);
+			}
 		}
 
 	}
