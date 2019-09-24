@@ -4,6 +4,9 @@
 #include <stdlib.h>
 #include <windows.h>
 #include <tchar.h>
+#include <WinBase.h>
+#include <sstream>
+#include <iomanip>
 
 using namespace std;
 
@@ -26,13 +29,10 @@ DWORD ReadCPUSpeed()
 		RegQueryValueEx(hKey, "~MHz", NULL, &type, (LPBYTE)& dwMHz, &BufSize);
 	}
 	int temp = (int)dwMHz;
-	char* s = new char[10];
-	sprintf_s(s, 10, "%d", temp);
-	MessageBox(NULL,
-		_T(s),
-		_T("CPU Speed"),
-		NULL);
-
+	
+	OutputDebugString("CPU SPEED: ");
+	OutputDebugString(to_string(temp).c_str());
+	OutputDebugStringW(L"\n");
 	return dwMHz;
 }
 string ReadCPUArchitecture()
@@ -50,10 +50,10 @@ string ReadCPUArchitecture()
 	{
 		RegQueryValueEx(hKey2, "ProcessorNameString", NULL, &type2, (LPBYTE)& CPUName, &BufSize2);
 	}
-	MessageBox(NULL,
-		_T(CPUName),
-		_T("CPU Architecture"),
-		NULL);
+
+	OutputDebugString("CPU ARCHITECTURE: ");
+	OutputDebugString(CPUName);
+	OutputDebugStringW(L"\n");
 	return CPUName;
 }
 
@@ -78,7 +78,8 @@ bool IsOnlyInstance(LPCTSTR gameTitle)
 			return false;
 		}
 	}
-
+	OutputDebugString("CHECK MUTI-INSTANCES SUCCESS");
+	OutputDebugStringW(L"\n");
 	return true;
 }
 
@@ -98,7 +99,7 @@ bool CheckStorage(const DWORDLONG diskSpaceNeeded)
 			NULL);
 		return false;
 	}
-	cout << "Check storage success";
+	
 	return true;
 }
 
@@ -150,7 +151,8 @@ bool CheckMemory(const DWORDLONG physicalRAMNeeded, const DWORDLONG virtualRAMNe
 
 		return false;
 	}
-	cout << "Check memory success";
+	OutputDebugString("CHECK MEMORY SUCCESS");
+	OutputDebugStringW(L"\n");
 	return true;
 }
 
