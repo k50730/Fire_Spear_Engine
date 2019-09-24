@@ -71,6 +71,10 @@ bool IsOnlyInstance(LPCTSTR gameTitle)
 			SetFocus(hwnd);
 			SetForegroundWindow(hwnd);
 			SetActiveWindow(hwnd);
+			MessageBox(NULL,
+				_T("There is another instance"),
+				_T("Check"),
+				NULL);
 			return false;
 		}
 	}
@@ -86,7 +90,7 @@ bool CheckStorage(const DWORDLONG diskSpaceNeeded)
 	_getdiskfree(drive, &diskfree);
 
 	unsigned __int64 const neededClusters = diskSpaceNeeded / ((diskfree.sectors_per_cluster) * diskfree.bytes_per_sector);
-	if (diskfree.avail_clusters < neededClusters) 
+	if (diskfree.avail_clusters < neededClusters)
 	{
 		MessageBox(NULL,
 			_T("CheckStorage Failure: Not enough physical storage."), // THE MESSAGE INSIDE THE WINDOW
@@ -94,10 +98,7 @@ bool CheckStorage(const DWORDLONG diskSpaceNeeded)
 			NULL);
 		return false;
 	}
-	MessageBox(NULL,
-		_T("CheckStorage Success"), // THE MESSAGE INSIDE THE WINDOW
-		_T("Check Storage Successful"), // THE MESSAGE ON THE TOP
-		NULL);
+	cout << "Check storage success";
 	return true;
 }
 
@@ -107,6 +108,7 @@ bool CheckMemory(const DWORDLONG physicalRAMNeeded, const DWORDLONG virtualRAMNe
 {
 
 	MEMORYSTATUSEX status;
+	status.dwLength = sizeof(status);
 	GlobalMemoryStatusEx(&status);
 
 	// CHECK PHYSICAL RAM
@@ -148,10 +150,7 @@ bool CheckMemory(const DWORDLONG physicalRAMNeeded, const DWORDLONG virtualRAMNe
 
 		return false;
 	}
-	MessageBox(NULL,
-		_T("Enough memory!"),
-		_T("CheckMemory Success"),
-		NULL);
+	cout << "Check memory success";
 	return true;
 }
 
@@ -176,7 +175,7 @@ int WINAPI WinMain(HINSTANCE currentInstance, HINSTANCE previousInstance, PSTR c
 
 		if (CheckMemory(3000, 3000))
 		{
-			if (CheckStorage(314572800))
+			if (CheckStorage(3145))
 			{
 				ReadCPUSpeed();
 				ReadCPUArchitecture();
