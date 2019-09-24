@@ -67,14 +67,17 @@ bool IsOnlyInstance(LPCTSTR gameTitle)
 		HWND hwnd = FindWindow(gameTitle, NULL);
 		if (hwnd)
 		{
+
+			MessageBox(NULL,
+				_T("There is another instance"),
+				_T("Muti-Instances Detected"),
+				NULL);
+
 			ShowWindow(hwnd, SW_SHOWNORMAL);
 			SetFocus(hwnd);
 			SetForegroundWindow(hwnd);
 			SetActiveWindow(hwnd);
-			MessageBox(NULL,
-				_T("There is another instance"),
-				_T("Check"),
-				NULL);
+			
 			return false;
 		}
 	}
