@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Actor>
+  <CubeComponent>
+    <Transform>
+      <Position x = "1.385883" y = "10.21463" z = "-2.88255"/>
+      <Rotation x = "3.461321" y = "355.6992" z = "204.3322"/>
+      <Scale x = "7.2182" y = "7.2182" z = "5"/>
+    </Transform>
+    <MeshFilter>
+      <Mesh>Cube</Mesh>
+    </MeshFilter>
+    <Collider>
+      <BoxCollider>
+        <IsTrigger>false</IsTrigger>
+        <PhysicsMaterial>none</PhysicsMaterial>
+        <Center x = "0" y = "0" z = "0"/>
+        <Size x = "1" y = "1" z = "1"/>
+      </BoxCollider>
+    </Collider>
+    <Renderer>
+      <MeshRendered>
+        <ShadowCastingMode>true</ShadowCastingMode>
+        <ReceiveShadows>true</ReceiveShadows>      
+        <Materials Size = "1"/>    
+        <LightProbeProxyVolumeOverride>true</LightProbeProxyVolumeOverride>
+      </MeshRendered>
+    </Renderer>
+    <Rigidbody>
+      <Mass>7.2182</Mass>
+      <Drag>0</Drag>
+      <AngularDrag>0.05</AngularDrag>
+      <UseGravity>true</UseGravity>
+      <IsKinematic>false</IsKinematic>
+      <Interpolation>none</Interpolation>
+      <CollisionDetectionMode>continuous</CollisionDetectionMode>
+      <Constraints></Constraints>
+    </Rigidbody>
+  </CubeComponent>
+</Actor>
