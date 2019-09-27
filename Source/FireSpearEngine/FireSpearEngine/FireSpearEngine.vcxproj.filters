@@ -21,9 +21,18 @@
     <ClCompile Include="..\..\Initialization.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Actors\SpecialAbilityComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Initialization.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Actors\AbilitiesInterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Actors\SpecialAbilityComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
