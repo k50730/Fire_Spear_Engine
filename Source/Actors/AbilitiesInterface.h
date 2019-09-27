@@ -1,6 +1,6 @@
 #pragma once
-
-class AbilitiesInterface 
+#include "ActorComponent.h"
+class AbilitiesInterface : public ActorComponent
 {
 public:
 
