@@ -1,11 +1,11 @@
-#include "Initialization.h"
+#include "CoreEngine.h"
 using namespace std;
 
-Initialization::Initialization()
+CoreEngine::CoreEngine()
 {
 }
 
-bool Initialization::CheckStorage(const DWORDLONG diskSpaceNeeded)
+bool CoreEngine::CheckStorage(const DWORDLONG diskSpaceNeeded)
 {
 	int const drive = _getdrive();
 	struct _diskfree_t diskfree;
@@ -24,7 +24,7 @@ bool Initialization::CheckStorage(const DWORDLONG diskSpaceNeeded)
 	return true;
 }
 
-bool Initialization::CheckMemory(const DWORDLONG physicalRAMNeeded, const DWORDLONG virtualRAMNeeded)
+bool CoreEngine::CheckMemory(const DWORDLONG physicalRAMNeeded, const DWORDLONG virtualRAMNeeded)
 {
 	MEMORYSTATUSEX status;
 	status.dwLength = sizeof(status);
@@ -81,7 +81,7 @@ bool Initialization::CheckMemory(const DWORDLONG physicalRAMNeeded, const DWORDL
 	return true;
 }
 
-bool Initialization::IsOnlyInstance(LPCTSTR gameTitle)
+bool CoreEngine::IsOnlyInstance(LPCTSTR gameTitle)
 {
 	HANDLE handle = CreateMutex(NULL, TRUE, gameTitle);
 
@@ -115,7 +115,7 @@ bool Initialization::IsOnlyInstance(LPCTSTR gameTitle)
 	return true;
 }
 
-char* Initialization::ReadCPUArchitecture()
+char* CoreEngine::ReadCPUArchitecture()
 {
 	char CPUName[255];
 	DWORD BufSize2 = sizeof(CPUName);
@@ -138,7 +138,7 @@ char* Initialization::ReadCPUArchitecture()
 	return CPUName;
 }
 
-DWORD Initialization::ReadCPUSpeed()
+DWORD CoreEngine::ReadCPUSpeed()
 {
 	DWORD BufSize = sizeof(DWORD);
 	DWORD dwMHz = 0;
@@ -159,4 +159,16 @@ DWORD Initialization::ReadCPUSpeed()
 	//OutputDebugString(to_string(temp).c_str());
 	//OutputDebugStringW(L"\n");
 	return dwMHz;
+}
+
+void CoreEngine::InitilizeSystem()
+{
+}
+
+void CoreEngine::UpdateSystem()
+{
+}
+
+void CoreEngine::AddSystem()
+{
 }

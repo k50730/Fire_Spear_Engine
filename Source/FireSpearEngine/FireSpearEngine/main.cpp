@@ -219,11 +219,11 @@ using namespace std;
 //	}
 //}
 
-#include "Initialization.h"
+#include "CoreEngine.h"
 
 int main()
 {
-	Initialization* p_init = new Initialization();
+	CoreEngine* p_init = new CoreEngine();
 
 	if (!p_init->IsOnlyInstance(TEXT("MyApplication")))
 		return 0;
