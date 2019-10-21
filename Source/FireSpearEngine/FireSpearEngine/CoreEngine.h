@@ -6,10 +6,10 @@
 #include <windows.h>
 #include <WinBase.h>
 
-class Initialization
+class CoreEngine
 {
 public:
-	Initialization();
+	CoreEngine();
 
 
 
@@ -18,5 +18,10 @@ public:
 	bool IsOnlyInstance(LPCTSTR gameTitle);
 	char* ReadCPUArchitecture();
 	DWORD ReadCPUSpeed();
+
+
+	void InitilizeSystem();
+	void UpdateSystem();
+	void AddSystem();
 };
 
