@@ -20,7 +20,7 @@ public:
 	DWORD ReadCPUSpeed();
 
 
-	void InitilizeSystem();
+	bool InitilizeSystem();
 	void UpdateSystem();
 	void AddSystem();
 };
