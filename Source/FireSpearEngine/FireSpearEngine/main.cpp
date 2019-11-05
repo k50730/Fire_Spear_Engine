@@ -17,6 +17,8 @@ static TCHAR szTitle[] = _T("Win32 Guided Tour Application");
 
 HINSTANCE hInst;
 
+CoreEngine* engine = new CoreEngine();
+
 // Forward declarations of functions included in this code module:  
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 
@@ -65,7 +67,7 @@ int CALLBACK WinMain(
 	// hInstance: the first parameter from WinMain  
 	// NULL: not used in this application  
 
-	CoreEngine* engine = new CoreEngine();
+	
 	
 
 	if (engine->InitilizeSystem())
@@ -128,21 +130,35 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	PAINTSTRUCT ps;
 	HDC hdc;
-	TCHAR greeting[] = _T("Hello, World!");
+	TCHAR greeting[] = _T("FireSpear Engine - Made by NeZhaS");
+	
 
 	switch (message)
 	{
 	case WM_PAINT:
 		hdc = BeginPaint(hWnd, &ps);
 
-		// Here your application is laid out.  
-		// For this introduction, we just print out "Hello, World!"  
+		// Here your application is laid out.    
 		// in the top left corner.  
 		TextOut(hdc,
 			5, 5,
 			greeting, _tcslen(greeting));
-		// End application-specific layout section.  
+		
+		
+		
+		TextOut(hdc,
+			5, 30,
+			engine->ReadCPUArchitecture(), _tcslen(greeting));
 
+		char szTest[10];
+		sprintf_s(szTest, "%d", engine->ReadCPUSpeed());
+
+		TextOut(hdc,
+			5, 55,
+			szTest, _tcslen(szTest));
+
+		
+		// End application-specific layout section.  
 		EndPaint(hWnd, &ps);
 		break;
 	case WM_DESTROY:

@@ -131,18 +131,20 @@ char* CoreEngine::ReadCPUArchitecture()
 	{
 		RegQueryValueEx(hKey2, "ProcessorNameString", NULL, &type2, (LPBYTE)& CPUName, &BufSize2);
 	}
-
-	OutputDebugString("CPU ARCHITECTURE: ");
-	OutputDebugString(CPUName);
-	OutputDebugStringW(L"\n");
+	
+	
+	//OutputDebugString();
+	//utputDebugString(CPUName);
+	//OutputDebugStringW(L"\n");
 	//printf("CPU ARCHITECTURE: %s\n", CPUName);
 	return CPUName;
 }
 
 DWORD CoreEngine::ReadCPUSpeed()
 {
-	DWORD BufSize = sizeof(DWORD);
-	DWORD dwMHz = 0;
+	
+	DWORD dwMHz;
+	DWORD BufSize = sizeof(dwMHz);
 	DWORD type = REG_DWORD;
 	HKEY hKey;
 
@@ -154,11 +156,13 @@ DWORD CoreEngine::ReadCPUSpeed()
 	{
 		RegQueryValueEx(hKey, "~MHz", NULL, &type, (LPBYTE)& dwMHz, &BufSize);
 	}
-	int temp = (int)dwMHz;
+	
+
 
 	//printf("CPU SPEED: %d\n", dwMHz);
-	OutputDebugString(to_string(temp).c_str());
-	OutputDebugStringW(L"\n");
+	//OutputDebugString(to_string(temp).c_str());
+	//OutputDebugStringW(L"\n");
+
 	return dwMHz;
 }
 
@@ -171,8 +175,8 @@ bool CoreEngine::InitilizeSystem()
 		{
 			if (CheckStorage(3145))
 			{
-				ReadCPUSpeed();
-				ReadCPUArchitecture();
+				//ReadCPUSpeed();
+				//ReadCPUArchitecture();
 				return true;
 			}
 		}
