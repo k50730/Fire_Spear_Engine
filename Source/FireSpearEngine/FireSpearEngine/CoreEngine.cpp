@@ -164,7 +164,7 @@ DWORD CoreEngine::ReadCPUSpeed()
 
 bool CoreEngine::InitilizeSystem()
 {
-	if (IsOnlyInstance("MyApplication")) // IF THE NAME IS UNIQUE
+	if (IsOnlyInstance("Win32 Guided Tour Application")) // IF THE NAME IS UNIQUE
 	{
 
 		if (CheckMemory(3000, 3000))
@@ -177,6 +177,7 @@ bool CoreEngine::InitilizeSystem()
 			}
 		}
 	}
+	
 
 	return false;
 }

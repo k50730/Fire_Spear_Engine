@@ -1,4 +1,4 @@
-#include <iostream>
+/*#include <iostream>
 #include <string>
 #include <direct.h>
 #include <stdlib.h>
@@ -15,7 +15,7 @@ using namespace std;
 #	define GCC_NEW new(_NORMAL_BLOCK,__FILE__, __LINE__)
 
 
-/*DWORD ReadCPUSpeed()
+DWORD ReadCPUSpeed()
 {
 	DWORD BufSize = sizeof(DWORD);
 	DWORD dwMHz = 0;
@@ -59,7 +59,7 @@ string ReadCPUArchitecture()
 	return CPUName;
 }
 
-// CHECK FOR INSTANCE
+ CHECK FOR INSTANCE
 bool IsOnlyInstance(LPCTSTR gameTitle)
 {
 	HANDLE handle = CreateMutex(NULL, TRUE, gameTitle);
@@ -117,7 +117,7 @@ bool CheckMemory(const DWORDLONG physicalRAMNeeded, const DWORDLONG virtualRAMNe
 	status.dwLength = sizeof(status);
 	GlobalMemoryStatusEx(&status);
 
-	// CHECK PHYSICAL RAM
+	 CHECK PHYSICAL RAM
 	if (status.ullTotalPhys < physicalRAMNeeded)
 	{
 
@@ -129,7 +129,7 @@ bool CheckMemory(const DWORDLONG physicalRAMNeeded, const DWORDLONG virtualRAMNe
 		return false;
 	}
 
-	// CHECK VIRTUAL RAM
+	 CHECK VIRTUAL RAM
 	if (status.ullAvailVirtual < virtualRAMNeeded)
 	{
 
@@ -142,7 +142,7 @@ bool CheckMemory(const DWORDLONG physicalRAMNeeded, const DWORDLONG virtualRAMNe
 	}
 
 
-	// CHECK CONTIGUIS MEMORY
+	 CHECK CONTIGUIS MEMORY
 	char* buff = GCC_NEW char[virtualRAMNeeded];
 
 	if (buff) delete[] buff;
@@ -167,7 +167,7 @@ LRESULT CALLBACK WindowProcessMessages(HWND hwnd, UINT msg, WPARAM param, LPARAM
 int WINAPI WinMain(HINSTANCE currentInstance, HINSTANCE previousInstance, PSTR cmdLine, INT cmdCount)
 {
 
-	// REGISTER WINDOW CLASS
+	 REGISTER WINDOW CLASS
 	const char* CLASS_NAME = "MyApplication";
 	WNDCLASS wc{};
 	wc.hInstance = currentInstance;
@@ -188,7 +188,7 @@ int WINAPI WinMain(HINSTANCE currentInstance, HINSTANCE previousInstance, PSTR c
 			{
 				engine->ReadCPUSpeed();
 				engine->ReadCPUArchitecture();
-				// CREATE WINDOW
+				 CREATE WINDOW
 				CreateWindow(CLASS_NAME, "Fire Spear",
 					WS_OVERLAPPEDWINDOW | WS_VISIBLE, // WINDOW STYLE
 					CW_USEDEFAULT, CW_USEDEFAULT, // WINDOW INITIAL POSITION
@@ -197,6 +197,104 @@ int WINAPI WinMain(HINSTANCE currentInstance, HINSTANCE previousInstance, PSTR c
 			}
 		}
 	}
+
+
+	 WINDOW LOOP
+	MSG msg{};
+	while (GetMessage(&msg, NULL, 0, 0))
+	{
+		TranslateMessage(&msg);
+		DispatchMessage(&msg);
+	}
+
+	return 0;
+}
+
+LRESULT CALLBACK WindowProcessMessages(HWND hwnd, UINT msg, WPARAM param, LPARAM lparam)
+{
+	switch (msg)
+	{
+	case WM_DESTROY:
+		PostQuitMessage(0);
+		return 0;
+
+	default:
+		return DefWindowProc(hwnd, msg, param, lparam);
+	}
+}
+#include "CoreEngine.h"
+
+int main()
+{
+	CoreEngine* p_init = new CoreEngine();
+
+	if (!p_init->IsOnlyInstance(TEXT("MyApplication")))
+		return 0;
+	else {
+		p_init->CheckStorage(300 * 1048576); // 1 MB = 1048576 Bytes
+		p_init->CheckMemory(3000, 3000);
+		p_init->ReadCPUSpeed();
+		p_init->ReadCPUArchitecture();
+	}
+
+	system("PAUSE");
+	return 0;
+}
+*/
+
+
+
+
+//********* SECOND VERSION ******//
+
+
+
+/*
+#include <iostream>
+#include <string>
+#include <direct.h>
+#include <stdlib.h>
+#include <windows.h>
+#include <tchar.h>
+#include <WinBase.h>
+#include <sstream>
+#include <iomanip>
+
+#include "CoreEngine.h"
+
+using namespace std;
+
+#	define GCC_NEW new(_NORMAL_BLOCK,__FILE__, __LINE__)
+
+
+LRESULT CALLBACK WindowProcessMessages(HWND hwnd, UINT msg, WPARAM param, LPARAM lparam);
+
+int WINAPI WinMain(HINSTANCE currentInstance, HINSTANCE previousInstance, PSTR cmdLine, INT cmdCount)
+{
+
+	// REGISTER WINDOW CLASS
+	const char* CLASS_NAME = "MyApplication";
+	WNDCLASS wc{};
+	wc.hInstance = currentInstance;
+	wc.lpszClassName = CLASS_NAME;
+	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
+	wc.hbrBackground = (HBRUSH)COLOR_WINDOW;
+	wc.lpfnWndProc = WindowProcessMessages;
+	RegisterClass(&wc);
+
+	CoreEngine* engine = new CoreEngine();
+
+
+	if (engine->InitilizeSystem())
+	{
+		// CREATE WINDOW
+		CreateWindow(CLASS_NAME, "Fire Spear",
+			WS_OVERLAPPEDWINDOW | WS_VISIBLE, // WINDOW STYLE
+			CW_USEDEFAULT, CW_USEDEFAULT, // WINDOW INITIAL POSITION
+			800, 800, // WINDOW SIZE
+			NULL, NULL, NULL, NULL);
+	}
+
 
 
 	// WINDOW LOOP
@@ -222,21 +320,6 @@ LRESULT CALLBACK WindowProcessMessages(HWND hwnd, UINT msg, WPARAM param, LPARAM
 		return DefWindowProc(hwnd, msg, param, lparam);
 	}
 }
-//#include "CoreEngine.h"
-//
-//int main()
-//{
-//	CoreEngine* p_init = new CoreEngine();
-//
-//	if (!p_init->IsOnlyInstance(TEXT("MyApplication")))
-//		return 0;
-//	else {
-//		p_init->CheckStorage(300 * 1048576); // 1 MB = 1048576 Bytes
-//		p_init->CheckMemory(3000, 3000);
-//		p_init->ReadCPUSpeed();
-//		p_init->ReadCPUArchitecture();
-//	}
-//
-//	system("PAUSE");
-//	return 0;
-//}*/
+
+
+*/

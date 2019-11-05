@@ -1,71 +1,157 @@
-#include <iostream>
-#include <string>
-#include <direct.h>
-#include <stdlib.h>
-#include <windows.h>
-#include <tchar.h>
-#include <WinBase.h>
-#include <sstream>
-#include <iomanip>
+// GT_HelloWorldWin32.cpp  
+// compile with: /D_UNICODE /DUNICODE /DWIN32 /D_WINDOWS /c  
 
+#include <windows.h>  
+#include <stdlib.h>  
+#include <string.h>  
+#include <tchar.h> 
 #include "CoreEngine.h"
 
-using namespace std;
+// Global variables  
 
-#	define GCC_NEW new(_NORMAL_BLOCK,__FILE__, __LINE__)
+// The main window class name.  
+static TCHAR szWindowClass[] = _T("win32app");
 
+// The string that appears in the application's title bar.  
+static TCHAR szTitle[] = _T("Win32 Guided Tour Application");
 
-LRESULT CALLBACK WindowProcessMessages(HWND hwnd, UINT msg, WPARAM param, LPARAM lparam);
+HINSTANCE hInst;
 
-int WINAPI WinMain(HINSTANCE currentInstance, HINSTANCE previousInstance, PSTR cmdLine, INT cmdCount)
+// Forward declarations of functions included in this code module:  
+LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
+
+int CALLBACK WinMain(
+	_In_ HINSTANCE hInstance,
+	_In_ HINSTANCE hPrevInstance,
+	_In_ LPSTR     lpCmdLine,
+	_In_ int       nCmdShow
+)
 {
+	WNDCLASSEX wcex;
 
-	// REGISTER WINDOW CLASS
-	const char* CLASS_NAME = "MyApplication";
-	WNDCLASS wc{};
-	wc.hInstance = currentInstance;
-	wc.lpszClassName = CLASS_NAME;
-	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
-	wc.hbrBackground = (HBRUSH)COLOR_WINDOW;
-	wc.lpfnWndProc = WindowProcessMessages;
-	RegisterClass(&wc);
+	wcex.cbSize = sizeof(WNDCLASSEX);
+	wcex.style = CS_HREDRAW | CS_VREDRAW;
+	wcex.lpfnWndProc = WndProc;
+	wcex.cbClsExtra = 0;
+	wcex.cbWndExtra = 0;
+	wcex.hInstance = hInstance;
+	wcex.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_APPLICATION));
+	wcex.hCursor = LoadCursor(NULL, IDC_ARROW);
+	wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
+	wcex.lpszMenuName = NULL;
+	wcex.lpszClassName = szWindowClass;
+	wcex.hIconSm = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_APPLICATION));
+
+	if (!RegisterClassEx(&wcex))
+	{
+		MessageBox(NULL,
+			_T("Call to RegisterClassEx failed!"),
+			_T("Win32 Guided Tour"),
+			NULL);
+
+		return 1;
+	}
+
+	hInst = hInstance; // Store instance handle in our global variable  
+
+	// The parameters to CreateWindow explained:  
+	// szWindowClass: the name of the application  
+	// szTitle: the text that appears in the title bar  
+	// WS_OVERLAPPEDWINDOW: the type of window to create  
+	// CW_USEDEFAULT, CW_USEDEFAULT: initial position (x, y)  
+	// 500, 100: initial size (width, length)  
+	// NULL: the parent of this window  
+	// NULL: this application does not have a menu bar  
+	// hInstance: the first parameter from WinMain  
+	// NULL: not used in this application  
 
 	CoreEngine* engine = new CoreEngine();
-
+	
 
 	if (engine->InitilizeSystem())
 	{
-		// CREATE WINDOW
-		CreateWindow(CLASS_NAME, "Fire Spear",
-			WS_OVERLAPPEDWINDOW | WS_VISIBLE, // WINDOW STYLE
-			CW_USEDEFAULT, CW_USEDEFAULT, // WINDOW INITIAL POSITION
-			800, 800, // WINDOW SIZE
-			NULL, NULL, NULL, NULL);
+		HWND hWnd = CreateWindow(
+			szWindowClass,
+			szTitle,
+			WS_OVERLAPPEDWINDOW,
+			CW_USEDEFAULT, CW_USEDEFAULT,
+			800, 800,
+			NULL,
+			NULL,
+			hInstance,
+			NULL
+		);
+
+		// The parameters to ShowWindow explained:  
+	// hWnd: the value returned from CreateWindow  
+	// nCmdShow: the fourth parameter from WinMain  
+		ShowWindow(hWnd,
+			nCmdShow);
+		UpdateWindow(hWnd);
+
+
+		if (!hWnd)
+		{
+			MessageBox(NULL,
+				_T("Call to CreateWindow failed!"),
+				_T("Win32 Guided Tour"),
+				NULL);
+
+			return 1;
+		}
 	}
+
+
 	
 
-
-	// WINDOW LOOP
-	MSG msg{};
+	// Main message loop:  
+	MSG msg;
 	while (GetMessage(&msg, NULL, 0, 0))
 	{
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
 	}
 
-	return 0;
+	return (int)msg.wParam;
 }
 
-LRESULT CALLBACK WindowProcessMessages(HWND hwnd, UINT msg, WPARAM param, LPARAM lparam)
+//  
+//  FUNCTION: WndProc(HWND, UINT, WPARAM, LPARAM)  
+//  
+//  PURPOSE:  Processes messages for the main window.  
+//  
+//  WM_PAINT    - Paint the main window  
+//  WM_DESTROY  - post a quit message and return  
+//  
+//  
+LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	switch (msg)
+	PAINTSTRUCT ps;
+	HDC hdc;
+	TCHAR greeting[] = _T("Hello, World!");
+
+	switch (message)
 	{
+	case WM_PAINT:
+		hdc = BeginPaint(hWnd, &ps);
+
+		// Here your application is laid out.  
+		// For this introduction, we just print out "Hello, World!"  
+		// in the top left corner.  
+		TextOut(hdc,
+			5, 5,
+			greeting, _tcslen(greeting));
+		// End application-specific layout section.  
+
+		EndPaint(hWnd, &ps);
+		break;
 	case WM_DESTROY:
 		PostQuitMessage(0);
-		return 0;
-
+		break;
 	default:
-		return DefWindowProc(hwnd, msg, param, lparam);
+		return DefWindowProc(hWnd, message, wParam, lParam);
+		break;
 	}
-}
 
+	return 0;
+}
