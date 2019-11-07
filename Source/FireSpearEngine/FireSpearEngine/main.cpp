@@ -133,6 +133,35 @@ int CALLBACK WinMain(
 // 
 
 
+void KeyPressed(HWND hwnd, WPARAM wParam, LPARAM lParam) {
+
+	/*int ret = -1;
+	if ((wParam >= 0x30 && wParam <= 0x39) ||
+		(wParam >= 0x41 && wParam <= 0x5A) ||
+		(wParam == 0x20))
+	{
+		UINT scandCode = (lParam >> 8) & 0xFFFFFF00;
+		WCHAR lBuffer[10];
+		CString lBuff;
+		
+		BYTE State[256];
+
+		GetKeyboardState(State);
+		ret = ToUnicode(wParam, scandCode, State, lBuffer, wcslen(lBuffer), 0);
+	}*/
+	HDC hdc;
+
+	hdc = GetDC(hwnd);
+
+	char text[40];
+	sprintf_s(text, "Key %d is pressed   ", wParam);
+	LPCSTR textmsg = (LPCSTR)text;
+	TextOut(hdc,
+		5, 105,
+		textmsg, _tcslen(textmsg));
+	ReleaseDC(hwnd, hdc);
+}
+
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	PAINTSTRUCT ps;
@@ -191,6 +220,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		break;
 	case WM_KEYUP:
 		inputInterface->KeyUp(hWnd, wParam, lParam);
+		break;
+	case WM_KEYDOWN:
+		KeyPressed(hWnd, wParam, lParam);
 		break;
 	case WM_DESTROY:
 		PostQuitMessage(0);
