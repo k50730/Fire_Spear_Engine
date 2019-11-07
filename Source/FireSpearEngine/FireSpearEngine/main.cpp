@@ -221,9 +221,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	case WM_KEYUP:
 		inputInterface->KeyUp(hWnd, wParam, lParam);
 		break;
-	case WM_KEYDOWN:
-		KeyPressed(hWnd, wParam, lParam);
-		break;
 	case WM_DESTROY:
 		PostQuitMessage(0);
 		break;
