@@ -7,6 +7,7 @@
 #include <tchar.h> 
 #include "CoreEngine.h"
 #include <windowsx.h>
+#include "InputInterface.h"
 
 // Global variables  
 
@@ -19,6 +20,7 @@ static TCHAR szTitle[] = _T("Win32 Guided Tour Application");
 HINSTANCE hInst;
 
 CoreEngine* engine = new CoreEngine();
+InputInterface* inputInterface = new InputInterface();
 
 // Forward declarations of functions included in this code module:  
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
@@ -129,121 +131,14 @@ int CALLBACK WinMain(
 //  WM_DESTROY  - post a quit message and return  
 //  
 // 
-void MouseMove(HWND hwnd, WPARAM wp, LPARAM lParam) {
-	POINTS p;
-	HDC hdc;
-	p.x = GET_X_LPARAM(lParam);
-	p.y = GET_Y_LPARAM(lParam);
-	hdc = GetDC(hwnd);
-
-	char text[40];
-	sprintf_s(text, "Mouse Position: X= %d, Y= %d     ", p.x, p.y);
-	LPCSTR textmsg = (LPCSTR)text; 
-	TextOut(hdc,
-		5, 80,
-		textmsg, _tcslen(textmsg));
-	ReleaseDC(hwnd, hdc);
-}
-
-void LeftMouseDown(HWND hwnd, WPARAM wp, LPARAM lParam) {
-	POINTS p;
-	HDC hdc;
-	p.x = GET_X_LPARAM(lParam);
-	p.y = GET_Y_LPARAM(lParam);
-	hdc = GetDC(hwnd);
-
-	char text[40];
-	sprintf_s(text, "Left Mouse Down: X= %d, Y= %d     ", p.x, p.y);
-	LPCSTR textmsg = (LPCSTR)text;
-	TextOut(hdc,
-		5, 80,
-		textmsg, _tcslen(textmsg));
-	ReleaseDC(hwnd, hdc);
-}
-
-void LeftMouseUp(HWND hwnd, WPARAM wp, LPARAM lParam) 
-{
-	POINTS p;
-	HDC hdc;
-	p.x = GET_X_LPARAM(lParam);
-	p.y = GET_Y_LPARAM(lParam);
-	hdc = GetDC(hwnd);
-
-	char text[40];
-	sprintf_s(text, "Left Mouse Up: X= %d, Y= %d     ", p.x, p.y);
-	LPCSTR textmsg = (LPCSTR)text;
-	TextOut(hdc,
-		5, 80,
-		textmsg, _tcslen(textmsg));
-	ReleaseDC(hwnd, hdc);
-}
 
 
-
-void RightMouseDown(HWND hwnd, WPARAM wp, LPARAM lParam) {
-	POINTS p;
-	HDC hdc;
-	p.x = GET_X_LPARAM(lParam);
-	p.y = GET_Y_LPARAM(lParam);
-	hdc = GetDC(hwnd);
-
-	char text[40];
-	sprintf_s(text, "Right Mouse Down: X= %d, Y= %d     ", p.x, p.y);
-	LPCSTR textmsg = (LPCSTR)text;
-	TextOut(hdc,
-		5, 80,
-		textmsg, _tcslen(textmsg));
-	ReleaseDC(hwnd, hdc);
-}
-
-void RightMouseUp(HWND hwnd, WPARAM wp, LPARAM lParam) {
-	POINTS p;
-	HDC hdc;
-	p.x = GET_X_LPARAM(lParam);
-	p.y = GET_Y_LPARAM(lParam);
-	hdc = GetDC(hwnd);
-
-	char text[40];
-	sprintf_s(text, "Right Mouse Up: X= %d, Y= %d     ", p.x, p.y);
-	LPCSTR textmsg = (LPCSTR)text;
-	TextOut(hdc,
-		5, 80,
-		textmsg, _tcslen(textmsg));
-	ReleaseDC(hwnd, hdc);
-}
-void KeyDown(HWND hwnd, WPARAM wp, LPARAM lParam) {
-	HDC hdc;
-	hdc = GetDC(hwnd);
-	char text[40];
-	sprintf_s(text, "KeyDown Code: %d", wp);
-	LPCSTR textmsg = (LPCSTR)text;
-	TextOut(hdc,
-		5, 105,
-		textmsg, _tcslen(textmsg));
-
-
-	ReleaseDC(hwnd, hdc);
-}
-
-void KeyUp(HWND hwnd, WPARAM wp, LPARAM lParam) {
-	HDC hdc;
-	hdc = GetDC(hwnd);
-	char text[40];
-	sprintf_s(text, "KeyUp Code: %d", wp);
-	LPCSTR textmsg = (LPCSTR)text;
-	TextOut(hdc,
-		5, 130,
-		textmsg, _tcslen(textmsg));
-
-
-	ReleaseDC(hwnd, hdc);
-}
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	PAINTSTRUCT ps;
 	HDC hdc;
 	TCHAR greeting[] = _T("FireSpear Engine - Made by NeZhaS");
-	
+
 	switch (message)
 	{
 
@@ -257,8 +152,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			5, 5,
 			greeting, _tcslen(greeting));
 		
-	
-
 		TextOut(hdc,
 			5, 30,
 			engine->ReadCPUArchitecture(), _tcslen(engine->ReadCPUArchitecture()));
@@ -277,27 +170,27 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		break;
 
 	case WM_MOUSEMOVE:
-		MouseMove(hWnd, wParam, lParam);
+		inputInterface->MouseMove(hWnd, wParam, lParam);
 		break;
 
 	case WM_LBUTTONDOWN:
-		LeftMouseDown(hWnd, wParam, lParam);
+		inputInterface->LeftMouseDown(hWnd, wParam, lParam);
 		break;
 	case WM_LBUTTONUP:
-		LeftMouseUp(hWnd, wParam, lParam);
+		inputInterface->LeftMouseUp(hWnd, wParam, lParam);
 		break;
 
 	case WM_RBUTTONDOWN:
-		RightMouseDown(hWnd, wParam, lParam);
+		inputInterface->RightMouseDown(hWnd, wParam, lParam);
 		break;
 	case WM_RBUTTONUP:
-		RightMouseUp(hWnd, wParam, lParam);
+		inputInterface->RightMouseUp(hWnd, wParam, lParam);
 		break;
 	case WM_KEYDOWN:
-		KeyDown(hWnd, wParam, lParam);
+		inputInterface->KeyDown(hWnd, wParam, lParam);
 		break;
 	case WM_KEYUP:
-		KeyUp(hWnd, wParam, lParam);
+		inputInterface->KeyUp(hWnd, wParam, lParam);
 		break;
 	case WM_DESTROY:
 		PostQuitMessage(0);

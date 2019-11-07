@@ -80,5 +80,8 @@
     <ClInclude Include="ComponentSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="InputInterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
