@@ -6,6 +6,7 @@
 #include <string.h>  
 #include <tchar.h> 
 #include "CoreEngine.h"
+#include <windowsx.h>
 
 // Global variables  
 
@@ -117,6 +118,8 @@ int CALLBACK WinMain(
 	return (int)msg.wParam;
 }
 
+
+
 //  
 //  FUNCTION: WndProc(HWND, UINT, WPARAM, LPARAM)  
 //  
@@ -125,45 +128,151 @@ int CALLBACK WinMain(
 //  WM_PAINT    - Paint the main window  
 //  WM_DESTROY  - post a quit message and return  
 //  
-//  
+// 
+void MouseMove(HWND hwnd, WPARAM wp, LPARAM lParam) {
+	POINTS p;
+	HDC hdc;
+	p.x = GET_X_LPARAM(lParam);
+	p.y = GET_Y_LPARAM(lParam);
+	hdc = GetDC(hwnd);
+
+	char text[40];
+	sprintf_s(text, "Mouse Position: X= %d, Y= %d     ", p.x, p.y);
+	LPCSTR textmsg = (LPCSTR)text; 
+	TextOut(hdc,
+		5, 80,
+		textmsg, _tcslen(textmsg));
+	ReleaseDC(hwnd, hdc);
+}
+
+void LeftMouseDown(HWND hwnd, WPARAM wp, LPARAM lParam) {
+	POINTS p;
+	HDC hdc;
+	p.x = GET_X_LPARAM(lParam);
+	p.y = GET_Y_LPARAM(lParam);
+	hdc = GetDC(hwnd);
+
+	char text[40];
+	sprintf_s(text, "Left Mouse Down: X= %d, Y= %d     ", p.x, p.y);
+	LPCSTR textmsg = (LPCSTR)text;
+	TextOut(hdc,
+		5, 80,
+		textmsg, _tcslen(textmsg));
+	ReleaseDC(hwnd, hdc);
+}
+
+void LeftMouseUp(HWND hwnd, WPARAM wp, LPARAM lParam) 
+{
+	POINTS p;
+	HDC hdc;
+	p.x = GET_X_LPARAM(lParam);
+	p.y = GET_Y_LPARAM(lParam);
+	hdc = GetDC(hwnd);
+
+	char text[40];
+	sprintf_s(text, "Left Mouse Up: X= %d, Y= %d     ", p.x, p.y);
+	LPCSTR textmsg = (LPCSTR)text;
+	TextOut(hdc,
+		5, 80,
+		textmsg, _tcslen(textmsg));
+	ReleaseDC(hwnd, hdc);
+}
+
+
+
+void RightMouseDown(HWND hwnd, WPARAM wp, LPARAM lParam) {
+	POINTS p;
+	HDC hdc;
+	p.x = GET_X_LPARAM(lParam);
+	p.y = GET_Y_LPARAM(lParam);
+	hdc = GetDC(hwnd);
+
+	char text[40];
+	sprintf_s(text, "Right Mouse Down: X= %d, Y= %d     ", p.x, p.y);
+	LPCSTR textmsg = (LPCSTR)text;
+	TextOut(hdc,
+		5, 80,
+		textmsg, _tcslen(textmsg));
+	ReleaseDC(hwnd, hdc);
+}
+
+void RightMouseUp(HWND hwnd, WPARAM wp, LPARAM lParam) {
+	POINTS p;
+	HDC hdc;
+	p.x = GET_X_LPARAM(lParam);
+	p.y = GET_Y_LPARAM(lParam);
+	hdc = GetDC(hwnd);
+
+	char text[40];
+	sprintf_s(text, "Right Mouse Up: X= %d, Y= %d     ", p.x, p.y);
+	LPCSTR textmsg = (LPCSTR)text;
+	TextOut(hdc,
+		5, 80,
+		textmsg, _tcslen(textmsg));
+	ReleaseDC(hwnd, hdc);
+}
+
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	PAINTSTRUCT ps;
 	HDC hdc;
 	TCHAR greeting[] = _T("FireSpear Engine - Made by NeZhaS");
 	
-
 	switch (message)
 	{
+
 	case WM_PAINT:
 		hdc = BeginPaint(hWnd, &ps);
 
 		// Here your application is laid out.    
 		// in the top left corner.  
+	
 		TextOut(hdc,
 			5, 5,
 			greeting, _tcslen(greeting));
 		
-		
-		
+	
+
 		TextOut(hdc,
 			5, 30,
-			engine->ReadCPUArchitecture(), _tcslen(greeting));
+			engine->ReadCPUArchitecture(), _tcslen(engine->ReadCPUArchitecture()));
 
-		char szTest[10];
-		sprintf_s(szTest, "%d", engine->ReadCPUSpeed());
+
+		char cpuSpeed[16];
+		sprintf_s(cpuSpeed, "CPU Speed: %d", engine->ReadCPUSpeed());
 
 		TextOut(hdc,
 			5, 55,
-			szTest, _tcslen(szTest));
+			cpuSpeed, _tcslen(cpuSpeed));
 
 		
 		// End application-specific layout section.  
 		EndPaint(hWnd, &ps);
 		break;
+
+	case WM_MOUSEMOVE:
+		MouseMove(hWnd, wParam, lParam);
+		break;
+
+	case WM_LBUTTONDOWN:
+		LeftMouseDown(hWnd, wParam, lParam);
+		break;
+	case WM_LBUTTONUP:
+		LeftMouseUp(hWnd, wParam, lParam);
+		break;
+
+	case WM_RBUTTONDOWN:
+		RightMouseDown(hWnd, wParam, lParam);
+		break;
+	case WM_RBUTTONUP:
+		RightMouseUp(hWnd, wParam, lParam);
+		break;
+
+
 	case WM_DESTROY:
 		PostQuitMessage(0);
 		break;
+		
 	default:
 		return DefWindowProc(hWnd, message, wParam, lParam);
 		break;
@@ -171,3 +280,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 	return 0;
 }
+
+
+
