@@ -142,6 +142,7 @@
     <ClCompile Include="GraphicSystem.cpp" />
     <ClCompile Include="InputHandler.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="oldMain.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="System.cpp" />
   </ItemGroup>

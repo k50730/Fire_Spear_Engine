@@ -1,4 +1,6 @@
 #include "CoreEngine.h"
+
+
 using namespace std;
 
 CoreEngine::CoreEngine()
@@ -70,12 +72,12 @@ bool CoreEngine::CheckMemory(const DWORDLONG physicalRAMNeeded, const DWORDLONG 
 
 		return false;
 	}
-	//OutputDebugString("CHECK MEMORY SUCCESS");
-	//OutputDebugStringW(L"\n");
-	cout << "CHECK MEMORY SUCCESS" << endl;
+	OutputDebugString("CHECK MEMORY SUCCESS");
+	OutputDebugStringW(L"\n");
+	/*cout << "CHECK MEMORY SUCCESS" << endl;
 
 	printf("Available RAM: %I64d \n", status.ullAvailPhys / 1048576);
-	printf("Available Virtual Memory: %I64d \n", status.ullAvailVirtual / 1048576);
+	printf("Available Virtual Memory: %I64d \n", status.ullAvailVirtual / 1048576);*/
 
 	
 	return true;
@@ -87,7 +89,7 @@ bool CoreEngine::IsOnlyInstance(LPCTSTR gameTitle)
 
 	if (GetLastError() == ERROR_ALREADY_EXISTS)
 	{
-		/*HWND hwnd = FindWindow(gameTitle, NULL);
+		HWND hwnd = FindWindow(gameTitle, NULL);
 		if (hwnd)
 		{
 
@@ -100,18 +102,17 @@ bool CoreEngine::IsOnlyInstance(LPCTSTR gameTitle)
 			SetFocus(hwnd);
 			SetForegroundWindow(hwnd);
 			SetActiveWindow(hwnd);
-
 			return false;
-		}*/
+		}
 		MessageBox(NULL,
 			"There is another instance",
 			"Muti-Instances Detected",
 			NULL);
 		return false;
 	}
-	//OutputDebugString("CHECK MUTI-INSTANCES SUCCESS");
-	//OutputDebugStringW(L"\n");
-	cout << "CHECK MUTI-INSTANCES SUCCESS" << endl;
+	OutputDebugString("CHECK MUTI-INSTANCES SUCCESS");
+	OutputDebugStringW(L"\n");
+	//cout << "CHECK MUTI-INSTANCES SUCCESS" << endl;
 	return true;
 }
 
@@ -130,18 +131,20 @@ char* CoreEngine::ReadCPUArchitecture()
 	{
 		RegQueryValueEx(hKey2, "ProcessorNameString", NULL, &type2, (LPBYTE)& CPUName, &BufSize2);
 	}
-
-	//OutputDebugString("CPU ARCHITECTURE: ");
-	//OutputDebugString(CPUName);
+	
+	
+	//OutputDebugString();
+	//utputDebugString(CPUName);
 	//OutputDebugStringW(L"\n");
-	printf("CPU ARCHITECTURE: %s\n", CPUName);
+	//printf("CPU ARCHITECTURE: %s\n", CPUName);
 	return CPUName;
 }
 
 DWORD CoreEngine::ReadCPUSpeed()
 {
-	DWORD BufSize = sizeof(DWORD);
-	DWORD dwMHz = 0;
+	
+	DWORD dwMHz;
+	DWORD BufSize = sizeof(dwMHz);
 	DWORD type = REG_DWORD;
 	HKEY hKey;
 
@@ -153,16 +156,34 @@ DWORD CoreEngine::ReadCPUSpeed()
 	{
 		RegQueryValueEx(hKey, "~MHz", NULL, &type, (LPBYTE)& dwMHz, &BufSize);
 	}
-	int temp = (int)dwMHz;
+	
 
-	printf("CPU SPEED: %d\n", dwMHz);
+
+	//printf("CPU SPEED: %d\n", dwMHz);
 	//OutputDebugString(to_string(temp).c_str());
 	//OutputDebugStringW(L"\n");
+
 	return dwMHz;
 }
 
-void CoreEngine::InitilizeSystem()
+bool CoreEngine::InitilizeSystem()
 {
+	if (IsOnlyInstance("Win32 Guided Tour Application")) // IF THE NAME IS UNIQUE
+	{
+
+		if (CheckMemory(3000, 3000))
+		{
+			if (CheckStorage(3145))
+			{
+				//ReadCPUSpeed();
+				//ReadCPUArchitecture();
+				return true;
+			}
+		}
+	}
+	
+
+	return false;
 }
 
 void CoreEngine::UpdateSystem()

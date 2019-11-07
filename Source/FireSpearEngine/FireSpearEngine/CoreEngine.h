@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include <windows.h>
 #include <WinBase.h>
+#include <string>
+
 
 class CoreEngine
 {
@@ -20,7 +22,7 @@ public:
 	DWORD ReadCPUSpeed();
 
 
-	void InitilizeSystem();
+	bool InitilizeSystem();
 	void UpdateSystem();
 	void AddSystem();
 };
