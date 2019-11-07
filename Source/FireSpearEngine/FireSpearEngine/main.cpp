@@ -212,34 +212,6 @@ void RightMouseUp(HWND hwnd, WPARAM wp, LPARAM lParam) {
 	ReleaseDC(hwnd, hdc);
 }
 
-void KeyDown(HWND hwnd, WPARAM wp, LPARAM lParam) {
-	HDC hdc;
-	hdc = GetDC(hwnd);
-	char text[40];
-	sprintf_s(text, "KeyDown Code: %d", wp);
-	LPCSTR textmsg = (LPCSTR)text;
-	TextOut(hdc,
-		5, 105,
-		textmsg, _tcslen(textmsg));
-
-
-	ReleaseDC(hwnd, hdc);
-}
-
-void KeyUp(HWND hwnd, WPARAM wp, LPARAM lParam) {
-	HDC hdc;
-	hdc = GetDC(hwnd);
-	char text[40];
-	sprintf_s(text, "KeyUp Code: %d", wp);
-	LPCSTR textmsg = (LPCSTR)text;
-	TextOut(hdc,
-		5, 130,
-		textmsg, _tcslen(textmsg));
-
-
-	ReleaseDC(hwnd, hdc);
-}
-
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	PAINTSTRUCT ps;
@@ -295,12 +267,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	case WM_RBUTTONUP:
 		RightMouseUp(hWnd, wParam, lParam);
 		break;
-	case WM_KEYDOWN:
-		KeyDown(hWnd, wParam, lParam);
-		break;
-	case WM_KEYUP:
-		KeyUp(hWnd, wParam, lParam);
-		break;
+
 
 	case WM_DESTROY:
 		PostQuitMessage(0);
