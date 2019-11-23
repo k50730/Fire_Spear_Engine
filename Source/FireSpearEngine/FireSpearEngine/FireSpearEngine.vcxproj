@@ -138,6 +138,7 @@
     <ClCompile Include="AudioSystem.cpp" />
     <ClCompile Include="ComponentSystem.cpp" />
     <ClCompile Include="CoreEngine.cpp" />
+    <ClCompile Include="EventData.cpp" />
     <ClCompile Include="GameStateManager.cpp" />
     <ClCompile Include="GraphicSystem.cpp" />
     <ClCompile Include="InputHandler.cpp" />
@@ -150,8 +151,12 @@
     <ClInclude Include="..\..\Actors\AbilitiesInterface.h" />
     <ClInclude Include="..\..\Actors\SpecialAbilityComponent.h" />
     <ClInclude Include="AudioSystem.h" />
+    <ClInclude Include="BaseEventData.h" />
     <ClInclude Include="ComponentSystem.h" />
     <ClInclude Include="CoreEngine.h" />
+    <ClInclude Include="EventData.h" />
+    <ClInclude Include="IEventData.h" />
+    <ClInclude Include="EventType.h" />
     <ClInclude Include="GameStateManager.h" />
     <ClInclude Include="GraphicSystem.h" />
     <ClInclude Include="InputHandler.h" />
