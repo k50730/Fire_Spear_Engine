@@ -8,6 +8,7 @@
 #include "CoreEngine.h"
 #include <windowsx.h>
 #include "InputInterface.h"
+#include "LuaPlus.h"
 
 // Global variables  
 
@@ -25,6 +26,8 @@ InputInterface* inputInterface = new InputInterface();
 // Forward declarations of functions included in this code module:  
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 
+using namespace LuaPlus;
+
 int CALLBACK WinMain(
 	_In_ HINSTANCE hInstance,
 	_In_ HINSTANCE hPrevInstance,
@@ -32,6 +35,10 @@ int CALLBACK WinMain(
 	_In_ int       nCmdShow
 )
 {
+
+	// This is called during the initialization of your application.
+	LuaState* pLuaState = LuaState::Create();
+	// This is done during the destruction of your application.
 	WNDCLASSEX wcex;
 
 	wcex.cbSize = sizeof(WNDCLASSEX);
@@ -116,6 +123,7 @@ int CALLBACK WinMain(
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
 	}
+	LuaState::Destroy(pLuaState);
 
 	return (int)msg.wParam;
 }
