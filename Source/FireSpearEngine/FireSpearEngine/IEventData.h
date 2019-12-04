@@ -6,7 +6,6 @@ typedef unsigned long EventType;
 
 
 class IEventData {
-	
 public:
 	typedef std::shared_ptr<IEventData> IEventDataPtr;
 	virtual const EventType& VGetEventType(void) const = 0;
