@@ -3,11 +3,12 @@
 #include "windows.h"
 
 typedef unsigned long EventType;
-typedef std::shared_ptr<IEventData> IEventDataPtr;
 
 
 class IEventData {
+	
 public:
+	typedef std::shared_ptr<IEventData> IEventDataPtr;
 	virtual const EventType& VGetEventType(void) const = 0;
 	virtual float VGetTimeStamp(void) const = 0;
 	virtual void VSerialize(std::ostream& out) const = 0;
