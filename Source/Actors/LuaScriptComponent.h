@@ -2,6 +2,7 @@
 #include "ScriptingComponentInterface.h"
 #include "LuaPlus.h"
 #include <string>
+#include <Windows.h>
 
 using namespace std;
 using namespace LuaPlus;
@@ -13,7 +14,7 @@ public:
 	~LuaScriptComponent();
 	void LuaScriptCreate();
 	void Start();
-	void Update();
+	void Update(HWND hWnd);
 	int num, numTest;
 protected:
 	LuaState* state;

@@ -1,4 +1,5 @@
 #include "LuaScriptComponent.h"
+#include <iostream>
 
 
 LuaScriptComponent::LuaScriptComponent()
@@ -32,4 +33,22 @@ void LuaScriptComponent::Start()
 	LuaFunction<int> LuaTestF = LuaTest;
 	}
 	//LuaFunction<int> LuaTest = state->GetGlobal("test");
+}
+
+void LuaScriptComponent::Update(HWND hWnd)
+{
+	LuaTest = state->GetGlobal("update");
+	LuaFunction<int> LuaSquare = LuaTest;
+	HDC hdc;
+	hdc = GetDC(hWnd);
+
+	num++;
+	char text[40];
+	sprintf_s(text, "Tick:%d " , num);
+	LPCSTR textmsg = (LPCSTR)text;
+	
+	TextOut(hdc,
+		25, 200,
+		textmsg, 9);
+	ReleaseDC(hWnd, hdc);
 }
