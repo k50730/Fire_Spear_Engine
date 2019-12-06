@@ -10,12 +10,13 @@ class LuaScriptComponent : public ScriptingComponentInterface
 {
 public:
 	LuaScriptComponent();
+	~LuaScriptComponent();
 	void LuaScriptCreate();
 	void Start();
 	void Update();
-	int num;
+	int num, numTest;
 protected:
 	LuaState* state;
-	LuaObject LuaTest, LuaNum;
+	LuaObject LuaTest, LuaNum, globals;
 private:
 };

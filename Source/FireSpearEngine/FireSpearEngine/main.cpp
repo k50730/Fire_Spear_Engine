@@ -37,7 +37,7 @@ int CALLBACK WinMain(
 	_In_ int       nCmdShow
 )
 {
-
+	//test call Lua code in C++
 	LuaScriptComponent* newScript = new LuaScriptComponent();
 	newScript->LuaScriptCreate();
 	newScript->Start();
