@@ -9,6 +9,8 @@
 #include <windowsx.h>
 #include "InputInterface.h"
 #include "LuaPlus.h"
+#include "../../Actors/LuaScriptComponent.h"""
+
 
 // Global variables  
 
@@ -35,6 +37,10 @@ int CALLBACK WinMain(
 	_In_ int       nCmdShow
 )
 {
+	//test call Lua code in C++
+	LuaScriptComponent* newScript = new LuaScriptComponent();
+	newScript->LuaScriptCreate();
+	newScript->Start();
 
 	// This is called during the initialization of your application.
 	LuaState* pLuaState = LuaState::Create();
@@ -77,22 +83,22 @@ int CALLBACK WinMain(
 	// hInstance: the first parameter from WinMain  
 	// NULL: not used in this application  
 
-	
+	HWND hWnd = CreateWindow(
+		szWindowClass,
+		szTitle,
+		WS_OVERLAPPEDWINDOW,
+		CW_USEDEFAULT, CW_USEDEFAULT,
+		800, 800,
+		NULL,
+		NULL,
+		hInstance,
+		NULL
+	);
 	
 
 	if (engine->InitilizeSystem())
 	{
-		HWND hWnd = CreateWindow(
-			szWindowClass,
-			szTitle,
-			WS_OVERLAPPEDWINDOW,
-			CW_USEDEFAULT, CW_USEDEFAULT,
-			800, 800,
-			NULL,
-			NULL,
-			hInstance,
-			NULL
-		);
+	
 
 		// The parameters to ShowWindow explained:  
 	// hWnd: the value returned from CreateWindow  
@@ -114,16 +120,21 @@ int CALLBACK WinMain(
 	}
 
 
-	
-
 	// Main message loop:  
-	MSG msg;
-	while (GetMessage(&msg, NULL, 0, 0))
+	MSG msg = {0};
+	while (msg.message != WM_QUIT)
 	{
-		TranslateMessage(&msg);
-		DispatchMessage(&msg);
+		if (PeekMessage(&msg, 0, 0, 0, PM_REMOVE))
+		{
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+		}
+		
+		newScript->Update(hWnd);
 	}
+
 	LuaState::Destroy(pLuaState);
+	pLuaState = NULL;
 
 	return (int)msg.wParam;
 }
