@@ -155,6 +155,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Actors\LuaScripteComponent.cpp" />
     <ClCompile Include="..\..\Actors\SpecialAbilityComponent.cpp" />
     <ClCompile Include="AudioSystem.cpp" />
     <ClCompile Include="ComponentSystem.cpp" />
@@ -170,6 +171,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Actors\AbilitiesInterface.h" />
+    <ClInclude Include="..\..\Actors\LuaScriptComponent.h" />
+    <ClInclude Include="..\..\Actors\ScriptingComponentInterface.h" />
     <ClInclude Include="..\..\Actors\SpecialAbilityComponent.h" />
     <ClInclude Include="AudioSystem.h" />
     <ClInclude Include="BaseEventData.h" />

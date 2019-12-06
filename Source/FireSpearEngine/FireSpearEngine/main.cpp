@@ -9,6 +9,7 @@
 #include <windowsx.h>
 #include "InputInterface.h"
 #include "LuaPlus.h"
+#include "../../Actors/LuaScriptComponent.h"""
 
 
 // Global variables  
@@ -36,6 +37,10 @@ int CALLBACK WinMain(
 	_In_ int       nCmdShow
 )
 {
+
+	LuaScriptComponent* newScript = new LuaScriptComponent();
+	newScript->LuaScriptCreate();
+	newScript->Start();
 
 	// This is called during the initialization of your application.
 	LuaState* pLuaState = LuaState::Create();
@@ -125,6 +130,7 @@ int CALLBACK WinMain(
 		DispatchMessage(&msg);
 	}
 	LuaState::Destroy(pLuaState);
+	pLuaState = NULL;
 
 	return (int)msg.wParam;
 }
