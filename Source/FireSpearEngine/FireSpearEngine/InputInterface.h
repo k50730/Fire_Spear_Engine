@@ -1,5 +1,5 @@
 #pragma once
-#include "CoreEngine.h"
+#include <windowsx.h>
 
 class InputInterface {
 public:
