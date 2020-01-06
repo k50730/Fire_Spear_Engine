@@ -1,15 +1,5 @@
-// GT_HelloWorldWin32.cpp  
-// compile with: /D_UNICODE /DUNICODE /DWIN32 /D_WINDOWS /c  
 
-#include <windows.h>  
-#include <stdlib.h>  
-#include <string.h>  
-#include <tchar.h> 
 #include "CoreEngine.h"
-#include <windowsx.h>
-#include "InputInterface.h"
-#include "LuaPlus.h"
-#include "../../Actors/LuaScriptComponent.h"
 
 
 //// Global variables  
