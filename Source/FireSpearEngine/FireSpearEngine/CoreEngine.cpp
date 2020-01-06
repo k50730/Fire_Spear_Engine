@@ -130,7 +130,7 @@ bool CoreEngine::IsOnlyInstance(LPCTSTR gameTitle)
 	return true;
 }
 
-char* CoreEngine::ReadCPUArchitecture()
+const char* CoreEngine::ReadCPUArchitecture()
 {
 	char CPUName[255];
 	DWORD BufSize2 = sizeof(CPUName);
@@ -324,12 +324,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			5, 5,
 			greeting, _tcslen(greeting));
 
-	/*	TextOut(hdc,
+		/*TextOut(hdc,
 			5, 30,
-			CoreEngine::ReadCPUArchitecture, _tcslen(CoreEngine::ReadCPUArchitecture));*/
+			CoreEngine::ReadCPUArchitecture(), _tcslen(CoreEngine::ReadCPUArchitecture));
 
-
-		/*char cpuSpeed[16];
+		char cpuSpeed[16];
 		sprintf_s(cpuSpeed, "CPU Speed: %d", CoreEngine::ReadCPUSpeed);
 
 		TextOut(hdc,
