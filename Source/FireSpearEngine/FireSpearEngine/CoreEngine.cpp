@@ -4,7 +4,7 @@
 #define SCREEN_HEIGHT 768
 #define WINDOW_POSX 200
 #define WINDOW_POSY 200
-
+#define MB 1000000
 
 
 using namespace std;
@@ -182,26 +182,26 @@ DWORD CoreEngine::ReadCPUSpeed()
 
 bool CoreEngine::InitilizeSystem()
 {
-	//if (IsOnlyInstance("Win32 Guided Tour Application")) // IF THE NAME IS UNIQUE
-	//{
+	if (IsOnlyInstance("FireSpear Engine")) // IF THE NAME IS UNIQUE
+	{
 
-	//	if (CheckMemory(3000, 3000))
-	//	{
-	//		if (CheckStorage(3145))
-	//		{
-	//			//ReadCPUSpeed();
-	//			//ReadCPUArchitecture();
-	//			return true;
-	//		}
-	//	}
-	//}
-	
+		if (CheckMemory(3000*MB, 3000*MB))
+		{
+			if (CheckStorage(3145))
+			{
+				ReadCPUSpeed();
+				ReadCPUArchitecture();
+				return true;
+			}
+		}
+	}
+	/*
 	if (!CreateEngineWindow("FireSpear Engine", WINDOW_POSX, WINDOW_POSY, SCREEN_WIDTH, SCREEN_HEIGHT))
 	{
 		return false;
-	}
+	}*/
 
-	return true;
+	return false;
 }
 
 void CoreEngine::Run()
@@ -235,10 +235,8 @@ void CoreEngine::Run()
 }
 
 
-bool CoreEngine::CreateEngineWindow(string windowTitle, int x, int y, int width, int height)
+void CoreEngine::CreateEngineWindow(string windowTitle, int x, int y, int width, int height)
 {
-	
-
 	m_appName = windowTitle.c_str();
 
 	wcex.cbSize			= sizeof(WNDCLASSEX);
@@ -262,7 +260,7 @@ bool CoreEngine::CreateEngineWindow(string windowTitle, int x, int y, int width,
 			"Win32 Guided Tour",
 			NULL);
 
-		return false;
+		return;
 	}
 
 	// Create Engine Window 
@@ -287,11 +285,8 @@ bool CoreEngine::CreateEngineWindow(string windowTitle, int x, int y, int width,
 		MessageBox(NULL, "Window Creation failed", "Error", MB_OK);
 		PostQuitMessage(0);
 
-		return false;
+		return;
 	}
-
-	return true;
-
 }
 
 
