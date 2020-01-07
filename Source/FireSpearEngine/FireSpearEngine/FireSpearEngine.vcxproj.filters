@@ -16,23 +16,17 @@
     <Filter Include="LuaScripts">
       <UniqueIdentifier>{c6768dd1-feb2-48b8-a26d-f627143a3a7b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Components">
+      <UniqueIdentifier>{4630db96-9ebd-4edf-89cc-45163629fd73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System">
+      <UniqueIdentifier>{c47a8d97-5857-42c2-bacf-d9b4118693dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Events">
+      <UniqueIdentifier>{bc999f41-8e3f-4977-841a-19c9508161ec}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Actors\SpecialAbilityComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="System.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GraphicSystem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="InputHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="AudioSystem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ResourceManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -45,36 +39,36 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ComponentSystem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="oldMain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="System.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentSystem.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioSystem.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicSystem.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Actors\SpecialAbilityComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
     <ClCompile Include="EventData.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Events</Filter>
+    </ClCompile>
+    <ClCompile Include="InputHandler.cpp">
+      <Filter>System</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Actors\LuaScripteComponent.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Actors\AbilitiesInterface.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Actors\SpecialAbilityComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="System.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GraphicSystem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="InputHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AudioSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ResourceManager.h">
@@ -86,29 +80,44 @@
     <ClInclude Include="CoreEngine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="System.h">
+      <Filter>System</Filter>
+    </ClInclude>
     <ClInclude Include="ComponentSystem.h">
-      <Filter>Header Files</Filter>
+      <Filter>System</Filter>
     </ClInclude>
-    <ClInclude Include="InputInterface.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BaseEventData.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="EventType.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="IEventData.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="EventData.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Actors\ScriptingComponentInterface.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="GraphicSystem.h">
+      <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Actors\LuaScriptComponent.h">
-      <Filter>Header Files</Filter>
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Actors\ScriptingComponentInterface.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Actors\SpecialAbilityComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioSystem.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="EventData.h">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseEventData.h">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="IEventData.h">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="EventType.h">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="InputHandler.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="InputInterface.h">
+      <Filter>System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

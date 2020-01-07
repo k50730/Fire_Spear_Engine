@@ -7,13 +7,15 @@
 #define MB 1000000
 
 
+
+
+
 using namespace std;
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 CoreEngine::CoreEngine()
 {
-
 }
 
 CoreEngine::~CoreEngine() 
@@ -184,8 +186,7 @@ bool CoreEngine::InitilizeSystem()
 {
 	if (IsOnlyInstance("FireSpear Engine")) // IF THE NAME IS UNIQUE
 	{
-
-		if (CheckMemory(3000*MB, 3000*MB))
+		if (CheckMemory(3*MB, 3*MB))
 		{
 			if (CheckStorage(3145))
 			{
@@ -204,54 +205,23 @@ bool CoreEngine::InitilizeSystem()
 	return false;
 }
 
-void CoreEngine::Run()
-{
-
-	LuaScriptComponent* newScript = new LuaScriptComponent();
-	newScript->LuaScriptCreate();
-	newScript->Start();
-
-	LuaState* pLuaState = LuaState::Create();
-
-	// Main message loop:  
-	MSG msg = { 0 };
-	while (msg.message != WM_QUIT)
-	{
-		if (PeekMessage(&msg, 0, 0, 0, PM_REMOVE))
-		{
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
-		}
-		else 
-		{
-			// update and render function at
-			newScript->Update(hWnd);
-		}
-	}
-
-	LuaState::Destroy(pLuaState);
-	pLuaState = NULL;
-
-}
-
-
 void CoreEngine::CreateEngineWindow(string windowTitle, int x, int y, int width, int height)
 {
 	m_appName = windowTitle.c_str();
 
-	wcex.cbSize			= sizeof(WNDCLASSEX);
-	wcex.style			= CS_HREDRAW | CS_VREDRAW;
-	wcex.lpfnWndProc	= WndProc;
-	wcex.cbClsExtra		= 0;
-	wcex.cbWndExtra		= 0;
-	wcex.hInstance		= m_hInst;
-	wcex.hIcon			= LoadIcon(NULL, MAKEINTRESOURCE(IDI_APPLICATION));
-	wcex.hIconSm		= wcex.hIcon;
-	wcex.hCursor		= LoadCursor(NULL, IDC_ARROW);
-	wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW + 1);
-	wcex.lpszMenuName   = NULL;
-	wcex.lpszClassName  = m_appName;
-	
+	wcex.cbSize = sizeof(WNDCLASSEX);
+	wcex.style = CS_HREDRAW | CS_VREDRAW;
+	wcex.lpfnWndProc = WndProc;
+	wcex.cbClsExtra = 0;
+	wcex.cbWndExtra = 0;
+	wcex.hInstance = m_hInst;
+	wcex.hIcon = LoadIcon(NULL, MAKEINTRESOURCE(IDI_APPLICATION));
+	wcex.hIconSm = wcex.hIcon;
+	wcex.hCursor = LoadCursor(NULL, IDC_ARROW);
+	wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
+	wcex.lpszMenuName = NULL;
+	wcex.lpszClassName = m_appName;
+
 
 	if (!RegisterClassEx(&wcex))
 	{
@@ -288,6 +258,37 @@ void CoreEngine::CreateEngineWindow(string windowTitle, int x, int y, int width,
 		return;
 	}
 }
+
+void CoreEngine::Run()
+{
+
+	LuaScriptComponent* newScript = new LuaScriptComponent();
+	newScript->LuaScriptCreate();
+	newScript->Start();
+
+	LuaState* pLuaState = LuaState::Create();
+
+	// Main message loop:  
+	MSG msg = { 0 };
+	while (msg.message != WM_QUIT)
+	{
+		if (PeekMessage(&msg, 0, 0, 0, PM_REMOVE))
+		{
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+		}
+		else 
+		{
+			// update and render function at
+			newScript->Update(hWnd);
+		}
+	}
+
+	LuaState::Destroy(pLuaState);
+	pLuaState = NULL;
+
+}
+
 
 
 void CoreEngine::UpdateSystem()
