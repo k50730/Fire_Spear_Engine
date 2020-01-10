@@ -16,11 +16,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 CoreEngine::CoreEngine()
 {
+
 }
 
-CoreEngine::~CoreEngine() 
+CoreEngine::~CoreEngine()
 {
-	m_hInst = NULL;
+
 }
 
 bool CoreEngine::CheckStorage(const DWORDLONG diskSpaceNeeded)
@@ -48,7 +49,7 @@ bool CoreEngine::CheckMemory(const DWORDLONG physicalRAMNeeded, const DWORDLONG 
 	status.dwLength = sizeof(status);
 	GlobalMemoryStatusEx(&status);
 
-	
+
 	// CHECK PHYSICAL RAM
 	if (status.ullTotalPhys < physicalRAMNeeded)
 	{
@@ -95,7 +96,7 @@ bool CoreEngine::CheckMemory(const DWORDLONG physicalRAMNeeded, const DWORDLONG 
 	printf("Available RAM: %I64d \n", status.ullAvailPhys / 1048576);
 	printf("Available Virtual Memory: %I64d \n", status.ullAvailVirtual / 1048576);*/
 
-	
+
 	return true;
 }
 
@@ -147,8 +148,8 @@ const char* CoreEngine::ReadCPUArchitecture()
 	{
 		RegQueryValueEx(hKey2, "ProcessorNameString", NULL, &type2, (LPBYTE)& CPUName, &BufSize2);
 	}
-	
-	
+
+
 	//OutputDebugString();
 	//utputDebugString(CPUName);
 	//OutputDebugStringW(L"\n");
@@ -158,7 +159,7 @@ const char* CoreEngine::ReadCPUArchitecture()
 
 DWORD CoreEngine::ReadCPUSpeed()
 {
-	
+
 	DWORD dwMHz;
 	DWORD BufSize = sizeof(dwMHz);
 	DWORD type = REG_DWORD;
@@ -172,7 +173,7 @@ DWORD CoreEngine::ReadCPUSpeed()
 	{
 		RegQueryValueEx(hKey, "~MHz", NULL, &type, (LPBYTE)& dwMHz, &BufSize);
 	}
-	
+
 
 
 	//printf("CPU SPEED: %d\n", dwMHz);
@@ -182,81 +183,46 @@ DWORD CoreEngine::ReadCPUSpeed()
 	return dwMHz;
 }
 
-bool CoreEngine::InitilizeSystem()
+void CoreEngine::Start()
+{
+	if (_gameState == Uninitialized)
+		return;
+
+	CoreEngine::CreateEngineWindow("FireSpear Engine", 1024, 768);
+	_gameState = CoreEngine::Playing;
+
+
+	while (!IsExiting())
+	{
+		Run();
+	}
+
+	_mainWindow.close();
+}
+
+void CoreEngine::InitilizeSystem()
 {
 	if (IsOnlyInstance("FireSpear Engine")) // IF THE NAME IS UNIQUE
 	{
-		if (CheckMemory(3*MB, 3*MB))
+		if (CheckMemory(3 * MB, 3 * MB))
 		{
 			if (CheckStorage(3145))
 			{
 				ReadCPUSpeed();
 				ReadCPUArchitecture();
-				return true;
+				_gameState = CoreEngine::ShowingSplash;
+				return;
 			}
 		}
 	}
-	/*
-	if (!CreateEngineWindow("FireSpear Engine", WINDOW_POSX, WINDOW_POSY, SCREEN_WIDTH, SCREEN_HEIGHT))
-	{
-		return false;
-	}*/
 
-	return false;
+
+	_gameState = CoreEngine::Uninitialized;
 }
 
-void CoreEngine::CreateEngineWindow(string windowTitle, int x, int y, int width, int height)
+void CoreEngine::CreateEngineWindow(string windowTitle, int width, int height)
 {
-	m_appName = windowTitle.c_str();
-
-	wcex.cbSize = sizeof(WNDCLASSEX);
-	wcex.style = CS_HREDRAW | CS_VREDRAW;
-	wcex.lpfnWndProc = WndProc;
-	wcex.cbClsExtra = 0;
-	wcex.cbWndExtra = 0;
-	wcex.hInstance = m_hInst;
-	wcex.hIcon = LoadIcon(NULL, MAKEINTRESOURCE(IDI_APPLICATION));
-	wcex.hIconSm = wcex.hIcon;
-	wcex.hCursor = LoadCursor(NULL, IDC_ARROW);
-	wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
-	wcex.lpszMenuName = NULL;
-	wcex.lpszClassName = m_appName;
-
-
-	if (!RegisterClassEx(&wcex))
-	{
-		MessageBox(NULL,
-			"Call to RegisterClassEx failed!",
-			"Win32 Guided Tour",
-			NULL);
-
-		return;
-	}
-
-	// Create Engine Window 
-	hWnd = CreateWindow(
-		m_appName,
-		m_appName,
-		WS_OVERLAPPEDWINDOW, // Application Style
-		//CW_USEDEFAULT, CW_USEDEFAULT, // set X pos and Y pos
-		x, y,
-		width, height,
-		NULL,
-		NULL,
-		m_hInst,
-		NULL
-	);
-
-	ShowWindow(hWnd, SW_SHOW);
-	UpdateWindow(hWnd);
-
-	if (!hWnd)
-	{
-		MessageBox(NULL, "Window Creation failed", "Error", MB_OK);
-		PostQuitMessage(0);
-
-		return;
-	}
+	_mainWindow.create(sf::VideoMode(width, height), windowTitle);
 }
 
 void CoreEngine::Run()
@@ -277,10 +243,10 @@ void CoreEngine::Run()
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}
-		else 
+		else
 		{
 			// update and render function at
-			newScript->Update(hWnd);
+			newScript->Update();
 		}
 	}
 
@@ -291,83 +257,14 @@ void CoreEngine::Run()
 
 
 
-void CoreEngine::UpdateSystem()
+bool CoreEngine::IsExiting()
 {
+	if (_mainWindow.isOpen())
+		return false;
+	return true;
 }
+
 
 void CoreEngine::AddSystem()
 {
 }
-
-
-LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
-{
-	PAINTSTRUCT ps;
-	HDC hdc;
-	TCHAR greeting[] = ("FireSpear Engine - Made by NeZhaS");
-	InputInterface* inputInterface = new InputInterface();
-
-	switch (message)
-	{
-
-	case WM_PAINT:
-		hdc = BeginPaint(hWnd, &ps);
-
-		// Here your application is laid out.    
-		// in the top left corner.  
-
-		TextOut(hdc,
-			5, 5,
-			greeting, _tcslen(greeting));
-
-		/*TextOut(hdc,
-			5, 30,
-			CoreEngine::ReadCPUArchitecture(), _tcslen(CoreEngine::ReadCPUArchitecture));
-
-		char cpuSpeed[16];
-		sprintf_s(cpuSpeed, "CPU Speed: %d", CoreEngine::ReadCPUSpeed);
-
-		TextOut(hdc,
-			5, 55,
-			cpuSpeed, _tcslen(cpuSpeed));*/
-
-
-		// End application-specific layout section.  
-		EndPaint(hWnd, &ps);
-		break;
-
-	case WM_MOUSEMOVE:
-		inputInterface->MouseMove(hWnd, wParam, lParam);
-		break;
-
-	case WM_LBUTTONDOWN:
-		inputInterface->LeftMouseDown(hWnd, wParam, lParam);
-		break;
-	case WM_LBUTTONUP:
-		inputInterface->LeftMouseUp(hWnd, wParam, lParam);
-		break;
-
-	case WM_RBUTTONDOWN:
-		inputInterface->RightMouseDown(hWnd, wParam, lParam);
-		break;
-	case WM_RBUTTONUP:
-		inputInterface->RightMouseUp(hWnd, wParam, lParam);
-		break;
-	case WM_KEYDOWN:
-		inputInterface->KeyDown(hWnd, wParam, lParam);
-		break;
-	case WM_KEYUP:
-		inputInterface->KeyUp(hWnd, wParam, lParam);
-		break;
-	case WM_DESTROY:
-		PostQuitMessage(0);
-		break;
-
-	default:
-		return DefWindowProc(hWnd, message, wParam, lParam);
-		break;
-	}
-
-	return 0;
-}
-
