@@ -14,7 +14,7 @@ public:
 	~LuaScriptComponent();
 	void LuaScriptCreate();
 	void Start();
-	void Update(HWND hWnd);
+	void Update();
 	int num, numTest;
 protected:
 	LuaState* state;

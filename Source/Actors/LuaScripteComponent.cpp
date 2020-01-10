@@ -35,20 +35,15 @@ void LuaScriptComponent::Start()
 	//LuaFunction<int> LuaTest = state->GetGlobal("test");
 }
 
-void LuaScriptComponent::Update(HWND hWnd)
+void LuaScriptComponent::Update()
 {
 	LuaTest = state->GetGlobal("update");
 	LuaFunction<int> LuaSquare = LuaTest;
-	HDC hdc;
-	hdc = GetDC(hWnd);
+
 
 	num++;
 	char text[40];
 	sprintf_s(text, "Tick:%d " , num);
 	LPCSTR textmsg = (LPCSTR)text;
-	
-	TextOut(hdc,
-		25, 200,
-		textmsg, 9);
-	ReleaseDC(hWnd, hdc);
+
 }

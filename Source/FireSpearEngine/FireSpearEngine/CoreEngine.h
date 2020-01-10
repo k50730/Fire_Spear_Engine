@@ -1,4 +1,5 @@
 #pragma once
+#include <SFML/Graphics.hpp>
 #include <iostream>
 #include <string>
 #include <direct.h>
@@ -10,6 +11,8 @@
 #include "../../Actors/LuaScriptComponent.h"
 #include <tchar.h> 
 #include "InputInterface.h"
+
+
 
 class CoreEngine
 {
@@ -25,20 +28,23 @@ public:
 	DWORD ReadCPUSpeed();
 
 
+	void InitilizeSystem(); // initilizing system and play splash screen
+	void Start(); // start of every components
+	void CreateEngineWindow(string windowTitle, int width, int height); // create engine window
+	void Run(); // where update functions are
 
-	void CreateEngineWindow(string windowTitle, int x, int y, int width, int height);
 
-	bool InitilizeSystem();
-	void Run();
-
-	void UpdateSystem();
 	void AddSystem();
 private:
+	bool IsExiting();
+
+	enum GameState
+	{
+		Uninitialized, Initialized, ShowingSplash, Paused, ShowingMenu, Playing, Exiting
+	};
+	GameState _gameState;
+	sf::RenderWindow _mainWindow;
 
 
-	const char* m_appName;
-	HINSTANCE m_hInst;
-	HWND hWnd;
-	WNDCLASSEX wcex;
 };
 
