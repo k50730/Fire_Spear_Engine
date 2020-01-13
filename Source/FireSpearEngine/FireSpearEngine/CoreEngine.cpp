@@ -16,7 +16,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 CoreEngine::CoreEngine()
 {
-
+	_gameState = CoreEngine::Uninitialized;
 }
 
 CoreEngine::~CoreEngine()
@@ -185,11 +185,13 @@ DWORD CoreEngine::ReadCPUSpeed()
 
 void CoreEngine::Start()
 {
-	if (_gameState == Uninitialized)
+	if (_gameState != Uninitialized)
 		return;
 
 	CoreEngine::CreateEngineWindow("FireSpear Engine", 1024, 768);
 	_gameState = CoreEngine::Playing;
+
+	//splashScreen->Show(_mainWindow , _gameState);
 
 
 	while (!IsExiting())
@@ -268,3 +270,5 @@ bool CoreEngine::IsExiting()
 void CoreEngine::AddSystem()
 {
 }
+
+

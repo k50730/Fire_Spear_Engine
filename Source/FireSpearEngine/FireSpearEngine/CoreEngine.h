@@ -11,8 +11,7 @@
 #include "../../Actors/LuaScriptComponent.h"
 #include <tchar.h> 
 #include "InputInterface.h"
-
-
+#include "SplashScreen.h"
 
 class CoreEngine
 {
@@ -33,11 +32,11 @@ public:
 	void CreateEngineWindow(string windowTitle, int width, int height); // create engine window
 	void Run(); // where update functions are
 
-
 	void AddSystem();
 private:
 	bool IsExiting();
 
+public:
 	enum GameState
 	{
 		Uninitialized, Initialized, ShowingSplash, Paused, ShowingMenu, Playing, Exiting
@@ -45,6 +44,6 @@ private:
 	GameState _gameState;
 	sf::RenderWindow _mainWindow;
 
-
+	//SplashScreen splashScreen;
 };
 

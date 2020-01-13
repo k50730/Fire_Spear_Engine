@@ -168,6 +168,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="oldMain.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
+    <ClCompile Include="SplashScreen.cpp" />
     <ClCompile Include="System.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -187,6 +188,7 @@
     <ClInclude Include="InputHandler.h" />
     <ClInclude Include="InputInterface.h" />
     <ClInclude Include="ResourceManager.h" />
+    <ClInclude Include="SplashScreen.h" />
     <ClInclude Include="System.h" />
   </ItemGroup>
   <ItemGroup>

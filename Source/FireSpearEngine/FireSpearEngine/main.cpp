@@ -5,7 +5,7 @@
 
 int main() 
 {
-	CoreEngine* engine = new CoreEngine();
+	CoreEngine *engine = new CoreEngine;
 
 	engine->InitilizeSystem();
 	engine->Start();
