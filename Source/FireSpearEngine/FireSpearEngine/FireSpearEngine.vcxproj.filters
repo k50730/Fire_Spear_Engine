@@ -66,9 +66,6 @@
     <ClCompile Include="..\..\Actors\LuaScripteComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="SplashScreen.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Actors\AbilitiesInterface.h">
@@ -121,9 +118,6 @@
     </ClInclude>
     <ClInclude Include="InputInterface.h">
       <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="SplashScreen.h">
-      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
