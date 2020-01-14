@@ -159,6 +159,7 @@
     <ClCompile Include="..\..\Actors\LuaScripteComponent.cpp" />
     <ClCompile Include="..\..\Actors\SpecialAbilityComponent.cpp" />
     <ClCompile Include="AudioSystem.cpp" />
+    <ClCompile Include="BaseComponent.cpp" />
     <ClCompile Include="ComponentSystem.cpp" />
     <ClCompile Include="CoreEngine.cpp" />
     <ClCompile Include="EventData.cpp" />
@@ -176,6 +177,7 @@
     <ClInclude Include="..\..\Actors\ScriptingComponentInterface.h" />
     <ClInclude Include="..\..\Actors\SpecialAbilityComponent.h" />
     <ClInclude Include="AudioSystem.h" />
+    <ClInclude Include="BaseComponent.h" />
     <ClInclude Include="BaseEventData.h" />
     <ClInclude Include="ComponentSystem.h" />
     <ClInclude Include="CoreEngine.h" />
