@@ -170,6 +170,7 @@
     <ClCompile Include="oldMain.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="System.cpp" />
+    <ClCompile Include="TransformComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Actors\AbilitiesInterface.h" />
@@ -190,6 +191,7 @@
     <ClInclude Include="InputInterface.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="System.h" />
+    <ClInclude Include="TransformComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="test.lua" />
