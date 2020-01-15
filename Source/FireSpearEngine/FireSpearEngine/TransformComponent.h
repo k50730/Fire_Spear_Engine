@@ -1,4 +1,5 @@
 #pragma once
+
 #include "BaseComponent.h"
 #include "../ExternalResources/SFML/Graphics/Transform.hpp"
 #include "../ExternalResources/SFML/Graphics/Transformable.hpp"
@@ -19,3 +20,23 @@ public:
 	void Rotate(float angle);
 	void Scaling(float fx, float fy);
 };
+
+#include <SFML/Graphics/Transform.hpp>
+#include "BaseComponent.h"
+
+
+class TransformComponent : public BaseComponent
+{
+public:
+	TransformComponent();
+	~TransformComponent();
+	void setPosition(const sf::Vector2f& position);
+	void setPosition(float x, float y);
+
+	void setRotation(float angle);
+
+	void setScale(float factorX, float factorY);
+	void setScale(const sf::Vector2f& factors);
+};
+
+

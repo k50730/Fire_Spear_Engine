@@ -26,3 +26,8 @@ public:
 	void SetRotation(float angle);
 	void SetScale(float fx, float fy);
 };
+
+class BaseComponent
+{
+};
+

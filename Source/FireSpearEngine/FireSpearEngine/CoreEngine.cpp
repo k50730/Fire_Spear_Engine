@@ -265,6 +265,7 @@ bool CoreEngine::IsExiting()
 
 void CoreEngine::AddSystem()
 {
+
 }
 
 void CoreEngine::CreateSplashScreen(sf::RenderWindow& window)

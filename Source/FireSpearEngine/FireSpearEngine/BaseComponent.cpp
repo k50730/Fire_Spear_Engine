@@ -54,3 +54,4 @@ void BaseComponent::SetScale(float fx, float fy) {
 	Scale.x = fx;
 	Scale.y = fy;
 }
+

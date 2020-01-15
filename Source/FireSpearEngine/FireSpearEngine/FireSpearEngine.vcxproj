@@ -163,6 +163,7 @@
     <ClCompile Include="ComponentSystem.cpp" />
     <ClCompile Include="CoreEngine.cpp" />
     <ClCompile Include="EventData.cpp" />
+    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameStateManager.cpp" />
     <ClCompile Include="GraphicSystem.cpp" />
     <ClCompile Include="InputHandler.cpp" />
@@ -183,6 +184,7 @@
     <ClInclude Include="ComponentSystem.h" />
     <ClInclude Include="CoreEngine.h" />
     <ClInclude Include="EventData.h" />
+    <ClInclude Include="GameObject.h" />
     <ClInclude Include="IEventData.h" />
     <ClInclude Include="EventType.h" />
     <ClInclude Include="GameStateManager.h" />
