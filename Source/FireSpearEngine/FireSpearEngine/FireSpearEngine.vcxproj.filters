@@ -69,6 +69,13 @@
     <ClCompile Include="..\..\Actors\LuaScripteComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+
+    <ClCompile Include="BaseComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="TransformComponent.cpp">
+      <Filter>Components</Filter>
+
     <ClCompile Include="GameObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -77,6 +84,7 @@
     </ClCompile>
     <ClCompile Include="TransformComponent.cpp">
       <Filter>Source Files\Components</Filter>
+
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -131,6 +139,13 @@
     <ClInclude Include="InputInterface.h">
       <Filter>System</Filter>
     </ClInclude>
+
+    <ClInclude Include="BaseComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="TransformComponent.h">
+      <Filter>Components</Filter>
+
     <ClInclude Include="GameObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -139,6 +154,7 @@
     </ClInclude>
     <ClInclude Include="TransformComponent.h">
       <Filter>Header Files</Filter>
+
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

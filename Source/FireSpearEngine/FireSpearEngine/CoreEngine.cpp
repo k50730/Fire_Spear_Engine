@@ -16,7 +16,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 CoreEngine::CoreEngine()
 {
-
 }
 
 CoreEngine::~CoreEngine()
@@ -185,12 +184,13 @@ DWORD CoreEngine::ReadCPUSpeed()
 
 void CoreEngine::Start()
 {
-	if (_gameState == Uninitialized)
+	if (_gameState != ShowingSplash)
 		return;
 
 	CoreEngine::CreateEngineWindow("FireSpear Engine", 1024, 768);
 	_gameState = CoreEngine::Playing;
 
+	CoreEngine::CreateSplashScreen(_mainWindow);
 
 	while (!IsExiting())
 	{
@@ -215,9 +215,7 @@ void CoreEngine::InitilizeSystem()
 			}
 		}
 	}
-
-
-	_gameState = CoreEngine::Uninitialized;
+	//_gameState = CoreEngine::Uninitialized;
 }
 
 void CoreEngine::CreateEngineWindow(string windowTitle, int width, int height)
@@ -268,4 +266,29 @@ bool CoreEngine::IsExiting()
 void CoreEngine::AddSystem()
 {
 
+}
+
+void CoreEngine::CreateSplashScreen(sf::RenderWindow& window)
+{
+	sf::Image backgroundImg;
+	sf::Texture backgroundTex;
+	if (backgroundImg.loadFromFile("../../Images/NeZhas_Logo.png") != true) {
+		return;
+	}
+	backgroundTex.loadFromImage(backgroundImg);
+	sf::Sprite sprite(backgroundTex);
+
+	window.draw(sprite);
+	window.display();
+
+	sf::Event event;
+	while (_gameState != CoreEngine::Initialized) {
+		while (window.pollEvent(event)) {
+			if (event.type == sf::Event::EventType::KeyPressed
+				|| event.type == sf::Event::EventType::MouseButtonPressed
+				|| event.type == sf::Event::EventType::Closed) {
+				return;
+			}
+		}
+	}
 }

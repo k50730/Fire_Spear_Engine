@@ -12,8 +12,6 @@
 #include <tchar.h> 
 #include "InputInterface.h"
 
-
-
 class CoreEngine
 {
 public:
@@ -27,24 +25,22 @@ public:
 	const char* ReadCPUArchitecture();
 	DWORD ReadCPUSpeed();
 
-
 	void InitilizeSystem(); // initilizing system and play splash screen
 	void Start(); // start of every components
 	void CreateEngineWindow(string windowTitle, int width, int height); // create engine window
+	void CreateSplashScreen(sf::RenderWindow& window);//create Splash Screen
 	void Run(); // where update functions are
-
-
 	void AddSystem();
+
 private:
 	bool IsExiting();
-
+	
 	enum GameState
 	{
 		Uninitialized, Initialized, ShowingSplash, Paused, ShowingMenu, Playing, Exiting
 	};
 	GameState _gameState;
 	sf::RenderWindow _mainWindow;
-
 
 };
 
