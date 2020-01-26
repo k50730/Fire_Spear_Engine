@@ -156,28 +156,28 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\..\Downloads\Fire_Spear_Engine\Source\FireSpearEngine\FireSpearEngine\FireSpear.cpp" />
-    <ClCompile Include="..\..\..\..\..\Downloads\Fire_Spear_Engine\Source\FireSpearEngine\FireSpearEngine\RenderComponent.cpp" />
-    <ClCompile Include="..\..\..\..\..\Downloads\Fire_Spear_Engine\Source\FireSpearEngine\FireSpearEngine\TransformComponent.cpp" />
     <ClCompile Include="..\..\Actors\LuaScripteComponent.cpp" />
     <ClCompile Include="EventData.cpp" />
+    <ClCompile Include="FireSpear.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameObjectManager.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="RenderComponent.cpp" />
+    <ClCompile Include="TransformComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\..\Downloads\Fire_Spear_Engine\Source\FireSpearEngine\FireSpearEngine\FireSpear.h" />
-    <ClInclude Include="..\..\..\..\..\Downloads\Fire_Spear_Engine\Source\FireSpearEngine\FireSpearEngine\RenderComponent.h" />
-    <ClInclude Include="..\..\..\..\..\Downloads\Fire_Spear_Engine\Source\FireSpearEngine\FireSpearEngine\TransformComponent.h" />
     <ClInclude Include="..\..\Actors\LuaScriptComponent.h" />
     <ClInclude Include="..\..\Actors\ScriptingComponentInterface.h" />
     <ClInclude Include="BaseComponent.h" />
     <ClInclude Include="BaseEventData.h" />
     <ClInclude Include="EventData.h" />
+    <ClInclude Include="FireSpear.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameObjectManager.h" />
     <ClInclude Include="IEventData.h" />
     <ClInclude Include="EventType.h" />
+    <ClInclude Include="RenderComponent.h" />
+    <ClInclude Include="TransformComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="test.lua" />
