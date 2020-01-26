@@ -19,6 +19,9 @@
     <ClCompile Include="..\..\..\..\..\Downloads\Fire_Spear_Engine\Source\FireSpearEngine\FireSpearEngine\TransformComponent.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\..\Downloads\Fire_Spear_Engine\Source\FireSpearEngine\FireSpearEngine\RenderComponent.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseEventData.h">
@@ -49,6 +52,9 @@
       <Filter>Source Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\..\Downloads\Fire_Spear_Engine\Source\FireSpearEngine\FireSpearEngine\TransformComponent.h">
+      <Filter>Source Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\Downloads\Fire_Spear_Engine\Source\FireSpearEngine\FireSpearEngine\RenderComponent.h">
       <Filter>Source Files\Components</Filter>
     </ClInclude>
   </ItemGroup>

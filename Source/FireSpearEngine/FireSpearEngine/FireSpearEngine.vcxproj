@@ -156,6 +156,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\..\Downloads\Fire_Spear_Engine\Source\FireSpearEngine\FireSpearEngine\RenderComponent.cpp" />
     <ClCompile Include="..\..\..\..\..\Downloads\Fire_Spear_Engine\Source\FireSpearEngine\FireSpearEngine\TransformComponent.cpp" />
     <ClCompile Include="..\..\Actors\LuaScripteComponent.cpp" />
     <ClCompile Include="EventData.cpp" />
@@ -164,6 +165,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\..\Downloads\Fire_Spear_Engine\Source\FireSpearEngine\FireSpearEngine\RenderComponent.h" />
     <ClInclude Include="..\..\..\..\..\Downloads\Fire_Spear_Engine\Source\FireSpearEngine\FireSpearEngine\TransformComponent.h" />
     <ClInclude Include="..\..\Actors\LuaScriptComponent.h" />
     <ClInclude Include="..\..\Actors\ScriptingComponentInterface.h" />
