@@ -158,6 +158,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\Actors\LuaScripteComponent.cpp" />
     <ClCompile Include="EventData.cpp" />
+    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -165,6 +166,7 @@
     <ClInclude Include="..\..\Actors\ScriptingComponentInterface.h" />
     <ClInclude Include="BaseEventData.h" />
     <ClInclude Include="EventData.h" />
+    <ClInclude Include="GameObject.h" />
     <ClInclude Include="IEventData.h" />
     <ClInclude Include="EventType.h" />
   </ItemGroup>
