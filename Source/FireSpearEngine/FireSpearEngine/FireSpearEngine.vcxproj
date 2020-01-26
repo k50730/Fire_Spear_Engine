@@ -157,43 +157,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Actors\LuaScripteComponent.cpp" />
-    <ClCompile Include="..\..\Actors\SpecialAbilityComponent.cpp" />
-    <ClCompile Include="AudioSystem.cpp" />
-    <ClCompile Include="BaseComponent.cpp" />
-    <ClCompile Include="ComponentSystem.cpp" />
-    <ClCompile Include="CoreEngine.cpp" />
     <ClCompile Include="EventData.cpp" />
-    <ClCompile Include="GameObject.cpp" />
-    <ClCompile Include="GameStateManager.cpp" />
-    <ClCompile Include="GraphicSystem.cpp" />
-    <ClCompile Include="InputHandler.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="oldMain.cpp" />
-    <ClCompile Include="ResourceManager.cpp" />
-    <ClCompile Include="System.cpp" />
-    <ClCompile Include="TransformComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Actors\AbilitiesInterface.h" />
     <ClInclude Include="..\..\Actors\LuaScriptComponent.h" />
     <ClInclude Include="..\..\Actors\ScriptingComponentInterface.h" />
-    <ClInclude Include="..\..\Actors\SpecialAbilityComponent.h" />
-    <ClInclude Include="AudioSystem.h" />
-    <ClInclude Include="BaseComponent.h" />
     <ClInclude Include="BaseEventData.h" />
-    <ClInclude Include="ComponentSystem.h" />
-    <ClInclude Include="CoreEngine.h" />
     <ClInclude Include="EventData.h" />
-    <ClInclude Include="GameObject.h" />
     <ClInclude Include="IEventData.h" />
     <ClInclude Include="EventType.h" />
-    <ClInclude Include="GameStateManager.h" />
-    <ClInclude Include="GraphicSystem.h" />
-    <ClInclude Include="InputHandler.h" />
-    <ClInclude Include="InputInterface.h" />
-    <ClInclude Include="ResourceManager.h" />
-    <ClInclude Include="System.h" />
-    <ClInclude Include="TransformComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="test.lua" />
