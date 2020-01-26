@@ -76,6 +76,10 @@ ComponentName GameObject::GetComponent()
 	{
 		id = BaseComponent::ComponentID::Transform;
 	}
+	else if (typeid(ComponentName) == typeid(LuaComponent*))
+	{
+		id = BaseComponent::ComponentID::Lua;
+	}
 	
 	for (const auto& p : components)
 	{ 

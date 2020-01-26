@@ -156,18 +156,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Actors\LuaScripteComponent.cpp" />
     <ClCompile Include="EventData.cpp" />
     <ClCompile Include="FireSpear.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameObjectManager.cpp" />
+    <ClCompile Include="LuaComponent.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="RenderComponent.cpp" />
     <ClCompile Include="TransformComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Actors\LuaScriptComponent.h" />
-    <ClInclude Include="..\..\Actors\ScriptingComponentInterface.h" />
     <ClInclude Include="BaseComponent.h" />
     <ClInclude Include="BaseEventData.h" />
     <ClInclude Include="EventData.h" />
@@ -176,6 +174,7 @@
     <ClInclude Include="GameObjectManager.h" />
     <ClInclude Include="IEventData.h" />
     <ClInclude Include="EventType.h" />
+    <ClInclude Include="LuaComponent.h" />
     <ClInclude Include="RenderComponent.h" />
     <ClInclude Include="TransformComponent.h" />
   </ItemGroup>
