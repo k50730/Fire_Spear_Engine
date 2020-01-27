@@ -4,7 +4,6 @@
 #include <direct.h>
 #include <windows.h>
 #include "LuaPlus.h"
-#include "../../Actors/LuaScriptComponent.h"
 #include "GameObjectManager.h"
 #include "RenderComponent.h"
 #include <iostream>
@@ -25,7 +24,7 @@ public:
 
 	void InitilizeSystem(); // initilizing system and play splash screen
 	void Start(); // start of every components
-	void CreateEngineWindow(string windowTitle, int width, int height); // create engine window
+	void CreateEngineWindow(std::string windowTitle, int width, int height); // create engine window
 	void CreateSplashScreen(sf::RenderWindow& window);//create Splash Screen
 	void Run(); // where update functions are
 	void Update(sf::Time deltaTime); //fixed update function

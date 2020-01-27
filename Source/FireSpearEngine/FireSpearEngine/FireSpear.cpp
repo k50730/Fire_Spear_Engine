@@ -126,7 +126,6 @@ bool FireSpear::IsOnlyInstance(LPCTSTR gameTitle)
 	}
 	OutputDebugString("CHECK MUTI-INSTANCES SUCCESS");
 	OutputDebugStringW(L"\n");
-	//cout << "CHECK MUTI-INSTANCES SUCCESS" << endl;
 	return true;
 }
 
@@ -146,12 +145,7 @@ const char* FireSpear::ReadCPUArchitecture()
 		RegQueryValueEx(hKey2, "ProcessorNameString", NULL, &type2, (LPBYTE)& CPUName, &BufSize2);
 	}
 
-
-	//OutputDebugString();
-	//utputDebugString(CPUName);
-	//OutputDebugStringW(L"\n");
-	//printf("CPU ARCHITECTURE: %s\n", CPUName);
-	std::cout << "CPU Architecture: " + (string)CPUName << std::endl;
+	std::cout << "CPU Architecture: " + (std::string)CPUName << std::endl;
 	return CPUName;
 }
 
@@ -175,8 +169,6 @@ DWORD FireSpear::ReadCPUSpeed()
 
 
 	printf("CPU Speed: %d\n", dwMHz);
-	//OutputDebugString(to_string(temp).c_str());
-	//OutputDebugStringW(L"\n");
 	return dwMHz;
 }
 
@@ -218,7 +210,7 @@ void FireSpear::InitilizeSystem()
 	_gameState = FireSpear::Uninitialized;
 }
 
-void FireSpear::CreateEngineWindow(string windowTitle, int width, int height)
+void FireSpear::CreateEngineWindow(std::string windowTitle, int width, int height)
 {
 	_mainWindow.create(sf::VideoMode(width, height), windowTitle);
 }
@@ -226,30 +218,6 @@ void FireSpear::CreateEngineWindow(string windowTitle, int width, int height)
 void FireSpear::Run()
 {
 
-
-	LuaScriptComponent* newScript = new LuaScriptComponent();
-	newScript->LuaScriptCreate();
-	newScript->Start();
-
-	LuaState* pLuaState = LuaState::Create();
-
-	//// Main message loop:  
-	//MSG msg = { 0 };
-	//while (msg.message != WM_QUIT)
-	//{
-	//	if (PeekMessage(&msg, 0, 0, 0, PM_REMOVE))
-	//	{
-	//		TranslateMessage(&msg);
-	//		DispatchMessage(&msg);
-	//	}
-	//	else
-	//	{
-	//		// update and render function at
-	//		
-	//	}
-
-	//	
-	//}\
 
 	sf::Clock clock;
 	sf::Time timeSinceLastFrame;
@@ -261,15 +229,13 @@ void FireSpear::Run()
 		{
 			timeSinceLastFrame -= FPS;
 			Update(FPS);
-			newScript->Update();
+		
 		}
 
 		ProcessEvent();
 		Render();
 	}
-	LuaState::Destroy(pLuaState);
-	pLuaState = NULL;
-
+	
 }
 
 void FireSpear::Update(sf::Time deltaTime)

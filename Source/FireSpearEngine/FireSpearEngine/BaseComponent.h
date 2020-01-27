@@ -6,7 +6,8 @@ public:
     {
         NONE,
         Transform,
-        Render
+        Render,
+        Lua
     };
     virtual void Awake() = 0;
     virtual void Start() = 0;
