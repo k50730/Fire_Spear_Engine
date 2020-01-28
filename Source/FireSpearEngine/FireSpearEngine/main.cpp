@@ -24,6 +24,7 @@ int main()
 	earth->transformComponent.position = sf::Vector2f(100, 200);
 	earth->AddComponent(new RenderComponent());
 	earth->GetComponent<RenderComponent*>()->SetColor(sf::Color::Blue);
+	sun->AddComponent(new RigidbodyComponent());
 
 	//engine->gameObjectManager.DestroyObject(earth);
 	//engine->gameObjectManager.DestroyObject(sun);

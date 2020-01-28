@@ -32,7 +32,7 @@ void TransformComponent::Start()
 
 }
 
-void TransformComponent::Update()
+void TransformComponent::Update(sf::Time t)
 {
 	sf::Transform translate
 	   (1.0f, 0.0f, position.x,
