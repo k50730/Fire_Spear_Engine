@@ -9,7 +9,7 @@ public:
 
 	void Awake() override;
 	void Start() override;
-	void Update() override;
+	void Update(sf::Time a) override;
 	void LateUpdate() override;
 
 private:

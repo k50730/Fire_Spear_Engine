@@ -1,4 +1,5 @@
 #include "GameObject.h"
+#include <iostream>
 
 GameObject::GameObject()
 {
@@ -17,7 +18,7 @@ GameObject::~GameObject()
 	}
 	children.clear();
 
-	for (const auto& p : components)
+	for (auto& p : components)
 	{
 		delete p;
 	}
@@ -80,7 +81,12 @@ ComponentName GameObject::GetComponent()
 	{
 		id = BaseComponent::ComponentID::Lua;
 	}
-	
+	else if (typeid(ComponentName) == typeid(RigidbodyComponent*))
+	{
+		id = BaseComponent::ComponentID::Rigidbody;
+	}
+
+
 	for (const auto& p : components)
 	{ 
 		if (p->GetComponentID() == id) return static_cast<ComponentName>(p);
@@ -100,7 +106,6 @@ void GameObject::Awake()
 	{
 		(*i)->Awake();
 	}
-
 }
 
 void GameObject::Start()
@@ -113,13 +118,20 @@ void GameObject::Start()
 
 void GameObject::Update(sf::Time msec)
 {
+	if (this->GetComponent<RigidbodyComponent*>() != nullptr)
+	{
+		transformComponent.position += this->GetComponent<RigidbodyComponent*>()->position;
+	}
+
 	worldTransform = parent != nullptr ? parent->GetWorldTransform() *  transformComponent.matrix: transformComponent.matrix;
 	
 	for (std::vector<BaseComponent*>::iterator i = components.begin(); i != components.end(); ++i)
 	{
-		(*i)->Update();
+		(*i)->Update(msec);
 	}
 
+	
+		
 	Render();
 }
 

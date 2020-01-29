@@ -163,6 +163,7 @@
     <ClCompile Include="LuaComponent.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="RenderComponent.cpp" />
+    <ClCompile Include="RigidbodyComponent.cpp" />
     <ClCompile Include="TransformComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -176,6 +177,7 @@
     <ClInclude Include="EventType.h" />
     <ClInclude Include="LuaComponent.h" />
     <ClInclude Include="RenderComponent.h" />
+    <ClInclude Include="RigidbodyComponent.h" />
     <ClInclude Include="TransformComponent.h" />
   </ItemGroup>
   <ItemGroup>

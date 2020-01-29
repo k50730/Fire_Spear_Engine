@@ -7,7 +7,7 @@ public:
     TransformComponent();
     void Awake() override;
     void Start() override;
-    void Update() override;
+    void Update(sf::Time t) override;
     void LateUpdate() override;
 
     sf::Vector2f position;

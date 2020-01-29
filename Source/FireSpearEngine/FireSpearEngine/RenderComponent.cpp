@@ -30,7 +30,7 @@ void RenderComponent::Start()
 {
 }
 
-void RenderComponent::Update()
+void RenderComponent::Update(sf::Time t)
 {
 
 }

@@ -22,7 +22,7 @@ void LuaComponent::Start()
 {
 }
 
-void LuaComponent::Update()
+void LuaComponent::Update(sf::Time t)
 {
 }
 

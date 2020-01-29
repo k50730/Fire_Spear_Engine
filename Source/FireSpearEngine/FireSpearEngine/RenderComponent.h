@@ -11,7 +11,7 @@ public:
 	void SetRadius(float r);
 	void Awake();
 	void Start();
-	void Update();
+	void Update(sf::Time t);
 	void LateUpdate();
 
 	// Change to private later
