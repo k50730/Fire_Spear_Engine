@@ -12,7 +12,6 @@ RigidbodyComponent::~RigidbodyComponent()
 
 void RigidbodyComponent::Awake()
 {
-    forces.push_back(gravity);
 }
 
 void RigidbodyComponent::Start()
@@ -21,6 +20,19 @@ void RigidbodyComponent::Start()
 
 void RigidbodyComponent::Update(sf::Time deltaTime)
 {
+ 
+    // check for obeyGravity, and add or remove gravity at run time
+    if (obeysGravity && !isHavingWeight) // if this object is changed to obeysGravity and there is not gravity is applied yet, add gravity to the forces
+    {
+        forces.insert(forces.begin(), gravity);
+        isHavingWeight = true;
+    }
+    else if(!obeysGravity && isHavingWeight)
+    {
+        forces.erase(forces.begin());
+        isHavingWeight = false;
+    }
+
     if (mass == 0) return; // this object is static
 
     sf::Vector2f newForce = sf::Vector2f(0, 0);

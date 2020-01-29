@@ -130,6 +130,8 @@ void GameObject::Update(sf::Time msec)
 		(*i)->Update(msec);
 	}
 
+	
+		
 	Render();
 }
 
