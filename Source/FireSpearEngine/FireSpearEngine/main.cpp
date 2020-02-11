@@ -29,10 +29,11 @@ int main()
 	sun->AddComponent(new RigidbodyComponent());
 	sun->GetComponent<RigidbodyComponent*>()->obeysGravity = true;
 
-	/*bgmHolder->AddComponent(new AudioPlayerComponent());
-	bgmHolder->GetComponent<AudioPlayerComponent*>()->PlaySoundFromFile("arcade-intro-2.wav");*/
+	bgmHolder->AddComponent(new AudioPlayerComponent());
+	bgmHolder->GetComponent<AudioPlayerComponent*>()->PlaySoundFromFile("../../Images/arcade-intro-2.wav");
 	//engine->gameObjectManager.DestroyObject(earth);
 	//engine->gameObjectManager.DestroyObject(sun);
+	//bgmHolder->GetComponent<AudioPlayerComponent*>()->Stop();
 
 #pragma endregion
 

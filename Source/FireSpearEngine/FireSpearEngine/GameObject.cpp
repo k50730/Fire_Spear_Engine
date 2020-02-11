@@ -85,7 +85,10 @@ ComponentName GameObject::GetComponent()
 	{
 		id = BaseComponent::ComponentID::Rigidbody;
 	}
-
+	else if (typeid(ComponentName) == typeid(AudioPlayerComponent*))
+	{
+		id = BaseComponent::ComponentID::Audio;
+	}
 
 	for (const auto& p : components)
 	{ 
@@ -102,6 +105,8 @@ int GameObject::GetID() const
 
 void GameObject::Awake()
 {
+	if(this->GetComponent<AudioPlayerComponent*>()){}
+
 	for (std::vector<BaseComponent*>::iterator i = components.begin(); i != components.end(); ++i) 
 	{
 		(*i)->Awake();

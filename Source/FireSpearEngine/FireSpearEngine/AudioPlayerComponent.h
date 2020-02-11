@@ -8,12 +8,11 @@ private:
 	sf::SoundBuffer buffer;
 	sf::Sound sound;
 	sf::Music music;
-	bool playSound, playMusic;
 public:
 	AudioPlayerComponent();
 	~AudioPlayerComponent();
-	void PlaySoundFromFile(std::string audioFile);
-	void PlayMusicFromFile(std::string musicFile);
+	void PlaySoundFromFile(const std::string audioFile);
+	void PlayMusicFromFile(const std::string musicFile);
 	void Stop();
 	
 	void Awake();
