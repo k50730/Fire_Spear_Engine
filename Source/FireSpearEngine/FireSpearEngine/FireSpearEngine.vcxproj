@@ -156,6 +156,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AudioPlayerComponent.cpp" />
     <ClCompile Include="EventData.cpp" />
     <ClCompile Include="FireSpear.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -167,6 +168,7 @@
     <ClCompile Include="TransformComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AudioPlayerComponent.h" />
     <ClInclude Include="BaseComponent.h" />
     <ClInclude Include="BaseEventData.h" />
     <ClInclude Include="EventData.h" />

@@ -4,6 +4,7 @@
 #include "RenderComponent.h"
 #include "RigidbodyComponent.h";
 #include "LuaComponent.h"
+#include "AudioPlayerComponent.h"
 #include "SFML/Graphics.hpp"
 #include <vector>
 

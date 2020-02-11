@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include "FireSpear.h"
 
 
@@ -12,6 +13,7 @@ int main()
 #pragma region Create Game Objects
 
 	GameObject* sun = engine->gameObjectManager.CreateObject();
+	GameObject* bgmHolder = engine->gameObjectManager.CreateObject();
 	sun->transformComponent.position = sf::Vector2f(300, 300);
 	sun->AddComponent(new RenderComponent());
 	sun->GetComponent<RenderComponent*>()->SetColor(sf::Color::Yellow);
@@ -26,6 +28,9 @@ int main()
 	earth->GetComponent<RenderComponent*>()->SetColor(sf::Color::Blue);
 	sun->AddComponent(new RigidbodyComponent());
 	sun->GetComponent<RigidbodyComponent*>()->obeysGravity = true;
+
+	/*bgmHolder->AddComponent(new AudioPlayerComponent());
+	bgmHolder->GetComponent<AudioPlayerComponent*>()->PlaySoundFromFile("arcade-intro-2.wav");*/
 	//engine->gameObjectManager.DestroyObject(earth);
 	//engine->gameObjectManager.DestroyObject(sun);
 
