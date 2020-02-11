@@ -1,5 +1,7 @@
 #include "GameObject.h"
 #include <iostream>
+#include "RigidbodyComponent.h"
+#include "CircleColliderComponent.h"
 
 GameObject::GameObject()
 {
@@ -85,6 +87,10 @@ ComponentName GameObject::GetComponent()
 	{
 		id = BaseComponent::ComponentID::Rigidbody;
 	}
+	else if (typeid(ComponentName) == typeid(CircleColliderComponent*))
+	{
+		id = BaseComponent::ComponentID::CircleCollider;
+	}
 
 
 	for (const auto& p : components)
@@ -102,6 +108,9 @@ int GameObject::GetID() const
 
 void GameObject::Awake()
 {
+	if (this->GetComponent<RigidbodyComponent*>()) {} // I DON'T KNOW WHY BUT JUST NEVER DELETE THIS LINE
+
+
 	for (std::vector<BaseComponent*>::iterator i = components.begin(); i != components.end(); ++i) 
 	{
 		(*i)->Awake();
@@ -118,20 +127,16 @@ void GameObject::Start()
 
 void GameObject::Update(sf::Time msec)
 {
-	if (this->GetComponent<RigidbodyComponent*>() != nullptr)
-	{
-		transformComponent.position += this->GetComponent<RigidbodyComponent*>()->position;
-	}
-
-	worldTransform = parent != nullptr ? parent->GetWorldTransform() *  transformComponent.matrix: transformComponent.matrix;
 	
+
+	worldTransform = parent != nullptr ? parent->GetWorldTransform() * transformComponent.matrix : transformComponent.matrix;
+
+	// Update physic
 	for (std::vector<BaseComponent*>::iterator i = components.begin(); i != components.end(); ++i)
 	{
 		(*i)->Update(msec);
 	}
 
-	
-		
 	Render();
 }
 
@@ -141,6 +146,7 @@ void GameObject::LateUpdate(sf::Time msec)
 	{
 		(*i)->LateUpdate();
 	}
+
 }
 
 void GameObject::Render()

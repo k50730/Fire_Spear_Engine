@@ -16,6 +16,7 @@ public:
     void LateUpdate(sf::Time msec);
     std::vector<GameObject*> DrawableObjects();
 
+
 private:
     std::map<int, GameObject*> gameObjects;
     static int nextObjectID;

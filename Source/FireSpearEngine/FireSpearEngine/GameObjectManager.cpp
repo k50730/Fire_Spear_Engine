@@ -73,3 +73,5 @@ std::vector<GameObject*> GameObjectManager::DrawableObjects()
 
 	return drawableObjects;
 }
+
+

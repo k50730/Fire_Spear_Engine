@@ -1,6 +1,8 @@
 #pragma once
 #include "BaseComponent.h"
-#include "SFML//Graphics.hpp"
+#include "SFML/Graphics.hpp"
+#include "GameObjectManager.h"
+#include <cmath> 
 
 class RigidbodyComponent : public BaseComponent
 {
@@ -27,5 +29,31 @@ public:
 	bool obeysGravity = true; // Whether or not this body obeys gravity
 	bool isHavingWeight = false; // is affected by gravity or not, allows gravity can be changed at run time
 	sf::Vector2f gravity = sf::Vector2f(0, 9.8f);
+	
+	sf::Transform transformMatrix;
+
+	bool grounded;
+	sf::Vector2f totalForces;
+
+	struct AABB
+	{
+		sf::Vector2f bLeft;
+		sf::Vector2f tRight;
+	};
+
+	void AddForce(sf::Vector2f force)
+	{
+		totalForces += force;
+	}
+
+	void Stop()
+	{
+		velecity = sf::Vector2f(0.0f, 0.0f);
+		totalForces = sf::Vector2f(0.0f, 0.0f);
+	}
+
+	void Integrate(float dT, GameObject a);
+
+	AABB aabb;
 };
 

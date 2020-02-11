@@ -28,6 +28,13 @@
     <ClCompile Include="RigidbodyComponent.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
+    <ClCompile Include="CircleColliderComponent.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicEngine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Rigidbody.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseEventData.h">
@@ -66,6 +73,13 @@
     <ClInclude Include="RigidbodyComponent.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
+    <ClInclude Include="CircleColliderComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicEngine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Rigidbody.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">

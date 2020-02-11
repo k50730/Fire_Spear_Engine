@@ -9,6 +9,7 @@
 //LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 GameObjectManager FireSpear::gameObjectManager;
+//PhysicEngine FireSpear::physicEngine;
 
 FireSpear::FireSpear()
 {

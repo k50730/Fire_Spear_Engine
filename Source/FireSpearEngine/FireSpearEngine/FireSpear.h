@@ -5,8 +5,11 @@
 #include <windows.h>
 #include "LuaPlus.h"
 #include "GameObjectManager.h"
+#include "PhysicEngine.h"
 #include "RenderComponent.h"
 #include <iostream>
+#include "RigidbodyComponent.h"
+#include "CircleColliderComponent.h"
 
 class FireSpear
 {
@@ -31,7 +34,7 @@ public:
 	void Render();
 	void ProcessEvent();
 	static GameObjectManager gameObjectManager;
-
+	static PhysicEngine physicEngine;
 	
 private:
 	bool IsExiting();

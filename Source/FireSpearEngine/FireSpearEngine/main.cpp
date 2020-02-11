@@ -1,8 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include "FireSpear.h"
 
-
-
 int main()
 {
 	FireSpear* engine = new FireSpear();
@@ -17,6 +15,7 @@ int main()
 	sun->GetComponent<RenderComponent*>()->SetColor(sf::Color::Yellow);
 	sun->GetComponent<RenderComponent*>()->SetRadius(100);
 	sun->transformComponent.rotation = -90;
+	sun->AddComponent(new CircleColliderComponent());
 
 	GameObject* earth = engine->gameObjectManager.CreateObject();
 	earth->SetParent(*sun);
@@ -24,8 +23,11 @@ int main()
 	earth->transformComponent.position = sf::Vector2f(100, 200);
 	earth->AddComponent(new RenderComponent());
 	earth->GetComponent<RenderComponent*>()->SetColor(sf::Color::Blue);
-	sun->AddComponent(new RigidbodyComponent());
-	sun->GetComponent<RigidbodyComponent*>()->obeysGravity = true;
+	earth->AddComponent(new RigidbodyComponent());
+	earth->GetComponent<RigidbodyComponent*>()->obeysGravity = false;
+	earth->GetComponent<RigidbodyComponent*>()->velecity = sf::Vector2f(2.0f, 0.0f);
+
+
 	//engine->gameObjectManager.DestroyObject(earth);
 	//engine->gameObjectManager.DestroyObject(sun);
 
