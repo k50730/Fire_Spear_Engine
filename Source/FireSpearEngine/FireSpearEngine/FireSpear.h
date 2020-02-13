@@ -34,7 +34,7 @@ public:
 	void Render();
 	void ProcessEvent();
 	static GameObjectManager gameObjectManager;
-	static PhysicEngine physicEngine;
+	PhysicEngine* physicEngine;
 	
 private:
 	bool IsExiting();

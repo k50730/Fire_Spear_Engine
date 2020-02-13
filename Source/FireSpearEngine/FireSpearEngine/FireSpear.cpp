@@ -9,11 +9,12 @@
 //LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 GameObjectManager FireSpear::gameObjectManager;
+
 //PhysicEngine FireSpear::physicEngine;
 
 FireSpear::FireSpear()
 {
-
+	physicEngine = new PhysicEngine(&gameObjectManager);
 }
 
 FireSpear::~FireSpear()
@@ -183,6 +184,8 @@ void FireSpear::Start()
 
 	CreateSplashScreen(_mainWindow);
 
+	physicEngine->Awake();
+	physicEngine->Start();
 	gameObjectManager.Awake();
 	gameObjectManager.Start();
 	Run();
@@ -218,8 +221,6 @@ void FireSpear::CreateEngineWindow(std::string windowTitle, int width, int heigh
 
 void FireSpear::Run()
 {
-
-
 	sf::Clock clock;
 	sf::Time timeSinceLastFrame;
 
@@ -230,18 +231,17 @@ void FireSpear::Run()
 		{
 			timeSinceLastFrame -= FPS;
 			Update(FPS);
-		
 		}
 
 		ProcessEvent();
 		Render();
 	}
-	
 }
 
 void FireSpear::Update(sf::Time deltaTime)
 {
 	gameObjectManager.Update(deltaTime);
+	physicEngine->FixedUpdate(deltaTime);
 }
 
 void FireSpear::Render()
@@ -250,7 +250,8 @@ void FireSpear::Render()
 	for (const auto& p : gameObjectManager.DrawableObjects())
 	{
 		RenderComponent* r = p->GetComponent<RenderComponent*>();
-		_mainWindow.draw(r->shape, sf::RenderStates(r->position));
+		
+		_mainWindow.draw(r->shape, sf::RenderStates(r->transform));
 	}
 	_mainWindow.display();
 }
@@ -299,6 +300,7 @@ void FireSpear::ProcessEvent()
 
 	}
 }
+
 bool FireSpear::IsExiting()
 {
 	if (_mainWindow.isOpen())

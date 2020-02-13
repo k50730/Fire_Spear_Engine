@@ -127,16 +127,12 @@ void GameObject::Start()
 
 void GameObject::Update(sf::Time msec)
 {
-	
-
 	worldTransform = parent != nullptr ? parent->GetWorldTransform() * transformComponent.matrix : transformComponent.matrix;
-
-	// Update physic
+	
 	for (std::vector<BaseComponent*>::iterator i = components.begin(); i != components.end(); ++i)
 	{
 		(*i)->Update(msec);
 	}
-
 	Render();
 }
 
@@ -146,14 +142,13 @@ void GameObject::LateUpdate(sf::Time msec)
 	{
 		(*i)->LateUpdate();
 	}
-
 }
 
 void GameObject::Render()
 {
 	if (GetComponent<RenderComponent*>() != nullptr)
 	{
-		GetComponent<RenderComponent*>()->position = worldTransform;
+		GetComponent<RenderComponent*>()->transform = worldTransform;
 	}
 }
 

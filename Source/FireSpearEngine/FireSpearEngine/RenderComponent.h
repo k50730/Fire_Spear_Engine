@@ -16,6 +16,6 @@ public:
 
 	// Change to private later
 	sf::CircleShape shape;
-	sf::Transform position;
+	sf::Transform transform;
 };
 
