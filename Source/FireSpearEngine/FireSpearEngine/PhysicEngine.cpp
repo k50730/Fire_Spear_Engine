@@ -22,22 +22,28 @@ void PhysicEngine::IntegrateBodies(sf::Time dT)
 
 }
 
-bool PhysicEngine::IsGrounded(RigidbodyComponent* rigidBody)
+void PhysicEngine::IsGrounded()
 {
-    for (const auto& rb : rigidBodies)
+    for (int i = 0; i < rigidBodies.size(); i++)
     {
-        if (rb != rigidBody)
+        for (int j = 0; j < rigidBodies.size(); j++)
         {
-             if (rigidBody->aabb.bLeft.x < rb->aabb.tRight.x
-                 && rigidBody->aabb.tRight.x > rb->aabb.bLeft.x
-                 && std::abs(rigidBody->aabb.bLeft.y - rb->aabb.tRight.y) <= groundedTol)
-             {
-                 if (std::abs(rigidBody->velecity.y) < groundedTol)
-                     return true;
-             }
+            if (i != j)
+            {
+                if (rigidBodies[i]->aabb.bLeft.x < rigidBodies[j]->aabb.tRight.x
+                    && rigidBodies[i]->aabb.tRight.x > rigidBodies[j]->aabb.bLeft.x
+                    && std::abs(rigidBodies[i]->aabb.bLeft.y - rigidBodies[j]->aabb.tRight.y) <= groundedTol)
+                {
+                    if (std::abs(rigidBodies[i]->velecity.y) < groundedTol)
+                    {
+                        rigidBodies[i]->grounded = true;
+                    }
+                        
+
+                }
+            }
         }
     }
-    return false;
 }
 
 void PhysicEngine::Awake()
@@ -83,16 +89,31 @@ void PhysicEngine::CheckCollisions()
 
                 sf::Vector2f gap = sf::Vector2f(std::abs(distance.x), std::abs(distance.y)) - (halfSizeA + halfSizeB);
 
+              
                 // Seperating Axis Theorem test
                 if (gap.x < 0 && gap.y < 0)
                 {
-                    std::cout << "Collide" << std::endl;
-
-                    if (collisions.find(pair) != collisions.end()) // if pair already existed in the collision list
+                    if (std::abs(rigidBodies[i]->velecity.y) < groundedTol)
                     {
-                        collisions.erase(collisions.find(pair));
+                        rigidBodies[i]->grounded = true;
+                        rigidBodies[i]->Stop();
                     }
-
+                    
+                    for (auto c : collisions)
+                    {
+                        if (c.first->rigidBodyA == pair->rigidBodyA && c.first->rigidBodyB == pair->rigidBodyB)
+                        {
+                            clearCollisions = true;
+                            break;
+                        }
+                    }
+                    if (clearCollisions)
+                    {
+                        collisions.clear();
+                        clearCollisions = false;
+                        return;
+                    }
+                    
                     if (gap.x > gap.y)
                     {
                         colInfo->collisionNormal = distance.x > 0 ? sf::Vector2f(1.0f, 0.0f) : sf::Vector2f(-1.0f, 0.0f); // Update collision normal
@@ -106,9 +127,21 @@ void PhysicEngine::CheckCollisions()
 
                     collisions[pair] = colInfo;
                 }
-                else if (collisions.find(pair) != collisions.end()) // if pair already existed in the collision list
+                else
                 {
-                    collisions.erase(collisions.find(pair));
+                    for (auto c : collisions)
+                    {
+                        if (c.first->rigidBodyA == pair->rigidBodyA && c.first->rigidBodyB == pair->rigidBodyB)
+                        {
+                            clearCollisions = true;
+                            break;
+                        }
+                    }
+                    if (clearCollisions)
+                    {
+                        collisions.clear();
+                        clearCollisions = false;
+                    }
                 }
             }
         }
@@ -119,33 +152,35 @@ void PhysicEngine::ResolveCollisions()
 {
     for (auto const& c : collisions)
     {
-        
-        float minBounce = std::min(c.first->rigidBodyA->bounciness, c.first->rigidBodyB->bounciness);
-
-        // dot product of relativeVelocity and collisionNormal
-        float velAlongNormal = ((c.first->rigidBodyB->velecity - c.first->rigidBodyA->velecity).x * collisions[c.first]->collisionNormal.x) + ((c.first->rigidBodyB->velecity - c.first->rigidBodyA->velecity).y * collisions[c.first]->collisionNormal.y);
-
-        if (velAlongNormal > 0) continue; // the contact is either stationary or seperating -> no impluse is needed
-
-        float j = -(1 + minBounce) * velAlongNormal;
-
-        float invMassA = c.first->rigidBodyA->mass == 0 ? 0 : 1 / c.first->rigidBodyA->mass;
-
-        float invMassB = c.first->rigidBodyB->mass == 0 ? 0 : 1 / c.first->rigidBodyB->mass;
-
-        j /= invMassA + invMassB;
-
-        sf::Vector2f impulse = j * collisions[c.first]->collisionNormal;
-
-        // update velocities
-        c.first->rigidBodyA->velecity = c.first->rigidBodyA->velecity - impulse * invMassA;
-        c.first->rigidBodyB->velecity = c.first->rigidBodyB->velecity + impulse * invMassB;
-
-
-        if (std::abs(collisions[c.first]->penetration) > 0.01f)
+        if (c.second != nullptr)
         {
-            PositionalCorrection(c.first);
+            float minBounce = std::min(c.first->rigidBodyA->bounciness, c.first->rigidBodyB->bounciness);
+
+            // dot product of relativeVelocity and collisionNormal
+            float velAlongNormal = ((c.first->rigidBodyB->velecity - c.first->rigidBodyA->velecity).x * collisions[c.first]->collisionNormal.x) + ((c.first->rigidBodyB->velecity - c.first->rigidBodyA->velecity).y * collisions[c.first]->collisionNormal.y);
+
+            if (velAlongNormal > 0) continue; // the contact is either stationary or seperating -> no impluse is needed
+
+            float j = -(1 + minBounce) * velAlongNormal;
+
+            float invMassA = c.first->rigidBodyA->mass == 0 ? 0 : 1 / c.first->rigidBodyA->mass;
+
+            float invMassB = c.first->rigidBodyB->mass == 0 ? 0 : 1 / c.first->rigidBodyB->mass;
+
+            j /= invMassA + invMassB;
+
+            sf::Vector2f impulse = j * collisions[c.first]->collisionNormal;
+
+            // update velocities
+            c.first->rigidBodyA->velecity = c.first->rigidBodyA->velecity - impulse * invMassA;
+            c.first->rigidBodyB->velecity = c.first->rigidBodyB->velecity + impulse * invMassB;
+
+            if (std::abs(collisions[c.first]->penetration) > 0.01f)
+            {
+                PositionalCorrection(c.first);
+            }
         }
+        
     }
 }
 
@@ -172,6 +207,7 @@ void PhysicEngine::PositionalCorrection(CollisionPair* c)
 
 void PhysicEngine::UpdatePhysics(sf::Time t)
 {
+    IsGrounded();
     IntegrateBodies(t);
     CheckCollisions();
     ResolveCollisions();

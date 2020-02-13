@@ -10,7 +10,7 @@ public:
 
     PhysicEngine(GameObjectManager* g);
 
-    float groundedTol = 0.1f;
+    float groundedTol = 2.0f;
 
     struct CollisionPair
     {
@@ -34,7 +34,7 @@ public:
  
     void IntegrateBodies(sf::Time);
   
-    bool IsGrounded(RigidbodyComponent* rigidBody);
+    void IsGrounded();
 
     void Awake();
 
@@ -57,5 +57,7 @@ private:
     void PositionalCorrection(CollisionPair* c);
 
     GameObjectManager* gameObjectManager;
+
+    bool clearCollisions = false;
 };
 

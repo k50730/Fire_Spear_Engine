@@ -30,8 +30,8 @@ void RigidbodyComponent::SetAABB()
 {
     RenderComponent* r = owner->GetComponent<RenderComponent*>();
 
-    aabb.bLeft = sf::Vector2f(-r->shape.getRadius(), -r->shape.getRadius()); //new Vector2(bound.center.x - bound.extents.x, bound.center.y - bound.extents.y);
-    aabb.tRight = sf::Vector2f(r->shape.getRadius(), r->shape.getRadius()); //new Vector2(bound.center.x + bound.extents.x, bound.center.y + bound.extents.y);
+    aabb.bLeft = sf::Vector2f(-r->shape.getSize().x / 2, -r->shape.getSize().y / 2); //new Vector2(bound.center.x - bound.extents.x, bound.center.y - bound.extents.y);
+    aabb.tRight = sf::Vector2f(r->shape.getSize().x / 2, r->shape.getSize().y / 2); //new Vector2(bound.center.x + bound.extents.x, bound.center.y + bound.extents.y);
 }
 
 void RigidbodyComponent::AddForce(sf::Vector2f force)
@@ -48,7 +48,7 @@ void RigidbodyComponent::Stop()
 void RigidbodyComponent::Integrate(float dT)
 {
     sf::Vector2f acceleration;
-    if (obeysGravity)
+    if (obeysGravity && !grounded)
     {
         acceleration = gravity;
     }
@@ -64,8 +64,10 @@ void RigidbodyComponent::Integrate(float dT)
     velecity += acceleration * dT;
 
     sf::Vector2f temp = owner->transformComponent.position;
+
     temp += velecity * dT;
     owner->transformComponent.position = temp;
+    
     SetAABB();
 
     totalForces = sf::Vector2f(0.0f, 0.0f);
