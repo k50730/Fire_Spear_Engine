@@ -28,6 +28,9 @@
     <ClCompile Include="RigidbodyComponent.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
+
+      <ClCompile Include="AudioPlayerComponent.cpp">
+      <Filter>Source Files\Components</Filter>
     <ClCompile Include="PhysicEngine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -69,8 +72,11 @@
     <ClInclude Include="RigidbodyComponent.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
+ <ClInclude Include="AudioPlayerComponent.h">
+      <Filter>Header Files\Components</Filter>
     <ClInclude Include="PhysicEngine.h">
       <Filter>Header Files</Filter>
+
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

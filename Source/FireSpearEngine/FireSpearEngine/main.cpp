@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include "FireSpear.h"
 
 int main()
@@ -25,12 +26,14 @@ int main()
 	////engine->gameObjectManager.DestroyObject(earth);
 	////engine->gameObjectManager.DestroyObject(sun);
 
+
 #pragma endregion
 
 #pragma region Scene 2 - Physic
 
 	GameObject* sun = engine->gameObjectManager->CreateObject();
 	sun->transformComponent.position = sf::Vector2f(600, 600);
+
 	sun->AddComponent(new RenderComponent());
 	sun->GetComponent<RenderComponent*>()->SetColor(sf::Color::Yellow);
 	sun->GetComponent<RenderComponent*>()->SetSize(sf::Vector2f(800, 200));
@@ -42,9 +45,11 @@ int main()
 	earth->transformComponent.position = sf::Vector2f(300, 200);
 	earth->AddComponent(new RenderComponent());
 	earth->GetComponent<RenderComponent*>()->SetColor(sf::Color::Blue);
+
 	earth->AddComponent(new RigidbodyComponent());
 	earth->GetComponent<RigidbodyComponent*>()->mass = 0.5f;
 	earth->GetComponent<RigidbodyComponent*>()->obeysGravity = true;
+
 
 	GameObject* mars = engine->gameObjectManager->CreateObject();
 	mars->transformComponent.position = sf::Vector2f(600, 300);
@@ -53,6 +58,10 @@ int main()
 	mars->AddComponent(new RigidbodyComponent());
 	mars->GetComponent<RigidbodyComponent*>()->mass = 4;
 	mars->GetComponent<RigidbodyComponent*>()->obeysGravity = true;
+  
+  GameObject* bgmHolder = engine->gameObjectManager.CreateObject();
+  bgmHolder->AddComponent(new AudioPlayerComponent());
+	bgmHolder->GetComponent<AudioPlayerComponent*>()->PlaySoundFromFile("../../Images/arcade-intro-2.wav");
 #pragma endregion
 
 #pragma region Scene 3 - Physic

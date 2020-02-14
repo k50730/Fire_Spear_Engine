@@ -100,7 +100,7 @@
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)..\..\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>luaplus51-1201.lib;sfml-system-s-d.lib;sfml-audio-s-d.lib;sfml-graphics-s-d.lib;sfml-network-s-d.lib;sfml-window-s-d.lib;opengl32.lib;winmm.lib;gdi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>luaplus51-1201.lib;sfml-system-s-d.lib;sfml-audio-s-d.lib;sfml-graphics-s-d.lib;sfml-network-s-d.lib;sfml-window-s-d.lib;opengl32.lib;winmm.lib;gdi32.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;vorbis.lib;ogg.lib;openal32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>NotSet</SubSystem>
     </Link>
     <PostBuildEvent>
@@ -140,7 +140,7 @@ xcopy /Y "$(ProjectDir)..\..\..\Lib\luaplus51-1201.pdb" "$(TargetDir)luaplus51-1
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(SolutionDir)..\..\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>luaplus51-1201.lib;sfml-graphics-s.lib;sfml-audio-s.lib;sfml-window-s.lib;sfml-system-s.lib;sfml-network-s.lib;opengl32.lib;winmm.lib;gdi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>luaplus51-1201.lib;sfml-graphics-s.lib;sfml-audio-s.lib;sfml-window-s.lib;sfml-system-s.lib;sfml-network-s.lib;opengl32.lib;winmm.lib;gdi32.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;vorbis.lib;ogg.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>NotSet</SubSystem>
     </Link>
     <PostBuildEvent>
@@ -170,6 +170,7 @@ xcopy /Y "$(ProjectDir)..\..\..\Lib\luaplus51-1201.pdb" "$(TargetDir)luaplus51-1
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AudioPlayerComponent.cpp" />
     <ClCompile Include="EventData.cpp" />
     <ClCompile Include="FireSpear.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -182,6 +183,7 @@ xcopy /Y "$(ProjectDir)..\..\..\Lib\luaplus51-1201.pdb" "$(TargetDir)luaplus51-1
     <ClCompile Include="TransformComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AudioPlayerComponent.h" />
     <ClInclude Include="BaseComponent.h" />
     <ClInclude Include="BaseEventData.h" />
     <ClInclude Include="EventData.h" />
