@@ -179,7 +179,6 @@ xcopy /Y "$(ProjectDir)..\..\..\Lib\luaplus51-1201.pdb" "$(TargetDir)luaplus51-1
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PhysicEngine.cpp" />
     <ClCompile Include="RenderComponent.cpp" />
-    <ClCompile Include="Rigidbody.cpp" />
     <ClCompile Include="RigidbodyComponent.cpp" />
     <ClCompile Include="TransformComponent.cpp" />
   </ItemGroup>
@@ -196,7 +195,6 @@ xcopy /Y "$(ProjectDir)..\..\..\Lib\luaplus51-1201.pdb" "$(TargetDir)luaplus51-1
     <ClInclude Include="LuaComponent.h" />
     <ClInclude Include="PhysicEngine.h" />
     <ClInclude Include="RenderComponent.h" />
-    <ClInclude Include="Rigidbody.h" />
     <ClInclude Include="RigidbodyComponent.h" />
     <ClInclude Include="TransformComponent.h" />
   </ItemGroup>

@@ -34,7 +34,6 @@
     <ClCompile Include="PhysicEngine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Rigidbody.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseEventData.h">
@@ -79,7 +78,6 @@
     <ClInclude Include="PhysicEngine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Rigidbody.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">

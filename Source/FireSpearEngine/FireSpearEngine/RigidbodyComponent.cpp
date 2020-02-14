@@ -54,7 +54,7 @@ void RigidbodyComponent::Integrate(float dT)
     }
     else
     {
-        if (std::abs(velecity.y) < 0.05f) velecity.y = 0;
+        if (std::abs(velecity.y) < 2.0f) velecity.y = 0;
     }
    
     acceleration += totalForces / mass;
@@ -64,7 +64,7 @@ void RigidbodyComponent::Integrate(float dT)
     velecity += acceleration * dT;
 
     sf::Vector2f temp = owner->transformComponent.position;
-
+    
     temp += velecity * dT;
     owner->transformComponent.position = temp;
     

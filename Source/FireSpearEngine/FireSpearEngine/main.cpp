@@ -9,11 +9,11 @@ int main()
 #pragma region Scene 1 - Child and Parent Objects
 
 	//GameObject* sun = engine->gameObjectManager.CreateObject();
-	//sun->transformComponent.position = sf::Vector2f(100, 600);
+	//sun->transformComponent.position = sf::Vector2f(300, 200);
 	//sun->AddComponent(new RenderComponent());
 	//sun->GetComponent<RenderComponent*>()->SetColor(sf::Color::Yellow);
-	//sun->GetComponent<RenderComponent*>()->SetRadius(100);
-	//sun->transformComponent.rotation = -90;
+	//sun->GetComponent<RenderComponent*>()->SetSize(sf::Vector2f(200.0f, 200.0f));
+	////sun->transformComponent.rotation = -90;
 
 	//GameObject* earth = engine->gameObjectManager.CreateObject();
 	//earth->SetParent(*sun);
@@ -55,23 +55,23 @@ int main()
 
 #pragma region Scene 3 - Physic
 
-	//GameObject* sun = engine->gameObjectManager.CreateObject();
-	//sun->transformComponent.position = sf::Vector2f(1000, 200);
-	//sun->AddComponent(new RenderComponent());
-	//sun->GetComponent<RenderComponent*>()->SetColor(sf::Color::Yellow);
-	//sun->GetComponent<RenderComponent*>()->SetRadius(100);
-	//sun->AddComponent(new RigidbodyComponent());
-	//sun->GetComponent<RigidbodyComponent*>()->obeysGravity = false;
-	//sun->GetComponent<RigidbodyComponent*>()->mass = 2;
-	//sun->GetComponent<RigidbodyComponent*>()->velecity = sf::Vector2f(-200.0f, 0.0f);
+	/*GameObject* sun = engine->gameObjectManager.CreateObject();
+	sun->transformComponent.position = sf::Vector2f(1000, 200);
+	sun->AddComponent(new RenderComponent());
+	sun->GetComponent<RenderComponent*>()->SetColor(sf::Color::Yellow);
+	sun->GetComponent<RenderComponent*>()->SetSize(sf::Vector2f(200, 200));
+	sun->AddComponent(new RigidbodyComponent());
+	sun->GetComponent<RigidbodyComponent*>()->obeysGravity = false;
+	sun->GetComponent<RigidbodyComponent*>()->mass = 2;
+	sun->GetComponent<RigidbodyComponent*>()->velecity = sf::Vector2f(-200.0f, 0.0f);
 
-	//GameObject* earth = engine->gameObjectManager.CreateObject();
-	//earth->transformComponent.position = sf::Vector2f(100, 200);
-	//earth->AddComponent(new RenderComponent());
-	//earth->GetComponent<RenderComponent*>()->SetColor(sf::Color::Blue);
-	//earth->AddComponent(new RigidbodyComponent());
-	//earth->GetComponent<RigidbodyComponent*>()->obeysGravity = false;
-	//earth->GetComponent<RigidbodyComponent*>()->velecity = sf::Vector2f(200.0f, 0.0f);
+	GameObject* earth = engine->gameObjectManager.CreateObject();
+	earth->transformComponent.position = sf::Vector2f(100, 200);
+	earth->AddComponent(new RenderComponent());
+	earth->GetComponent<RenderComponent*>()->SetColor(sf::Color::Blue);
+	earth->AddComponent(new RigidbodyComponent());
+	earth->GetComponent<RigidbodyComponent*>()->obeysGravity = false;
+	earth->GetComponent<RigidbodyComponent*>()->velecity = sf::Vector2f(200.0f, 0.0f);*/
 
 #pragma endregion
 

@@ -30,16 +30,17 @@ void PhysicEngine::IsGrounded()
         {
             if (i != j)
             {
-                if (rigidBodies[i]->aabb.bLeft.x < rigidBodies[j]->aabb.tRight.x
-                    && rigidBodies[i]->aabb.tRight.x > rigidBodies[j]->aabb.bLeft.x
-                    && std::abs(rigidBodies[i]->aabb.bLeft.y - rigidBodies[j]->aabb.tRight.y) <= groundedTol)
+                if (rigidBodies[i]->owner->transformComponent.position.x + rigidBodies[i]->aabb.bLeft.x <rigidBodies[j]->owner->transformComponent.position.x + rigidBodies[j]->aabb.tRight.x
+                    && rigidBodies[i]->owner->transformComponent.position.x + rigidBodies[i]->aabb.tRight.x > rigidBodies[j]->owner->transformComponent.position.x + rigidBodies[j]->aabb.bLeft.x
+                    )
                 {
-                    if (std::abs(rigidBodies[i]->velecity.y) < groundedTol)
+                    if (rigidBodies[i]->mass != 0)
                     {
-                        rigidBodies[i]->grounded = true;
+                        if (rigidBodies[j]->owner->transformComponent.position.y + rigidBodies[i]->aabb.bLeft.y - rigidBodies[j]->aabb.tRight.y - rigidBodies[i]->owner->transformComponent.position.y < groundedTol)
+                        {
+                            if (std::abs(rigidBodies[i]->velecity.y) < 0.1f) rigidBodies[i]->grounded = true;
+                        }
                     }
-                        
-
                 }
             }
         }
@@ -93,11 +94,11 @@ void PhysicEngine::CheckCollisions()
                 // Seperating Axis Theorem test
                 if (gap.x < 0 && gap.y < 0)
                 {
-                    if (std::abs(rigidBodies[i]->velecity.y) < groundedTol)
+                    /*if (std::abs(rigidBodies[i]->velecity.y) < groundedTol)
                     {
                         rigidBodies[i]->grounded = true;
                         rigidBodies[i]->Stop();
-                    }
+                    }*/
                     
                     for (auto c : collisions)
                     {

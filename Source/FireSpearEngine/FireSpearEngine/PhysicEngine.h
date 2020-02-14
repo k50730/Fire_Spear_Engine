@@ -10,7 +10,7 @@ public:
 
     PhysicEngine(GameObjectManager* g);
 
-    float groundedTol = 2.0f;
+    float groundedTol = 0.5f;
 
     struct CollisionPair
     {
