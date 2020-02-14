@@ -103,6 +103,9 @@
       <AdditionalDependencies>luaplus51-1201.lib;sfml-system-s-d.lib;sfml-audio-s-d.lib;sfml-graphics-s-d.lib;sfml-network-s-d.lib;sfml-window-s-d.lib;opengl32.lib;winmm.lib;gdi32.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;vorbis.lib;ogg.lib;openal32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>NotSet</SubSystem>
     </Link>
+    <PostBuildEvent>
+      <Command>copy "$(ProjectDir)..\..\..\Lib\luaplus51-1201.dll" "$(OutputPath)"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -117,6 +120,10 @@
       <AdditionalDependencies>luaplus51-1201.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>NotSet</SubSystem>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy /Y "$(ProjectDir)..\..\..\Lib\luaplus51-1201.dll" "$(TargetDir)luaplus51-1201.dll"
+xcopy /Y "$(ProjectDir)..\..\..\Lib\luaplus51-1201.pdb" "$(TargetDir)luaplus51-1201.pdb"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -136,6 +143,9 @@
       <AdditionalDependencies>luaplus51-1201.lib;sfml-graphics-s.lib;sfml-audio-s.lib;sfml-window-s.lib;sfml-system-s.lib;sfml-network-s.lib;opengl32.lib;winmm.lib;gdi32.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;vorbis.lib;ogg.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>NotSet</SubSystem>
     </Link>
+    <PostBuildEvent>
+      <Command>copy "$(ProjectDir)..\..\..\Lib\luaplus51-1201.dll" "$(OutputPath)"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -154,6 +164,10 @@
       <AdditionalDependencies>luaplus51-1201.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>NotSet</SubSystem>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy /Y "$(ProjectDir)..\..\..\Lib\luaplus51-1201.dll" "$(TargetDir)luaplus51-1201.dll"
+xcopy /Y "$(ProjectDir)..\..\..\Lib\luaplus51-1201.pdb" "$(TargetDir)luaplus51-1201.pdb"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AudioPlayerComponent.cpp" />
@@ -163,6 +177,7 @@
     <ClCompile Include="GameObjectManager.cpp" />
     <ClCompile Include="LuaComponent.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="PhysicEngine.cpp" />
     <ClCompile Include="RenderComponent.cpp" />
     <ClCompile Include="RigidbodyComponent.cpp" />
     <ClCompile Include="TransformComponent.cpp" />
@@ -178,6 +193,7 @@
     <ClInclude Include="IEventData.h" />
     <ClInclude Include="EventType.h" />
     <ClInclude Include="LuaComponent.h" />
+    <ClInclude Include="PhysicEngine.h" />
     <ClInclude Include="RenderComponent.h" />
     <ClInclude Include="RigidbodyComponent.h" />
     <ClInclude Include="TransformComponent.h" />
