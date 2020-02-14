@@ -15,9 +15,10 @@ public:
     void Start();
     void LateUpdate(sf::Time msec);
     std::vector<GameObject*> DrawableObjects();
+    std::map<int, GameObject*> gameObjects; // should change to private later ????
 
 private:
-    std::map<int, GameObject*> gameObjects;
+    
     static int nextObjectID;
 };
 
