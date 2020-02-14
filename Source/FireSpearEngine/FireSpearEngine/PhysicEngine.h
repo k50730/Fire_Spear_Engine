@@ -2,13 +2,13 @@
 #include "SFML\Graphics.hpp"
 #include "RigidbodyComponent.h"
 #include "GameObjectManager.h"
-#include <unordered_map>
 
 class PhysicEngine
 {
 public:
 
     PhysicEngine(GameObjectManager* g);
+    ~PhysicEngine();
 
     float groundedTol = 0.5f;
 
@@ -23,12 +23,6 @@ public:
         sf::Vector2f collisionNormal;
         float penetration;
     };
-
-private:
-    std::map<CollisionPair*, CollisionInfo*> collisions;
-    std::vector<RigidbodyComponent*> rigidBodies; // keep track of all PhyscsRBody are existing in the scene
-
-public:
 
     void AddRigidBody(RigidbodyComponent* rigidBody);
  
@@ -59,5 +53,8 @@ private:
     GameObjectManager* gameObjectManager;
 
     bool clearCollisions = false;
+
+    std::map<CollisionPair*, CollisionInfo*> collisions;
+    std::vector<RigidbodyComponent*> rigidBodies; // keep track of all PhyscsRBody are existing in the scene
 };
 

@@ -1,25 +1,19 @@
 #include "FireSpear.h"
 #define SCREEN_WIDTH 1280
 #define SCREEN_HEIGHT 768
-#define WINDOW_POSX 200
-#define WINDOW_POSY 200
 #define MB 1000000
 
 
-//LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
-
-GameObjectManager FireSpear::gameObjectManager;
-
-//PhysicEngine FireSpear::physicEngine;
-
 FireSpear::FireSpear()
 {
-	physicEngine = new PhysicEngine(&gameObjectManager);
+	gameObjectManager = new GameObjectManager();
+	physicEngine = new PhysicEngine(gameObjectManager);
 }
 
 FireSpear::~FireSpear()
 {
-
+	delete physicEngine;
+	delete gameObjectManager;
 }
 
 bool FireSpear::CheckStorage(const DWORDLONG diskSpaceNeeded)
@@ -174,24 +168,6 @@ DWORD FireSpear::ReadCPUSpeed()
 	return dwMHz;
 }
 
-void FireSpear::Start()
-{
-	if (_gameState == Uninitialized)
-		return;
-	
-	CreateEngineWindow("Fire Spear Engine", SCREEN_WIDTH, SCREEN_HEIGHT);
-	_gameState = FireSpear::Playing;
-
-	CreateSplashScreen(_mainWindow);
-
-	physicEngine->Awake();
-	physicEngine->Start();
-	gameObjectManager.Awake();
-	gameObjectManager.Start();
-	Run();
-	_mainWindow.close();
-}
-
 void FireSpear::InitilizeSystem()
 {
 	if (IsOnlyInstance("Fire Spear Engine")) // IF THE NAME IS UNIQUE
@@ -219,43 +195,6 @@ void FireSpear::CreateEngineWindow(std::string windowTitle, int width, int heigh
 	_mainWindow.create(sf::VideoMode(width, height), windowTitle);
 }
 
-void FireSpear::Run()
-{
-	sf::Clock clock;
-	sf::Time timeSinceLastFrame;
-
-	while (_mainWindow.isOpen())
-	{
-		timeSinceLastFrame += clock.restart();
-		while (timeSinceLastFrame > FPS)
-		{
-			timeSinceLastFrame -= FPS;
-			Update(FPS);
-		}
-
-		ProcessEvent();
-		Render();
-	}
-}
-
-void FireSpear::Update(sf::Time deltaTime)
-{
-	gameObjectManager.Update(deltaTime);
-	physicEngine->FixedUpdate(deltaTime);
-}
-
-void FireSpear::Render()
-{
-	_mainWindow.clear(sf::Color(255, 230, 171, 100));
-	for (const auto& p : gameObjectManager.DrawableObjects())
-	{
-		RenderComponent* r = p->GetComponent<RenderComponent*>();
-		
-		_mainWindow.draw(r->shape, sf::RenderStates(r->transform));
-	}
-	_mainWindow.display();
-}
-
 void FireSpear::CreateSplashScreen(sf::RenderWindow& window)
 {
 	sf::Image backgroundImg;
@@ -279,7 +218,79 @@ void FireSpear::CreateSplashScreen(sf::RenderWindow& window)
 			return;
 		}
 	}
-	
+
+}
+
+void FireSpear::Run()
+{
+	if (_gameState == Uninitialized)
+		return;
+
+	CreateEngineWindow("Fire Spear Engine", SCREEN_WIDTH, SCREEN_HEIGHT);
+	_gameState = FireSpear::Playing;
+
+	CreateSplashScreen(_mainWindow);
+
+
+	Awake();
+	Start();
+
+	Tick();
+	_mainWindow.close();
+}
+
+void FireSpear::Tick()
+{
+	sf::Clock clock;
+	sf::Time timeSinceLastFrame;
+
+	while (_mainWindow.isOpen())
+	{
+		timeSinceLastFrame += clock.restart();
+		while (timeSinceLastFrame > FPS)
+		{
+			timeSinceLastFrame -= FPS;
+			FixUpdate();
+		}
+
+		ProcessEvent();
+		Update(timeSinceLastFrame);
+		Render();
+	}
+}
+
+void FireSpear::Awake()
+{
+	physicEngine->Awake();
+	gameObjectManager->Awake();
+}
+
+void FireSpear::Start()
+{
+	physicEngine->Start();
+	gameObjectManager->Start();
+}
+
+void FireSpear::Update(sf::Time deltaTime)
+{
+	gameObjectManager->Update(deltaTime);
+}
+
+void FireSpear::FixUpdate()
+{
+	physicEngine->FixedUpdate(FPS);
+}
+
+void FireSpear::Render()
+{
+	_mainWindow.clear(sf::Color(255, 230, 171, 100));
+	for (const auto& p : gameObjectManager->DrawableObjects())
+	{
+		RenderComponent* r = p->GetComponent<RenderComponent*>();
+		
+		_mainWindow.draw(r->shape, sf::RenderStates(r->transform));
+	}
+	_mainWindow.display();
 }
 
 void FireSpear::ProcessEvent()

@@ -1,8 +1,18 @@
 #include "PhysicEngine.h"
-#include <iostream>
+
 PhysicEngine::PhysicEngine(GameObjectManager* g)
 {
     gameObjectManager = g;
+}
+
+PhysicEngine::~PhysicEngine()
+{
+    for (auto const& c : collisions)
+    {
+        delete c.first;
+        delete c.second;
+    }
+    collisions.clear();
 }
 
 void PhysicEngine::AddRigidBody(RigidbodyComponent* rigidBody)
@@ -94,12 +104,8 @@ void PhysicEngine::CheckCollisions()
                 // Seperating Axis Theorem test
                 if (gap.x < 0 && gap.y < 0)
                 {
-                    /*if (std::abs(rigidBodies[i]->velecity.y) < groundedTol)
-                    {
-                        rigidBodies[i]->grounded = true;
-                        rigidBodies[i]->Stop();
-                    }*/
-                    
+                    //std::cout << "Collide" << std::endl;
+
                     for (auto c : collisions)
                     {
                         if (c.first->rigidBodyA == pair->rigidBodyA && c.first->rigidBodyB == pair->rigidBodyB)
@@ -193,7 +199,6 @@ void PhysicEngine::PositionalCorrection(CollisionPair* c)
 
     float invMassA = c->rigidBodyA->mass == 0 ? 0 : 1 / c->rigidBodyA->mass;
     float invMassB = c->rigidBodyB->mass == 0 ? 0 : 1 / c->rigidBodyB->mass;
-
 
     sf::Vector2f correction = ((collisions[c]->penetration / (invMassA + invMassB)) * percent) * -collisions[c]->collisionNormal;
 

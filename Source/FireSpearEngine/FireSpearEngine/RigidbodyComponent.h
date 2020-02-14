@@ -23,7 +23,8 @@ public:
 	bool obeysGravity = true; // Whether or not this body obeys gravity
 	sf::Vector2f gravity = sf::Vector2f(0, 98.0f);	
 	bool grounded = false;
-	
+	bool isTrigger = false;
+
 	struct AABB
 	{
 		sf::Vector2f bLeft;

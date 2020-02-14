@@ -170,7 +170,6 @@ xcopy /Y "$(ProjectDir)..\..\..\Lib\luaplus51-1201.pdb" "$(TargetDir)luaplus51-1
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="CircleColliderComponent.cpp" />
     <ClCompile Include="EventData.cpp" />
     <ClCompile Include="FireSpear.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -185,7 +184,6 @@ xcopy /Y "$(ProjectDir)..\..\..\Lib\luaplus51-1201.pdb" "$(TargetDir)luaplus51-1
   <ItemGroup>
     <ClInclude Include="BaseComponent.h" />
     <ClInclude Include="BaseEventData.h" />
-    <ClInclude Include="CircleColliderComponent.h" />
     <ClInclude Include="EventData.h" />
     <ClInclude Include="FireSpear.h" />
     <ClInclude Include="GameObject.h" />

@@ -9,8 +9,7 @@ public:
         Transform,
         Render,
         Lua,
-        Rigidbody,
-        CircleCollider
+        Rigidbody
     };
     virtual void Awake() = 0;
     virtual void Start() = 0;

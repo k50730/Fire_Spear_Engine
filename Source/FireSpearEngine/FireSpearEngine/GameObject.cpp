@@ -1,7 +1,6 @@
 #include "GameObject.h"
 #include <iostream>
 #include "RigidbodyComponent.h"
-#include "CircleColliderComponent.h"
 
 GameObject::GameObject()
 {
@@ -14,18 +13,11 @@ GameObject::GameObject(int newID) : id(newID), parent(nullptr)
 
 GameObject::~GameObject()
 {
-	/*for (const auto& c : children)
-	{
-		delete c;
-	}
-	children.clear();
-
-	for (auto& p : components)
-	{
-		delete p;
-	}
-
-	components.clear();*/
+	//for (auto p : components)
+	//{
+	//	delete p;
+	//}
+	//components.clear();
 }
 
 void GameObject::SetParent(GameObject& p)
@@ -86,10 +78,6 @@ ComponentName GameObject::GetComponent()
 	else if (typeid(ComponentName) == typeid(RigidbodyComponent*))
 	{
 		id = BaseComponent::ComponentID::Rigidbody;
-	}
-	else if (typeid(ComponentName) == typeid(CircleColliderComponent*))
-	{
-		id = BaseComponent::ComponentID::CircleCollider;
 	}
 
 
