@@ -34,6 +34,9 @@
     <ClCompile Include="ScriptingSystem.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="AudioPlayerComponent.cpp">
+      <Filter>Source\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseComponent.h">
@@ -76,6 +79,9 @@
       <Filter>Headers\Components</Filter>
     </ClInclude>
     <ClInclude Include="ScriptingSystem.h">
+      <Filter>Headers\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioPlayerComponent.h">
       <Filter>Headers\Components</Filter>
     </ClInclude>
   </ItemGroup>

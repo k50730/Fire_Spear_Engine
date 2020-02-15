@@ -56,7 +56,8 @@ int main()
 	mars->AddComponent(new RigidbodyComponent());
 	mars->GetComponent<RigidbodyComponent*>()->mass = 4;
 	mars->GetComponent<RigidbodyComponent*>()->obeysGravity = true;
-	//mars->GetComponent<AudioPlayerComponent*>()->PlaySoundFromFile("../../Images/arcade-intro-2.wav");
+	mars->AddComponent(new AudioPlayerComponent());
+	mars->GetComponent<AudioPlayerComponent*>()->PlaySoundFromFile("../../Audio/arcade-intro-2.wav");
 	
 #pragma endregion
 
