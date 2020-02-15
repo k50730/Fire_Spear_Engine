@@ -1,5 +1,3 @@
-#include <SFML/Graphics.hpp>
-#include <SFML/Audio.hpp>
 #include "FireSpear.h"
 
 int main()
@@ -58,10 +56,8 @@ int main()
 	mars->AddComponent(new RigidbodyComponent());
 	mars->GetComponent<RigidbodyComponent*>()->mass = 4;
 	mars->GetComponent<RigidbodyComponent*>()->obeysGravity = true;
-  
-  GameObject* bgmHolder = engine->gameObjectManager.CreateObject();
-  bgmHolder->AddComponent(new AudioPlayerComponent());
-	bgmHolder->GetComponent<AudioPlayerComponent*>()->PlaySoundFromFile("../../Images/arcade-intro-2.wav");
+	//mars->GetComponent<AudioPlayerComponent*>()->PlaySoundFromFile("../../Images/arcade-intro-2.wav");
+	
 #pragma endregion
 
 #pragma region Scene 3 - Physic
