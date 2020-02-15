@@ -7,13 +7,13 @@
     <ClCompile Include="FireSpear.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="GameObjectManager.cpp">
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="GameObjectManager.cpp">
+    <ClCompile Include="main.cpp">
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="PhysicEngine.cpp">
@@ -25,77 +25,19 @@
     <ClCompile Include="RigidbodyComponent.cpp">
       <Filter>Source\Components</Filter>
     </ClCompile>
-<<<<<<< Updated upstream
-    <ClCompile Include="RigidbodyComponent.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="PhysicEngine.cpp">
-      <Filter>Source Files</Filter>
-=======
-    <ClCompile Include="AudioPlayerComponent.cpp">
-      <Filter>Source\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="LuaComponent.cpp">
+    <ClCompile Include="ScriptComponent.cpp">
       <Filter>Source\Components</Filter>
     </ClCompile>
     <ClCompile Include="TransformComponent.cpp">
       <Filter>Source\Components</Filter>
->>>>>>> Stashed changes
-    </ClCompile>
-    <ClCompile Include="ScriptComponent.cpp">
-      <Filter>Source Files\Components</Filter>
     </ClCompile>
     <ClCompile Include="ScriptingSystem.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="PhysicEngine.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObjectManager.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="FireSpear.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="AudioPlayerComponent.h">
-      <Filter>Headers\Components</Filter>
-    </ClInclude>
     <ClInclude Include="BaseComponent.h">
       <Filter>Headers\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="LuaComponent.h">
-      <Filter>Headers\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="TransformComponent.h">
-<<<<<<< Updated upstream
-      <Filter>Header Files\Components</Filter>
-=======
-      <Filter>Headers\Components</Filter>
->>>>>>> Stashed changes
-    </ClInclude>
-    <ClInclude Include="RigidbodyComponent.h">
-      <Filter>Headers\Components</Filter>
-    </ClInclude>
-<<<<<<< Updated upstream
-    <ClInclude Include="PhysicEngine.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ScriptComponent.h">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="ScriptingSystem.h">
-      <Filter>Header Files</Filter>
-=======
-    <ClInclude Include="RenderComponent.h">
-      <Filter>Headers\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="IEventData.h">
-      <Filter>Headers\Event</Filter>
     </ClInclude>
     <ClInclude Include="BaseEventData.h">
       <Filter>Headers\Event</Filter>
@@ -105,32 +47,61 @@
     </ClInclude>
     <ClInclude Include="EventType.h">
       <Filter>Headers\Event</Filter>
->>>>>>> Stashed changes
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="FireSpear.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjectManager.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="IEventData.h">
+      <Filter>Headers\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicEngine.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderComponent.h">
+      <Filter>Headers\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="RigidbodyComponent.h">
+      <Filter>Headers\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ScriptComponent.h">
+      <Filter>Headers\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="TransformComponent.h">
+      <Filter>Headers\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ScriptingSystem.h">
+      <Filter>Headers\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
-      <UniqueIdentifier>{5f81b645-783a-4651-b9a8-8c21b704f297}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Components">
-      <UniqueIdentifier>{a2d8256a-4876-4d05-99ce-e3105cbf4c67}</UniqueIdentifier>
+      <UniqueIdentifier>{e2363a77-379d-4722-97e3-0a46b42665af}</UniqueIdentifier>
     </Filter>
     <Filter Include="Headers">
-      <UniqueIdentifier>{221910fc-eec3-467e-8c03-c85d54f09698}</UniqueIdentifier>
+      <UniqueIdentifier>{94841ff1-47be-42ee-b00b-1f2a8334a5de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua">
+      <UniqueIdentifier>{a4510aaa-59d8-44af-b7a9-24a7346c648d}</UniqueIdentifier>
     </Filter>
     <Filter Include="Headers\Components">
-      <UniqueIdentifier>{1ff5ff06-d414-4538-b7a5-20cd6929681a}</UniqueIdentifier>
+      <UniqueIdentifier>{b4fc92cf-4645-4ff4-bc55-4f6615da3cb0}</UniqueIdentifier>
     </Filter>
     <Filter Include="Headers\Event">
-      <UniqueIdentifier>{53cb35a8-1f49-496b-bbf2-6e2371e01814}</UniqueIdentifier>
+      <UniqueIdentifier>{073b3041-7e64-43fa-8f7b-ed6fea72b72c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Lua Scripts">
-      <UniqueIdentifier>{5fde0bce-2f78-47e5-80fa-2b8be64ef07b}</UniqueIdentifier>
+    <Filter Include="Source\Components">
+      <UniqueIdentifier>{bb6db8c8-7832-4fd4-855d-7caf6e42b0a4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="mars.lua">
-      <Filter>Lua Scripts</Filter>
+      <Filter>Lua</Filter>
     </None>
   </ItemGroup>
 </Project>

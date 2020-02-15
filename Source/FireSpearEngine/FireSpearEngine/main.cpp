@@ -27,7 +27,7 @@ int main()
 
 #pragma endregion
 
-#pragma region Scene 2 - Physic
+#pragma region Scene 2 - Physic - Collide With Gravity
 
 	GameObject* sun = engine->gameObjectManager->CreateObject();
 	sun->transformComponent.position = sf::Vector2f(600, 600);
@@ -60,7 +60,7 @@ int main()
 	
 #pragma endregion
 
-#pragma region Scene 3 - Physic
+#pragma region Scene 3 - Physic - Collide Without Gravity
 
 	/*GameObject* sun = engine->gameObjectManager->CreateObject();
 	sun->transformComponent.position = sf::Vector2f(1000, 200);
