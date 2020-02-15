@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include "FireSpear.h"
 
 int main()
@@ -25,37 +26,45 @@ int main()
 	////engine->gameObjectManager.DestroyObject(earth);
 	////engine->gameObjectManager.DestroyObject(sun);
 
+
 #pragma endregion
 
-#pragma region Scene 2 - Physic - Collide with gravity
+#pragma region Scene 2 - Physic
 
-	//GameObject* sun = engine->gameObjectManager->CreateObject();
-	//sun->transformComponent.position = sf::Vector2f(600, 600);
-	//sun->AddComponent(new RenderComponent());
-	//sun->GetComponent<RenderComponent*>()->SetColor(sf::Color::Yellow);
-	//sun->GetComponent<RenderComponent*>()->SetSize(sf::Vector2f(800, 200));
-	//sun->AddComponent(new RigidbodyComponent());
-	//sun->GetComponent<RigidbodyComponent*>()->obeysGravity = false;
-	//sun->GetComponent<RigidbodyComponent*>()->mass = 0;
+	GameObject* sun = engine->gameObjectManager->CreateObject();
+	sun->transformComponent.position = sf::Vector2f(600, 600);
 
-	//GameObject* earth = engine->gameObjectManager->CreateObject();
-	//earth->transformComponent.position = sf::Vector2f(300, 200);
-	//earth->AddComponent(new RenderComponent());
-	//earth->GetComponent<RenderComponent*>()->SetColor(sf::Color::Blue);
-	//earth->AddComponent(new RigidbodyComponent());
-	//earth->GetComponent<RigidbodyComponent*>()->mass = 0.5f;
-	//earth->GetComponent<RigidbodyComponent*>()->obeysGravity = true;
+	sun->AddComponent(new RenderComponent());
+	sun->GetComponent<RenderComponent*>()->SetColor(sf::Color::Yellow);
+	sun->GetComponent<RenderComponent*>()->SetSize(sf::Vector2f(800, 200));
+	sun->AddComponent(new RigidbodyComponent());
+	sun->GetComponent<RigidbodyComponent*>()->obeysGravity = false;
+	sun->GetComponent<RigidbodyComponent*>()->mass = 0;
 
-	//GameObject* mars = engine->gameObjectManager->CreateObject();
-	//mars->transformComponent.position = sf::Vector2f(600, 300);
-	//mars->AddComponent(new RenderComponent());
-	//mars->GetComponent<RenderComponent*>()->SetColor(sf::Color::Red);
-	//mars->AddComponent(new RigidbodyComponent());
-	//mars->GetComponent<RigidbodyComponent*>()->mass = 4;
-	//mars->GetComponent<RigidbodyComponent*>()->obeysGravity = true;
+	GameObject* earth = engine->gameObjectManager->CreateObject();
+	earth->transformComponent.position = sf::Vector2f(300, 200);
+	earth->AddComponent(new RenderComponent());
+	earth->GetComponent<RenderComponent*>()->SetColor(sf::Color::Blue);
+
+	earth->AddComponent(new RigidbodyComponent());
+	earth->GetComponent<RigidbodyComponent*>()->mass = 0.5f;
+	earth->GetComponent<RigidbodyComponent*>()->obeysGravity = true;
+
+
+	GameObject* mars = engine->gameObjectManager->CreateObject();
+	mars->transformComponent.position = sf::Vector2f(600, 300);
+	mars->AddComponent(new RenderComponent());
+	mars->GetComponent<RenderComponent*>()->SetColor(sf::Color::Red);
+	mars->AddComponent(new RigidbodyComponent());
+	mars->GetComponent<RigidbodyComponent*>()->mass = 4;
+	mars->GetComponent<RigidbodyComponent*>()->obeysGravity = true;
+  
+  GameObject* bgmHolder = engine->gameObjectManager.CreateObject();
+  bgmHolder->AddComponent(new AudioPlayerComponent());
+	bgmHolder->GetComponent<AudioPlayerComponent*>()->PlaySoundFromFile("../../Images/arcade-intro-2.wav");
 #pragma endregion
 
-#pragma region Scene 3 - Physic - Collide without gravity
+#pragma region Scene 3 - Physic
 
 	/*GameObject* sun = engine->gameObjectManager->CreateObject();
 	sun->transformComponent.position = sf::Vector2f(1000, 200);
@@ -74,36 +83,6 @@ int main()
 	earth->AddComponent(new RigidbodyComponent());
 	earth->GetComponent<RigidbodyComponent*>()->obeysGravity = false;
 	earth->GetComponent<RigidbodyComponent*>()->velecity = sf::Vector2f(200.0f, 0.0f);*/
-
-#pragma endregion 
-
-#pragma region Scene 4 - Script Component
-
-	GameObject* sun = engine->gameObjectManager->CreateObject();
-	sun->transformComponent.position = sf::Vector2f(600, 600);
-	sun->AddComponent(new RenderComponent());
-	sun->GetComponent<RenderComponent*>()->SetColor(sf::Color::Yellow);
-	sun->GetComponent<RenderComponent*>()->SetSize(sf::Vector2f(800, 200));
-	sun->AddComponent(new RigidbodyComponent());
-	sun->GetComponent<RigidbodyComponent*>()->obeysGravity = false;
-	sun->GetComponent<RigidbodyComponent*>()->mass = 0;
-
-	GameObject* earth = engine->gameObjectManager->CreateObject();
-	earth->transformComponent.position = sf::Vector2f(300, 200);
-	earth->AddComponent(new RenderComponent());
-	earth->GetComponent<RenderComponent*>()->SetColor(sf::Color::Blue);
-	earth->AddComponent(new RigidbodyComponent());
-	earth->GetComponent<RigidbodyComponent*>()->mass = 0.5f;
-	earth->GetComponent<RigidbodyComponent*>()->obeysGravity = true;
-
-	GameObject* mars = engine->gameObjectManager->CreateObject();
-	mars->transformComponent.position = sf::Vector2f(600, 300);
-	mars->AddComponent(new RenderComponent());
-	mars->GetComponent<RenderComponent*>()->SetColor(sf::Color::Red);
-	mars->AddComponent(new RigidbodyComponent());
-	mars->GetComponent<RigidbodyComponent*>()->mass = 4;
-	mars->GetComponent<RigidbodyComponent*>()->obeysGravity = true;
-	mars->AddComponent(new ScriptComponent("mars.lua"));
 
 #pragma endregion
 
