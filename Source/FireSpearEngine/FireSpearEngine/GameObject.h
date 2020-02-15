@@ -3,6 +3,7 @@
 #include "BaseComponent.h"
 #include "TransformComponent.h"
 #include "RenderComponent.h"
+#include "LuaComponent.h"
 #include "AudioPlayerComponent.h"
 #include "SFML/Graphics.hpp"
 #include <vector>
