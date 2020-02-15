@@ -1,6 +1,6 @@
 #include "GameObject.h"
-#include <iostream>
 #include "RigidbodyComponent.h"
+#include "ScriptComponent.h"
 
 GameObject::GameObject()
 {
@@ -71,7 +71,7 @@ ComponentName GameObject::GetComponent()
 	{
 		id = BaseComponent::ComponentID::Transform;
 	}
-	else if (typeid(ComponentName) == typeid(LuaComponent*))
+	else if (typeid(ComponentName) == typeid(ScriptComponent*))
 	{
 		id = BaseComponent::ComponentID::Lua;
 	}
@@ -97,7 +97,7 @@ int GameObject::GetID() const
 void GameObject::Awake()
 {
 	if (this->GetComponent<RigidbodyComponent*>()) {} // I DON'T KNOW WHY BUT JUST NEVER DELETE THIS LINE
-
+	if (this->GetComponent<ScriptComponent*>()) {}
 
 	for (std::vector<BaseComponent*>::iterator i = components.begin(); i != components.end(); ++i) 
 	{
