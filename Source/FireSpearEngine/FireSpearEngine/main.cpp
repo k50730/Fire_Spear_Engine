@@ -1,5 +1,3 @@
-#include <SFML/Graphics.hpp>
-#include <SFML/Audio.hpp>
 #include "FireSpear.h"
 
 int main()
@@ -29,7 +27,7 @@ int main()
 
 #pragma endregion
 
-#pragma region Scene 2 - Physic
+#pragma region Scene 2 - Physic - Collide With Gravity
 
 	GameObject* sun = engine->gameObjectManager->CreateObject();
 	sun->transformComponent.position = sf::Vector2f(600, 600);
@@ -58,13 +56,13 @@ int main()
 	mars->AddComponent(new RigidbodyComponent());
 	mars->GetComponent<RigidbodyComponent*>()->mass = 4;
 	mars->GetComponent<RigidbodyComponent*>()->obeysGravity = true;
-  
-  GameObject* bgmHolder = engine->gameObjectManager.CreateObject();
-  bgmHolder->AddComponent(new AudioPlayerComponent());
-	bgmHolder->GetComponent<AudioPlayerComponent*>()->PlaySoundFromFile("../../Images/arcade-intro-2.wav");
+	mars->AddComponent(new AudioPlayerComponent());
+	mars->GetComponent<AudioPlayerComponent*>()->PlaySoundFromFile("../../Audio/arcade-intro-2.wav");
+	mars->AddComponent(new ScriptComponent("mars.lua"));
+
 #pragma endregion
 
-#pragma region Scene 3 - Physic
+#pragma region Scene 3 - Physic - Collide Without Gravity
 
 	/*GameObject* sun = engine->gameObjectManager->CreateObject();
 	sun->transformComponent.position = sf::Vector2f(1000, 200);

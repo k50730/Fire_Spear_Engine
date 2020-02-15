@@ -3,12 +3,13 @@
 #include <string>
 #include <direct.h>
 #include <windows.h>
-#include "LuaPlus.h"
 #include "GameObjectManager.h"
 #include "PhysicEngine.h"
 #include "RenderComponent.h"
 #include "RigidbodyComponent.h"
+#include "ScriptComponent.h"
 #include <iostream>
+#include "ScriptingSystem.h"
 
 class FireSpear
 {
@@ -21,6 +22,7 @@ public:
 	
 	GameObjectManager* gameObjectManager;
 	PhysicEngine* physicEngine;
+	ScriptingSystem* scriptingSystem;
 	
 private:
 
