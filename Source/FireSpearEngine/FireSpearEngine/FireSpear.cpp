@@ -8,14 +8,12 @@ FireSpear::FireSpear()
 {
 	gameObjectManager = new GameObjectManager();
 	physicEngine = new PhysicEngine(gameObjectManager);
-	scriptingSystem = new ScriptingSystem(gameObjectManager);
 }
 
 FireSpear::~FireSpear()
 {
 	delete physicEngine;
 	delete gameObjectManager;
-	delete scriptingSystem;
 }
 
 bool FireSpear::CheckStorage(const DWORDLONG diskSpaceNeeded)
@@ -233,6 +231,7 @@ void FireSpear::Run()
 
 	CreateSplashScreen(_mainWindow);
 
+
 	Awake();
 	Start();
 
@@ -264,20 +263,17 @@ void FireSpear::Awake()
 {
 	physicEngine->Awake();
 	gameObjectManager->Awake();
-	scriptingSystem->Awake();
 }
 
 void FireSpear::Start()
 {
 	physicEngine->Start();
 	gameObjectManager->Start();
-	scriptingSystem->Start();
 }
 
 void FireSpear::Update(sf::Time deltaTime)
 {
 	gameObjectManager->Update(deltaTime);
-	scriptingSystem->Update(deltaTime);
 }
 
 void FireSpear::FixUpdate()

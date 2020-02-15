@@ -46,7 +46,7 @@ void PhysicEngine::IsGrounded()
                 {
                     if (rigidBodies[i]->mass != 0)
                     {
-                        if (std::abs(rigidBodies[j]->owner->transformComponent.position.y + rigidBodies[i]->aabb.bLeft.y - rigidBodies[j]->aabb.tRight.y - rigidBodies[i]->owner->transformComponent.position.y) < groundedTol)
+                        if (rigidBodies[j]->owner->transformComponent.position.y + rigidBodies[i]->aabb.bLeft.y - rigidBodies[j]->aabb.tRight.y - rigidBodies[i]->owner->transformComponent.position.y < groundedTol)
                         {
                             if (std::abs(rigidBodies[i]->velecity.y) < 0.1f) rigidBodies[i]->grounded = true;
                         }
