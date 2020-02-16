@@ -2,105 +2,111 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="EventData.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="ScriptingSystem.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicEngine.cpp">
+      <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="FireSpear.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="GameObjectManager.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="FireSpear.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioPlayerComponent.cpp">
+      <Filter>Source\Components</Filter>
     </ClCompile>
     <ClCompile Include="RenderComponent.cpp">
-      <Filter>Source Files\Components</Filter>
+      <Filter>Source\Components</Filter>
     </ClCompile>
-    <ClCompile Include="TransformComponent.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="LuaComponent.cpp">
-      <Filter>Source Files\Components</Filter>
+    <ClCompile Include="ScriptComponent.cpp">
+      <Filter>Source\Components</Filter>
     </ClCompile>
     <ClCompile Include="RigidbodyComponent.cpp">
-      <Filter>Source Files\Components</Filter>
+      <Filter>Source\Components</Filter>
     </ClCompile>
-
-      <ClCompile Include="AudioPlayerComponent.cpp">
-      <Filter>Source Files\Components</Filter>
-    <ClCompile Include="PhysicEngine.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="TransformComponent.cpp">
+      <Filter>Source\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BaseEventData.h">
-      <Filter>Header Files\Events System</Filter>
-    </ClInclude>
-    <ClInclude Include="EventType.h">
-      <Filter>Header Files\Events System</Filter>
-    </ClInclude>
-    <ClInclude Include="IEventData.h">
-      <Filter>Header Files\Events System</Filter>
-    </ClInclude>
-    <ClInclude Include="EventData.h">
-      <Filter>Header Files\Events System</Filter>
-    </ClInclude>
     <ClInclude Include="FireSpear.h">
-      <Filter>Header Files</Filter>
+      <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="GameObject.h">
-      <Filter>Header Files</Filter>
+      <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="GameObjectManager.h">
-      <Filter>Header Files</Filter>
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicEngine.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ScriptingSystem.h">
+      <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="BaseComponent.h">
-      <Filter>Header Files\Components</Filter>
+      <Filter>Headers\Compoents</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioPlayerComponent.h">
+      <Filter>Headers\Compoents</Filter>
     </ClInclude>
     <ClInclude Include="RenderComponent.h">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="TransformComponent.h">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="LuaComponent.h">
-      <Filter>Header Files\Components</Filter>
+      <Filter>Headers\Compoents</Filter>
     </ClInclude>
     <ClInclude Include="RigidbodyComponent.h">
-      <Filter>Header Files\Components</Filter>
+      <Filter>Headers\Compoents</Filter>
     </ClInclude>
- <ClInclude Include="AudioPlayerComponent.h">
-      <Filter>Header Files\Components</Filter>
-    <ClInclude Include="PhysicEngine.h">
-      <Filter>Header Files</Filter>
-
+    <ClInclude Include="ScriptComponent.h">
+      <Filter>Headers\Compoents</Filter>
+    </ClInclude>
+    <ClInclude Include="TransformComponent.h">
+      <Filter>Headers\Compoents</Filter>
+    </ClInclude>
+    <ClInclude Include="EventData.h">
+      <Filter>Headers\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="EventType.h">
+      <Filter>Headers\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="IEventData.h">
+      <Filter>Headers\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseEventData.h">
+      <Filter>Headers\Event</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{32e33ce9-50fa-4ac1-a309-050231402fe1}</UniqueIdentifier>
+    <Filter Include="Source">
+      <UniqueIdentifier>{c7f0e2c3-7d4a-4fac-9b19-e177dcec3ee2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{ea3645f6-b873-453f-9e20-64d4f6847bd0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Events System">
-      <UniqueIdentifier>{922a4286-9a7b-41d9-bf7b-cfc0afbf1290}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Components">
-      <UniqueIdentifier>{1509c11b-0615-4b4d-ba95-1abdabcd324e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Components">
-      <UniqueIdentifier>{5a6f204d-ccb7-493c-a050-4d814e3370b9}</UniqueIdentifier>
+    <Filter Include="Headers">
+      <UniqueIdentifier>{a4aa3e50-b418-4ba3-a770-e71d4b16578e}</UniqueIdentifier>
     </Filter>
     <Filter Include="Lua Scripts">
-      <UniqueIdentifier>{af7f9196-1a00-4c96-a106-ed315fb96ebb}</UniqueIdentifier>
+      <UniqueIdentifier>{06b7b3a0-c883-434e-859d-43a3e5ad0397}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Components">
+      <UniqueIdentifier>{25a5bb86-715e-449b-bfd3-c31bf002399a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\Compoents">
+      <UniqueIdentifier>{b111bc20-8c7b-494b-9a84-d47972623d67}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\Event">
+      <UniqueIdentifier>{66ac3e8a-2e98-4d54-935b-26c161f75fdc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="test.lua">
+    <None Include="mars.lua">
       <Filter>Lua Scripts</Filter>
     </None>
   </ItemGroup>
