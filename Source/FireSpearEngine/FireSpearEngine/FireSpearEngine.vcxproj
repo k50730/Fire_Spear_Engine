@@ -171,7 +171,9 @@ xcopy /Y "$(ProjectDir)..\..\..\Lib\luaplus51-1201.pdb" "$(TargetDir)luaplus51-1
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AudioPlayerComponent.cpp" />
-    <ClCompile Include="EventData.cpp" />
+    <ClCompile Include="Event.cpp" />
+    <ClCompile Include="EventManager.cpp" />
+    <ClCompile Include="EventManagerImplement.cpp" />
     <ClCompile Include="FireSpear.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameObjectManager.cpp" />
@@ -186,13 +188,15 @@ xcopy /Y "$(ProjectDir)..\..\..\Lib\luaplus51-1201.pdb" "$(TargetDir)luaplus51-1
   <ItemGroup>
     <ClInclude Include="AudioPlayerComponent.h" />
     <ClInclude Include="BaseComponent.h" />
-    <ClInclude Include="BaseEventData.h" />
-    <ClInclude Include="EventData.h" />
+    <ClInclude Include="Event.h" />
+    <ClInclude Include="EventManager.h" />
+    <ClInclude Include="EventManagerImplement.h" />
+    <ClInclude Include="FastDelegate.h" />
+    <ClInclude Include="FastDelegateBind.h" />
     <ClInclude Include="FireSpear.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameObjectManager.h" />
     <ClInclude Include="IEventData.h" />
-    <ClInclude Include="EventType.h" />
     <ClInclude Include="PhysicEngine.h" />
     <ClInclude Include="RenderComponent.h" />
     <ClInclude Include="RigidbodyComponent.h" />

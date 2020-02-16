@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <sstream>
 #include "windows.h"
 
 typedef unsigned long EventType;
@@ -13,5 +14,5 @@ public:
 	virtual void VSerialize(std::ostream& out) const = 0;
 	virtual IEventDataPtr VCopy(void) const = 0;
 	virtual const char* GetName(void) const = 0;
-
+	virtual std::string ToString() const { return GetName(); }
 };
