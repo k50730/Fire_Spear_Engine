@@ -19,19 +19,22 @@ void AudioPlayerComponent::PlaySoundFromFile(const std::string audioFile)
 	sound.play();
 }
 
-void AudioPlayerComponent::PlayMusicFromFile(const std::string musicFile)
-{
-	music.openFromFile(musicFile);
-	if (!music.openFromFile(musicFile))
-		return;
-	music.play();
-}
 
 void AudioPlayerComponent::Stop()
 {
 	sound.stop();
-	music.stop();
 }
+
+void AudioPlayerComponent::IsLoop(bool loop)
+{
+	sound.setLoop(loop);
+}
+
+void AudioPlayerComponent::SetVolume(float volume)
+{
+	sound.setVolume(volume);
+}
+
 
 void AudioPlayerComponent::Awake()
 {
