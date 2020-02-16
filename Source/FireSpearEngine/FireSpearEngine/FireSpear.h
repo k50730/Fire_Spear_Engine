@@ -48,6 +48,7 @@ private:
 
 	void Render();
 	void ProcessEvent();
+	void InstantiateSystems();
 	void Tick(); // where all update functions are
 	void Awake();
 	void Start();

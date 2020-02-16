@@ -31,6 +31,8 @@ public:
   
     void IsGrounded();
 
+    void Instantiate();
+
     void Awake();
 
     void Start();

@@ -55,22 +55,22 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="BaseComponent.h">
-      <Filter>Headers\Compoents</Filter>
+      <Filter>Headers\Components</Filter>
     </ClInclude>
     <ClInclude Include="AudioPlayerComponent.h">
-      <Filter>Headers\Compoents</Filter>
+      <Filter>Headers\Components</Filter>
     </ClInclude>
     <ClInclude Include="RenderComponent.h">
-      <Filter>Headers\Compoents</Filter>
+      <Filter>Headers\Components</Filter>
     </ClInclude>
     <ClInclude Include="RigidbodyComponent.h">
-      <Filter>Headers\Compoents</Filter>
+      <Filter>Headers\Components</Filter>
     </ClInclude>
     <ClInclude Include="ScriptComponent.h">
-      <Filter>Headers\Compoents</Filter>
+      <Filter>Headers\Components</Filter>
     </ClInclude>
     <ClInclude Include="TransformComponent.h">
-      <Filter>Headers\Compoents</Filter>
+      <Filter>Headers\Components</Filter>
     </ClInclude>
     <ClInclude Include="EventData.h">
       <Filter>Headers\Event</Filter>
@@ -98,15 +98,18 @@
     <Filter Include="Source\Components">
       <UniqueIdentifier>{25a5bb86-715e-449b-bfd3-c31bf002399a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Headers\Compoents">
-      <UniqueIdentifier>{b111bc20-8c7b-494b-9a84-d47972623d67}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Headers\Event">
       <UniqueIdentifier>{66ac3e8a-2e98-4d54-935b-26c161f75fdc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\Components">
+      <UniqueIdentifier>{b111bc20-8c7b-494b-9a84-d47972623d67}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="mars.lua">
+      <Filter>Lua Scripts</Filter>
+    </None>
+    <None Include="earth.lua">
       <Filter>Lua Scripts</Filter>
     </None>
   </ItemGroup>

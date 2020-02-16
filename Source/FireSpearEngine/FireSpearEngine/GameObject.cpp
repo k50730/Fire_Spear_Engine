@@ -160,3 +160,4 @@ std::vector<GameObject*> GameObject::GetChildren() const
 {
 	return children;
 }
+
