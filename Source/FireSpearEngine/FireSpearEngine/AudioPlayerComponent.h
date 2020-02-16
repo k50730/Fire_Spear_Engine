@@ -7,13 +7,13 @@ class AudioPlayerComponent : public BaseComponent
 private:
 	sf::SoundBuffer buffer;
 	sf::Sound sound;
-	sf::Music music;
 public:
 	AudioPlayerComponent();
 	~AudioPlayerComponent();
 	void PlaySoundFromFile(const std::string audioFile);
-	void PlayMusicFromFile(const std::string musicFile);
 	void Stop();
+	void IsLoop(bool);
+	void SetVolume(float volume);
 	
 	void Awake();
 	void Start();
