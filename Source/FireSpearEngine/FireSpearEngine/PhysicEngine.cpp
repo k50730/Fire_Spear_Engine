@@ -57,6 +57,17 @@ void PhysicEngine::IsGrounded()
     }
 }
 
+void PhysicEngine::Instantiate()
+{
+    for (std::map<int, GameObject*>::iterator i = gameObjectManager->gameObjects.begin(); i != gameObjectManager->gameObjects.end(); ++i)
+    {
+        if ((i->second)->GetComponent<RigidbodyComponent*>() != nullptr)
+        {
+            (i->second)->GetComponent<RigidbodyComponent*>()->owner = i->second;
+        }
+    }
+}
+
 void PhysicEngine::Awake()
 {
     for (std::map<int, GameObject*>::iterator i = gameObjectManager->gameObjects.begin(); i != gameObjectManager->gameObjects.end(); ++i)
@@ -70,13 +81,6 @@ void PhysicEngine::Awake()
 
 void PhysicEngine::Start()
 {
-    for (std::map<int, GameObject*>::iterator i = gameObjectManager->gameObjects.begin(); i != gameObjectManager->gameObjects.end(); ++i)
-    {
-        if ((i->second)->GetComponent<RigidbodyComponent*>() != nullptr)
-        {
-            (i->second)->GetComponent<RigidbodyComponent*>()->owner = i->second;
-        }
-    }
 }
 
 void PhysicEngine::CheckCollisions()

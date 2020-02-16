@@ -232,6 +232,7 @@ void FireSpear::Run()
 	_gameState = FireSpear::Playing;
 
 	CreateSplashScreen(_mainWindow);
+	InstantiateSystems();
 
 	Awake();
 	Start();
@@ -314,6 +315,12 @@ void FireSpear::ProcessEvent()
 		}
 
 	}
+}
+
+void FireSpear::InstantiateSystems()
+{
+	physicEngine->Instantiate();
+	scriptingSystem->Instantiate();
 }
 
 bool FireSpear::IsExiting()

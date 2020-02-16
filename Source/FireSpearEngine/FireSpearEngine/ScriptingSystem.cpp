@@ -9,11 +9,7 @@ ScriptingSystem::~ScriptingSystem()
 {
 }
 
-void ScriptingSystem::Awake()
-{
-}
-
-void ScriptingSystem::Start()
+void ScriptingSystem::Instantiate()
 {
     for (std::map<int, GameObject*>::iterator i = gameObjectManager->gameObjects.begin(); i != gameObjectManager->gameObjects.end(); ++i)
     {
@@ -22,6 +18,15 @@ void ScriptingSystem::Start()
             (i->second)->GetComponent<ScriptComponent*>()->owner = i->second;
         }
     }
+}
+
+void ScriptingSystem::Awake()
+{ 
+}
+
+void ScriptingSystem::Start()
+{
+ 
 }
 
 void ScriptingSystem::Update(sf::Time dt)

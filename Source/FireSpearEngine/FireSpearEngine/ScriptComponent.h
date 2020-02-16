@@ -5,7 +5,9 @@
 #include "SFML/Graphics.hpp"
 #include <iostream>
 #include "GameObject.h"
+#include <random>
 
+using namespace LuaPlus;
 
 class ScriptComponent : public BaseComponent
 {
@@ -20,9 +22,22 @@ public:
 	GameObject* owner;
 
 private:
-	lua_State* luaState;
 	std::string name;
 	bool CheckLua(int r);
 	bool isFileAvailable;
-	
+	LuaState* mLuaState;
+	void RegisterFunctions();
+
+#pragma region Lua Functions
+	void LuaCreateGameObject();
+	void LuaAddChild();
+	void LuaAddCompoent();
+	void LuaSetParent();
+	float LuaRandom(float, float);
+	void SetColor(float r, float g, float b, float);
+	void SetSize(float, float);
+	void LuaSetPosition(float, float);
+	void LuaSetRotation(float);
+	sf::Vector2f LuaGetPosition() const;
+#pragma endregion
 };

@@ -7,7 +7,6 @@
 #include "SFML/Graphics.hpp"
 #include <vector>
 
-
 class GameObject
 {
 public:
@@ -34,6 +33,7 @@ public:
 	sf::Transform GetWorldTransform() const;
 	GameObject* GetParent() const;
 	std::vector<GameObject*> GetChildren() const;
+
 private:
 	
 	sf::Transform worldTransform;
@@ -41,6 +41,6 @@ private:
 	GameObject* parent;
 	std::vector<GameObject*> children;
 	std::vector<BaseComponent*> components;
-
+	
 };
 

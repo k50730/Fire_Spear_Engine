@@ -8,6 +8,7 @@ public:
 	ScriptingSystem(GameObjectManager* g);
 	~ScriptingSystem();
 
+	void Instantiate();
 	void Awake();
 	void Start();
 	void Update(sf::Time dt);
