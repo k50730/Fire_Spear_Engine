@@ -104,7 +104,8 @@
       <SubSystem>NotSet</SubSystem>
     </Link>
     <PostBuildEvent>
-      <Command>copy "$(ProjectDir)..\..\..\Lib\luaplus51-1201.dll" "$(OutputPath)"</Command>
+      <Command>copy "$(ProjectDir)..\..\..\Lib\luaplus51-1201.dll" "$(OutputPath)"
+copy "$(ProjectDir)..\..\..\Lib\openal32.dll" "$(OutputPath)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -144,7 +145,8 @@ xcopy /Y "$(ProjectDir)..\..\..\Lib\luaplus51-1201.pdb" "$(TargetDir)luaplus51-1
       <SubSystem>NotSet</SubSystem>
     </Link>
     <PostBuildEvent>
-      <Command>copy "$(ProjectDir)..\..\..\Lib\luaplus51-1201.dll" "$(OutputPath)"</Command>
+      <Command>copy "$(ProjectDir)..\..\..\Lib\luaplus51-1201.dll" "$(OutputPath)"
+copy "$(ProjectDir)..\..\..\Lib\openal32.dll" "$(OutputPath)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
