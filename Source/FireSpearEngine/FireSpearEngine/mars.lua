@@ -15,7 +15,6 @@ function Update(dt)
          render.SetColor(Random(0, 255), Random(0, 255), Random(0, 255), Random(0, 255))
          time = 0
     end
-
 end
 
 function  LateUpdate()

@@ -163,16 +163,6 @@ int main()
 	sun->GetComponent<RigidbodyComponent*>()->obeysGravity = false;
 	sun->GetComponent<RigidbodyComponent*>()->mass = 0;
 
-	GameObject* earth = engine->gameObjectManager->CreateObject();
-	earth->transformComponent.position = sf::Vector2f(300, 200);
-	earth->AddComponent(new RenderComponent());
-	earth->GetComponent<RenderComponent*>()->SetColor(sf::Color::Blue);
-
-	earth->AddComponent(new RigidbodyComponent());
-	earth->GetComponent<RigidbodyComponent*>()->mass = 0.5f;
-	earth->GetComponent<RigidbodyComponent*>()->obeysGravity = true;
-
-
 	GameObject* mars = engine->gameObjectManager->CreateObject();
 	mars->transformComponent.position = sf::Vector2f(600, 300);
 	mars->AddComponent(new RenderComponent());
@@ -180,12 +170,7 @@ int main()
 	mars->AddComponent(new RigidbodyComponent());
 	mars->GetComponent<RigidbodyComponent*>()->mass = 4;
 	mars->GetComponent<RigidbodyComponent*>()->obeysGravity = true;
-	mars->AddComponent(new AudioPlayerComponent());
-	mars->GetComponent<AudioPlayerComponent*>()->PlaySoundFromFile("../../Audio/arcade-intro-2.wav");
-	mars->GetComponent<AudioPlayerComponent*>()->SetVolume(30.f);
-	mars->GetComponent<AudioPlayerComponent*>()->IsLoop(true);
-
-	mars->AddComponent(new InputComponent());
+	mars->AddComponent(new ScriptComponent("inputTest.lua"));
 #pragma endregion
 
 	engine->Run();

@@ -76,14 +76,23 @@ void ScriptComponent::RegisterFunctions()
 	transform.SetObject(1, transform);
 	transform.RegisterDirect("SetPosition", *this, &ScriptComponent::LuaSetPosition);
 	transform.RegisterDirect("SetRotation", *this, &ScriptComponent::LuaSetRotation);
-	
+	transform.RegisterDirect("AddForce", *this, &ScriptComponent::LuaAddForce);
 
 	LuaObject render = mLuaState->GetGlobals().CreateTable("render");
 	render.SetObject(1, transform);
 	render.RegisterDirect("SetColor", *this, &ScriptComponent::SetColor);
 	render.RegisterDirect("SetSize", *this, &ScriptComponent::SetSize);
+
+	LuaObject input = mLuaState->GetGlobals().CreateTable("input");
+	input.SetObject(1, transform);
+	input.RegisterDirect("IsKeyDown", *this, &ScriptComponent::LuaIsKeyDown);
 }
 
+
+bool ScriptComponent::LuaIsKeyDown(const char* KeyName)
+{
+	return InputSystem::GetKeyDown(KeyName);
+}
 
 float ScriptComponent::LuaRandom(float min, float max)
 {
@@ -120,6 +129,14 @@ void ScriptComponent::LuaSetPosition(float x, float y)
 void ScriptComponent::LuaSetRotation(float r)
 {
 	owner->transformComponent.rotation = r;
+}
+
+void ScriptComponent::LuaAddForce(float x, float y)
+{
+	if (owner->GetComponent<RigidbodyComponent*>() != nullptr)
+	{
+		owner->GetComponent<RigidbodyComponent*>()->AddForce(sf::Vector2f(x, y));
+	}
 }
 
 sf::Vector2f ScriptComponent::LuaGetPosition() const
