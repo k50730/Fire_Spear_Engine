@@ -1,7 +1,6 @@
 #include "GameObject.h"
 #include "RigidbodyComponent.h"
 #include "ScriptComponent.h"
-#include "InputComponent.h"
 
 GameObject::GameObject()
 {
@@ -84,10 +83,6 @@ ComponentName GameObject::GetComponent()
 	{
 		id = BaseComponent::ComponentID::Audio;
 	}
-	else if (typeid(ComponentName) == typeid(InputComponent*))
-	{
-		id = BaseComponent::ComponentID::Input;
-	}
 
 	for (const auto& p : components)
 	{ 
@@ -108,7 +103,6 @@ void GameObject::Awake()
 	if (this->GetComponent<RigidbodyComponent*>()) {} 
 	if (this->GetComponent<ScriptComponent*>()) {}
 	if (this->GetComponent<AudioPlayerComponent*>()) {}
-	if (this->GetComponent<InputComponent*>()){}
 
 
 	for (std::vector<BaseComponent*>::iterator i = components.begin(); i != components.end(); ++i) 
