@@ -43,6 +43,12 @@
     <ClCompile Include="EventManagerImplement.cpp">
       <Filter>Source\Events</Filter>
     </ClCompile>
+    <ClCompile Include="InputComponent.cpp">
+      <Filter>Source\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="InputSystem.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FireSpear.h">
@@ -95,6 +101,12 @@
     </ClInclude>
     <ClInclude Include="FastDelegateBind.h">
       <Filter>Headers\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="InputComponent.h">
+      <Filter>Headers\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="InputSystem.h">
+      <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

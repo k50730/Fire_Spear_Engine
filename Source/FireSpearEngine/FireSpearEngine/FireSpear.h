@@ -10,6 +10,7 @@
 #include "ScriptComponent.h"
 #include <iostream>
 #include "ScriptingSystem.h"
+#include "InputSystem.h"
 
 class FireSpear
 {
@@ -23,6 +24,7 @@ public:
 	GameObjectManager* gameObjectManager;
 	PhysicEngine* physicEngine;
 	ScriptingSystem* scriptingSystem;
+	InputSystem* inputSystem;
 	
 private:
 

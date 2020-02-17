@@ -10,7 +10,8 @@ public:
         Render,
         Lua,
         Rigidbody,
-        Audio
+        Audio,
+        Input
     };
     virtual void Awake() = 0;
     virtual void Start() = 0;

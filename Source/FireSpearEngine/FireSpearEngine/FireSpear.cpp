@@ -9,6 +9,7 @@ FireSpear::FireSpear()
 	gameObjectManager = new GameObjectManager();
 	physicEngine = new PhysicEngine(gameObjectManager);
 	scriptingSystem = new ScriptingSystem(gameObjectManager);
+	inputSystem = new InputSystem(gameObjectManager);
 }
 
 FireSpear::~FireSpear()
@@ -16,6 +17,7 @@ FireSpear::~FireSpear()
 	delete physicEngine;
 	delete gameObjectManager;
 	delete scriptingSystem;
+	delete inputSystem;
 }
 
 bool FireSpear::CheckStorage(const DWORDLONG diskSpaceNeeded)
@@ -266,6 +268,7 @@ void FireSpear::Awake()
 	physicEngine->Awake();
 	gameObjectManager->Awake();
 	scriptingSystem->Awake();
+	inputSystem->Awake();
 }
 
 void FireSpear::Start()
@@ -273,12 +276,14 @@ void FireSpear::Start()
 	physicEngine->Start();
 	gameObjectManager->Start();
 	scriptingSystem->Start();
+	inputSystem->Start();
 }
 
 void FireSpear::Update(sf::Time deltaTime)
 {
 	gameObjectManager->Update(deltaTime);
 	scriptingSystem->Update(deltaTime);
+	inputSystem->Update(deltaTime);
 }
 
 void FireSpear::FixUpdate()
@@ -321,6 +326,7 @@ void FireSpear::InstantiateSystems()
 {
 	physicEngine->Instantiate();
 	scriptingSystem->Instantiate();
+	inputSystem->Instantiate();
 }
 
 bool FireSpear::IsExiting()
