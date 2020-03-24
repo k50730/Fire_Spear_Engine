@@ -135,6 +135,8 @@ bool InputSystem::GetKeyDown(const char* Key)
 #pragma endregion
 
     auto k = KeyCode.find(Key);
-    if(k != std::end(KeyCode))
+    if (k != std::end(KeyCode))
+    {
         return sf::Keyboard::isKeyPressed(k->second);
+    }
 }

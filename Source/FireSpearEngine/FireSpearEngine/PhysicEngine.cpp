@@ -153,7 +153,11 @@ void PhysicEngine::CheckCollisions()
                         collisions.clear();
                         clearCollisions = false;
                     }
+
+                    delete pair;
+                    delete colInfo;
                 }
+
             }
         }
     }

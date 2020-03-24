@@ -8,6 +8,7 @@ GameObjectManager::~GameObjectManager()
 	{
 		delete p.second;
 	}
+	gameObjects.clear();
 }
 
 GameObject* GameObjectManager::CreateObject()

@@ -58,6 +58,6 @@ private:
     bool clearCollisions = false;
 
     std::map<CollisionPair*, CollisionInfo*> collisions;
-    std::vector<RigidbodyComponent*> rigidBodies; // keep track of all PhyscsRBody are existing in the scene
+    std::vector<RigidbodyComponent*> rigidBodies; // keep track of all PhysicsRBody are existing in the scene
 };
 

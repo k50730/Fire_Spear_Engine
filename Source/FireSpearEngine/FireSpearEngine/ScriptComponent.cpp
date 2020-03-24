@@ -14,6 +14,7 @@ ScriptComponent::~ScriptComponent()
 {
 	LuaState::Destroy(mLuaState);
 	mLuaState = nullptr;
+	delete* mLuaState;
 }
 
 void ScriptComponent::Awake()

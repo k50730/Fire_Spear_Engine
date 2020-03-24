@@ -13,11 +13,12 @@ GameObject::GameObject(int newID) : id(newID), parent(nullptr)
 
 GameObject::~GameObject()
 {
-	//for (auto p : components)
-	//{
-	//	delete p;
-	//}
-	//components.clear();
+	for (auto p : components)
+	{
+		if(p->GetComponentID() != BaseComponent::ComponentID::Transform) // Transform component is not a pointer
+		delete p;
+	}
+	components.clear();
 }
 
 void GameObject::SetParent(GameObject& p)
