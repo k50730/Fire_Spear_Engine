@@ -24,7 +24,7 @@ struct ObjectsReader
 class XMLReader
 {
 public:
-	tinyxml2::XMLError XMLLoad(const char* path, GameObjectManager* gameObjectManager);
+	tinyxml2::XMLError XMLLoad(tinyxml2::XMLDocument* xmlDoc, GameObjectManager* gameObjectManager);
 	tinyxml2::XMLError XMLSave(const char* path, std::list<GameObject> GameObjects);
 	
 	std::list<GameObject> GameObjects;

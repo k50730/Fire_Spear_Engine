@@ -74,4 +74,14 @@ std::vector<GameObject*> GameObjectManager::DrawableObjects()
 	return drawableObjects;
 }
 
+void GameObjectManager::DeleteAllGameObjects()
+{
+	for (auto g : gameObjects)
+	{
+		delete g.second;
+	}
+	gameObjects.clear();
+	nextObjectID = 0;
+}
+
 

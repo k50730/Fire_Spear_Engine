@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Scene>
+  
+  <GameObject>
+    <TransformComponent>
+      <position>
+        <x>1000</x>
+        <y>200</y>
+      </position>
+      <scale>
+        <x>1</x>
+        <y>1</y>
+      </scale>
+      <rotation>0</rotation>
+    </TransformComponent>
+    <RenderComponent>
+      <size>
+        <x>200</x>
+        <y>200</y>
+      </size>
+      <color>
+        <r>255</r>
+        <g>0</g>
+        <b>0</b>
+        <a>255</a>
+      </color>
+    </RenderComponent>
+    <RigidbodyComponent>
+      <obeysGravity>false</obeysGravity>
+      <mass>2</mass>
+      <velocity>
+        <x>-200</x>
+        <y>0</y>
+      </velocity>
+    </RigidbodyComponent>
+  </GameObject>
+  
+  <GameObject>
+    <TransformComponent>
+      <position>
+        <x>100</x>
+        <y>200</y>
+      </position>
+    </TransformComponent>
+    <RenderComponent>
+      <color>
+        <r>0</r>
+        <g>0</g>
+        <b>255</b>
+        <a>255</a>
+      </color>
+    </RenderComponent>
+    <RigidbodyComponent>
+      <obeysGravity>false</obeysGravity>
+      <velocity>
+        <x>200</x>
+        <y>0</y>
+      </velocity>
+    </RigidbodyComponent>
+  </GameObject>
+
+  
+</Scene>

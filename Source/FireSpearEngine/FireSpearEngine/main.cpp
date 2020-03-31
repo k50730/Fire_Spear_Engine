@@ -1,13 +1,14 @@
 #include "FireSpear.h"
-#include "XMLReader.h"
 
 int main()
 {
 	FireSpear* engine = new FireSpear();
 	engine->InitilizeSystem();
 
-	XMLReader* xmlManager = new XMLReader();
-	xmlManager->XMLLoad("xmlTest.xml", engine->gameObjectManager);
+	engine->sceneManager->LoadScene("Scene1.xml");
+	engine->sceneManager->LoadScene("Scene2.xml");
+	engine->sceneManager->SetActive(0);
+	//engine->sceneManager->SetActive(1);
 
 	engine->Run();
 	delete engine;
