@@ -1,6 +1,25 @@
 #include "XMLReader.h"
 #include <iostream>
 
+
+/*
+LOADING GAMEOBJECT XML FILE
+LOAD NEEDS A PATH FROM THE USER, 
+XMLNODE IS THE ROOT OF THE XML FILE ( IN THIS CASE THE SCENE NODE )
+EACH ELEMENT WILL START WITH GAMEOBJECT ELEMENT
+FOLLOW THE XML FORMAT LIKE THIS AND ADD WHATEVER ELEMENT WE WILL NEED IN FUTURE
+<Scene>
+  <GameObject>
+	<ID>1</ID>
+	<position>
+	  <x>200</x>
+	  <y>200</y>
+	</position>
+  </GameObject>
+
+</Scene>
+
+*/
 XMLError XMLReader::XMLLoad(const char* path) 
 {
 	XMLDocument xmlDoc;
@@ -23,7 +42,7 @@ XMLError XMLReader::XMLLoad(const char* path)
 	// Create empty game object
 	GameObject go;
 	//int i = 0;
-
+	// Run the while loop if there's still element
 	while (element != nullptr)
 	{
 		// Check the id of the gameobject element and store it
