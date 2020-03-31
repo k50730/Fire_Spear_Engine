@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Scene>
+  <GameObject>
+    <ID>1</ID>
+    <position>
+      <x>200</x>
+      <y>200</y>
+    </position>
+  </GameObject>
+  
+</Scene>

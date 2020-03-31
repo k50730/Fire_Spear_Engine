@@ -46,6 +46,12 @@
     <ClCompile Include="InputSystem.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="tinyxml2.cpp">
+      <Filter>Source\External</Filter>
+    </ClCompile>
+    <ClCompile Include="XMLReader.cpp">
+      <Filter>Source\External</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FireSpear.h">
@@ -102,6 +108,12 @@
     <ClInclude Include="InputSystem.h">
       <Filter>Headers</Filter>
     </ClInclude>
+    <ClInclude Include="tinyxml2.h">
+      <Filter>Headers\External</Filter>
+    </ClInclude>
+    <ClInclude Include="XMLReader.h">
+      <Filter>Headers\External</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
@@ -124,6 +136,12 @@
     </Filter>
     <Filter Include="Source\Events">
       <UniqueIdentifier>{a98f78e7-e0e7-40a1-bd89-501ef47239df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\External">
+      <UniqueIdentifier>{10cd618d-b726-4002-9f8b-3246d5ebe06b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\External">
+      <UniqueIdentifier>{2704672b-bb6d-4500-9608-55f139bd172d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

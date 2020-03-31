@@ -1,9 +1,13 @@
 #include "FireSpear.h"
+#include "XMLReader.h"
 
 int main()
 {
 	FireSpear* engine = new FireSpear();
 	engine->InitilizeSystem();
+
+	XMLReader* xmlManager = new XMLReader();
+	xmlManager->XMLLoad("xmlTest.xml");
 
 #pragma region Scene 1 - Child and Parent Objects
 

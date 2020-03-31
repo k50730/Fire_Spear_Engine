@@ -186,7 +186,9 @@ xcopy /Y "$(ProjectDir)..\..\..\Lib\luaplus51-1201.pdb" "$(TargetDir)luaplus51-1
     <ClCompile Include="RigidbodyComponent.cpp" />
     <ClCompile Include="ScriptComponent.cpp" />
     <ClCompile Include="ScriptingSystem.cpp" />
+    <ClCompile Include="tinyxml2.cpp" />
     <ClCompile Include="TransformComponent.cpp" />
+    <ClCompile Include="XMLReader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AudioPlayerComponent.h" />
@@ -206,7 +208,9 @@ xcopy /Y "$(ProjectDir)..\..\..\Lib\luaplus51-1201.pdb" "$(TargetDir)luaplus51-1
     <ClInclude Include="RigidbodyComponent.h" />
     <ClInclude Include="ScriptComponent.h" />
     <ClInclude Include="ScriptingSystem.h" />
+    <ClInclude Include="tinyxml2.h" />
     <ClInclude Include="TransformComponent.h" />
+    <ClInclude Include="XMLReader.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="earth.lua" />
