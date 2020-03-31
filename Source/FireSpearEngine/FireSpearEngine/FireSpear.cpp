@@ -300,7 +300,7 @@ void FireSpear::Render()
 	{
 		RenderComponent* r = p->GetComponent<RenderComponent*>();
 		
-		_mainWindow.draw(r->shape, sf::RenderStates(r->transform));
+		_mainWindow.draw(r->GetShape(), sf::RenderStates(r->GetTransform()));
 	}
 	_mainWindow.display();
 }

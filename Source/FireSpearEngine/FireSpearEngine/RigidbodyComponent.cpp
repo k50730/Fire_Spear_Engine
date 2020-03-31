@@ -33,8 +33,8 @@ void RigidbodyComponent::SetAABB()
 {
     RenderComponent* r = owner->GetComponent<RenderComponent*>();
 
-    aabb.bLeft = sf::Vector2f(-r->shape.getSize().x / 2, -r->shape.getSize().y / 2); //new Vector2(bound.center.x - bound.extents.x, bound.center.y - bound.extents.y);
-    aabb.tRight = sf::Vector2f(r->shape.getSize().x / 2, r->shape.getSize().y / 2); //new Vector2(bound.center.x + bound.extents.x, bound.center.y + bound.extents.y);
+    aabb.bLeft = sf::Vector2f(-r->GetShape().getSize().x / 2, -r->GetShape().getSize().y / 2); //new Vector2(bound.center.x - bound.extents.x, bound.center.y - bound.extents.y);
+    aabb.tRight = sf::Vector2f(r->GetShape().getSize().x / 2, r->GetShape().getSize().y / 2); //new Vector2(bound.center.x + bound.extents.x, bound.center.y + bound.extents.y);
 }
 
 void RigidbodyComponent::AddForce(sf::Vector2f force)
@@ -74,6 +74,3 @@ void RigidbodyComponent::Integrate(float dT)
 
     totalForces = sf::Vector2f(0.0f, 0.0f);
 }
-
-
-

@@ -11,7 +11,6 @@ public:
 
 	RigidbodyComponent();
 	~RigidbodyComponent();
-
 	void Awake() override;
 	void Start() override;
 	void Update(sf::Time t) override;

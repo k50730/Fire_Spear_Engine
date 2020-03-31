@@ -95,7 +95,7 @@ void ScriptComponent::RegisterFunctions()
 	rigidBody.RegisterDirect("SetBounciness", *this, &ScriptComponent::LuaSetBounciness);
 
 	LuaObject gameObject = mLuaState->GetGlobals().CreateTable("gameObject");
-	//gameObject.RegisterDirect("AddComponent", *this, &ScriptComponent::LuaAddComponent);
+	gameObject.RegisterDirect("AddComponent", *this, &ScriptComponent::LuaAddComponent);
 }
 
 
@@ -181,22 +181,23 @@ void ScriptComponent::LuaSetBounciness(float _bounciness)
 	}
 }
 
-//void ScriptComponent::LuaAddComponent(const char* ComponentName)
-//{
-//	std::string compName = ComponentName;
-//	if (compName == "TransformComponent")
-//	{
-//		owner->AddComponent(new TransformComponent());
-//	}
-//	else if (compName == "RenderComponent")
-//	{
-//		owner->AddComponent(new RenderComponent());
-//	}
-//	else if (compName == "RigidBodyComponent")
-//	{
-//		owner->AddComponent(new RigidbodyComponent());
-//	}
-//}
+void ScriptComponent::LuaAddComponent(const char* ComponentName)
+{
+	std::string compName = ComponentName;
+	std::cout << compName << std::endl;
+	if (compName == "TransformComponent")
+	{
+		owner->AddComponent(new TransformComponent());
+	}
+	else if (compName == "RenderComponent")
+	{
+		owner->AddComponent(new RenderComponent());
+	}
+	else if (compName == "RigidBodyComponent")
+	{
+		owner->AddComponent(new RigidbodyComponent());
+	}
+}
 
 sf::Vector2f ScriptComponent::LuaGetPosition() const
 {

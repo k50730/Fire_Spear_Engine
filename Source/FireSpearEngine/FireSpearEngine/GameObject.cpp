@@ -157,7 +157,7 @@ void GameObject::Render()
 {
 	if (GetComponent<RenderComponent*>() != nullptr)
 	{
-		GetComponent<RenderComponent*>()->transform = worldTransform;
+		GetComponent<RenderComponent*>()->SetTransform(worldTransform);
 	}
 }
 

@@ -27,6 +27,9 @@ function Update(dt)
     if(input.IsKeyDown("Space")) then
         rigidBody.Stop();
     end
+    if(input.IsKeyDown("G")) then
+        gameObject.AddComponent("RigidBodyComponent");
+    end
     
 
 end
