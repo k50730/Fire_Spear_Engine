@@ -4,7 +4,7 @@
 #include <string>
 #include <list>
 #include <iterator>
-using namespace tinyxml2;
+#include "GameObjectManager.h"
 
 #ifndef XMLCheckResult
 #define XMLCheckResult(a_eResult) if (a_eResult != XML_SUCCESS) { printf("Error: %i\n", a_eResult); return a_eResult; }
@@ -24,12 +24,16 @@ struct ObjectsReader
 class XMLReader
 {
 public:
-	XMLError XMLLoad(const char* path);
-	XMLError XMLSave(const char* path, std::list<GameObject> GameObjects);
+	tinyxml2::XMLError XMLLoad(const char* path, GameObjectManager* gameObjectManager);
+	tinyxml2::XMLError XMLSave(const char* path, std::list<GameObject> GameObjects);
 	
-
 	std::list<GameObject> GameObjects;
-	//GameObject gameObjects[];
+
+private:
+	void ReadComponentFromXML(GameObject* g, tinyxml2::XMLElement* c);
+	void ReadTransformProperties(GameObject* g, tinyxml2::XMLElement* t);
+	void ReadRenderProperties(GameObject* g, tinyxml2::XMLElement* t);
+	void ReadRigidbodyProperties(GameObject* g, tinyxml2::XMLElement* t);
 };
 
 

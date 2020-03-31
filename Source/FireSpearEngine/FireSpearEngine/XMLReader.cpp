@@ -1,26 +1,9 @@
 #include "XMLReader.h"
 #include <iostream>
+#include "ScriptComponent.h"
+using namespace tinyxml2;
 
-
-/*
-LOADING GAMEOBJECT XML FILE
-LOAD NEEDS A PATH FROM THE USER, 
-XMLNODE IS THE ROOT OF THE XML FILE ( IN THIS CASE THE SCENE NODE )
-EACH ELEMENT WILL START WITH GAMEOBJECT ELEMENT
-FOLLOW THE XML FORMAT LIKE THIS AND ADD WHATEVER ELEMENT WE WILL NEED IN FUTURE
-<Scene>
-  <GameObject>
-	<ID>1</ID>
-	<position>
-	  <x>200</x>
-	  <y>200</y>
-	</position>
-  </GameObject>
-
-</Scene>
-
-*/
-XMLError XMLReader::XMLLoad(const char* path) 
+XMLError XMLReader::XMLLoad(const char* path, GameObjectManager* gameObjectManager)
 {
 	XMLDocument xmlDoc;
 
@@ -35,36 +18,21 @@ XMLError XMLReader::XMLLoad(const char* path)
 	if (element == nullptr) { 
 		std::cout << "Element null" << std::endl;
 		return XML_ERROR_PARSING_ELEMENT; }
-	//int xml_count;
-	//eResult = element->QueryIntText(&xml_count);
-	//XMLCheckResult(eResult);
 
-	// Create empty game object
-	GameObject go;
+	
 	//int i = 0;
 	// Run the while loop if there's still element
 	while (element != nullptr)
 	{
-		// Check the id of the gameobject element and store it
-		XMLElement* item = element->FirstChildElement("ID");
-		int id;
-		eResult = item->QueryIntText(&id);
-		XMLCheckResult(eResult);
-		// Same thing for the position
-		item = element->FirstChildElement("position")->FirstChildElement("x");
-		float px;
-		eResult = item->QueryFloatText(&px);
+		GameObject* go = gameObjectManager->CreateObject();
+		XMLElement* component = element->FirstChildElement();
 
-		float py;
-		eResult = item->QueryFloatText(&py);
-		// Create a gameobject with the id
-		go = GameObject(id);
-		std::cout << "Gameobject with id: " << go.GetID() << " found in xml" << std::endl;
-		// Set it's position
-		//go.GetComponent<TransformComponent>().position = sf::Vector2f(px, py);
-		// Add the gameobject to the list
-		GameObjects.push_back(go);
-		// Go for the next gameobject
+		while (component != nullptr)
+		{
+			ReadComponentFromXML(go, component);
+			component = component->NextSiblingElement();
+		}
+	
 		element = element->NextSiblingElement("GameObject");
 	}
 }
@@ -109,4 +77,134 @@ XMLError XMLReader::XMLSave(const char* path, std::list<GameObject> GameObjects)
 	}
 	XMLError eResult = xmlDoc.SaveFile(path);
 	XMLCheckResult(eResult);
+}
+
+void XMLReader::ReadComponentFromXML(GameObject* g, XMLElement* c)
+{
+	std::string name = c->Name();
+	if (name == "TransformComponent") ReadTransformProperties(g, c);
+	else if(name == "RenderComponent") ReadRenderProperties(g, c);
+	else if (name == "RigidbodyComponent") ReadRigidbodyProperties(g, c);
+	else if(name == "ScriptComponent") g->AddComponent(new ScriptComponent(c->GetText()));
+	else if (name == "AudioComponent") g->AddComponent(new AudioPlayerComponent());
+	
+}
+
+void XMLReader::ReadTransformProperties(GameObject* g, XMLElement* c)
+{
+	XMLElement* property = c->FirstChildElement();
+
+	while (property != nullptr)
+	{
+		switch (*property->Name())
+		{
+		case * "position":
+			float px, py;
+			property->FirstChildElement("x")->QueryFloatText(&px);
+			property->FirstChildElement("y")->QueryFloatText(&py);
+			g->transformComponent.position = sf::Vector2f(px, py);
+			break;
+
+		case * "scale":
+			float sx, sy;
+			property->FirstChildElement("x")->QueryFloatText(&sx);
+			property->FirstChildElement("y")->QueryFloatText(&sy);
+			g->transformComponent.scale = sf::Vector2f(sx, sy);
+			break;
+
+		case * "rotation":
+			float a;
+			property->QueryFloatText(&a);
+			g->transformComponent.rotation = a;
+			break;
+
+		default:
+			break;
+		}
+		property = property->NextSiblingElement();
+	}
+}
+
+void XMLReader::ReadRenderProperties(GameObject* g, XMLElement* c)
+{
+	 g->AddComponent(new RenderComponent());
+	 auto render = g->GetComponent<RenderComponent*>();
+
+	 XMLElement* property = c->FirstChildElement();
+
+	 while (property != nullptr)
+	 {
+		 switch (*property->Name())
+		 {
+		 case * "size":
+			 float px, py;
+			 property->FirstChildElement("x")->QueryFloatText(&px);
+			 property->FirstChildElement("y")->QueryFloatText(&py);
+			 render->SetSize(sf::Vector2f(px, py));
+			 break;
+
+		 case * "color":
+			 float r, g, b, a;
+			 property->FirstChildElement("r")->QueryFloatText(&r);
+			 property->FirstChildElement("g")->QueryFloatText(&g);
+			 property->FirstChildElement("b")->QueryFloatText(&b);
+			 property->FirstChildElement("a")->QueryFloatText(&a);
+			 render->SetColor(sf::Color(r, g, b, a));
+			 break;
+
+		 default:
+			 break;
+		 }
+		 property = property->NextSiblingElement();
+	 }
+}
+
+void XMLReader::ReadRigidbodyProperties(GameObject* g, tinyxml2::XMLElement* c)
+{
+	g->AddComponent(new RigidbodyComponent());
+
+	auto rid = g->GetComponent<RigidbodyComponent*>();
+
+	XMLElement* property = c->FirstChildElement();
+
+	while (property != nullptr)
+	{
+		switch (*property->Name())
+		{
+		case * "velecity":
+			float x, y;
+			property->FirstChildElement("x")->QueryFloatText(&x);
+			property->FirstChildElement("y")->QueryFloatText(&y);
+			rid->velecity = sf::Vector2f(x, y);
+			break;
+
+		case * "mass":
+			float m;
+			property->QueryFloatText(&m);
+			rid->mass = m;
+			break;
+
+		case * "bounciness":
+			float b;
+			property->QueryFloatText(&b);
+			rid->bounciness = b;
+			break;
+
+		case * "obeysGravity":
+			bool o;
+			property->QueryBoolText(&o);
+			rid->obeysGravity = o;
+			break;
+
+		case * "isTrigger":
+			bool i;
+			property->QueryBoolText(&i);
+			rid->isTrigger = i;
+			break;
+
+		default:
+			break;
+		}
+		property = property->NextSiblingElement();
+	}
 }

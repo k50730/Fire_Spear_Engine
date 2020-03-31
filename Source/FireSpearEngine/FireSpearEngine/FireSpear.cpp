@@ -10,6 +10,7 @@ FireSpear::FireSpear()
 	physicEngine = new PhysicEngine(gameObjectManager);
 	scriptingSystem = new ScriptingSystem(gameObjectManager);
 	inputSystem = new InputSystem(gameObjectManager);
+	sceneManager = new SceneManager(gameObjectManager);
 }
 
 FireSpear::~FireSpear()
@@ -18,6 +19,7 @@ FireSpear::~FireSpear()
 	delete gameObjectManager;
 	delete scriptingSystem;
 	delete inputSystem;
+	delete sceneManager;
 }
 
 bool FireSpear::CheckStorage(const DWORDLONG diskSpaceNeeded)

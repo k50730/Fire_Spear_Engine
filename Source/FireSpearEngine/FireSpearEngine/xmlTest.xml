@@ -1,17 +1,77 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Scene>
+  
   <GameObject>
-    <ID>1</ID>
-    <position>
-      <x>200</x>
-      <y>200</y>
-    </position>
+    <TransformComponent>
+      <position>
+        <x>600</x>
+        <y>600</y>
+      </position>
+      <scale>
+        <x>1</x>
+        <y>1</y>
+      </scale>
+      <rotation>0</rotation>
+    </TransformComponent>
+    <RenderComponent>
+      <size>
+        <x>800</x>
+        <y>200</y>
+      </size>
+      <color>
+        <r>255</r>
+        <g>0</g>
+        <b>0</b>
+        <a>255</a>
+      </color>
+    </RenderComponent>
+    <RigidbodyComponent>
+      <obeysGravity>false</obeysGravity>
+      <mass>0</mass>
+    </RigidbodyComponent>
   </GameObject>
+  
   <GameObject>
-    <ID>2</ID>
-    <position>
-      <x>200</x>
-      <y>200</y>
-    </position>
+    <TransformComponent>
+      <position>
+        <x>300</x>
+        <y>200</y>
+      </position>
+    </TransformComponent>
+    <RenderComponent>
+      <color>
+        <r>0</r>
+        <g>0</g>
+        <b>255</b>
+        <a>255</a>
+      </color>
+    </RenderComponent>
+    <RigidbodyComponent>
+      <obeysGravity>false</obeysGravity>
+      <mass>0</mass>
+    </RigidbodyComponent>
   </GameObject>
+
+  <GameObject>
+    <TransformComponent>
+      <position>
+        <x>600</x>
+        <y>300</y>
+      </position>
+    </TransformComponent>
+    <RenderComponent>
+      <color>
+        <r>0</r>
+        <g>0</g>
+        <b>255</b>
+        <a>255</a>
+      </color>
+    </RenderComponent>
+    <RigidbodyComponent>
+      <obeysGravity>true</obeysGravity>
+      <mass>4</mass>
+    </RigidbodyComponent>
+    <ScriptComponent>inputTest.lua</ScriptComponent>
+  </GameObject>
+  
 </Scene>
