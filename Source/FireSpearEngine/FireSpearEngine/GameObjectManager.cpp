@@ -15,7 +15,6 @@ GameObject* GameObjectManager::CreateObject()
 {
 	GameObject* newObj = new GameObject(nextObjectID++);
 	gameObjects[newObj->GetID()] = newObj;
-
 	return newObj;
 }
 

@@ -46,6 +46,13 @@
     <ClCompile Include="InputSystem.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="tinyxml2.cpp">
+      <Filter>Source\External</Filter>
+    </ClCompile>
+    <ClCompile Include="XMLReader.cpp">
+      <Filter>Source\External</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FireSpear.h">
@@ -102,6 +109,13 @@
     <ClInclude Include="InputSystem.h">
       <Filter>Headers</Filter>
     </ClInclude>
+    <ClInclude Include="tinyxml2.h">
+      <Filter>Headers\External</Filter>
+    </ClInclude>
+    <ClInclude Include="XMLReader.h">
+      <Filter>Headers\External</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
@@ -125,6 +139,15 @@
     <Filter Include="Source\Events">
       <UniqueIdentifier>{a98f78e7-e0e7-40a1-bd89-501ef47239df}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\External">
+      <UniqueIdentifier>{10cd618d-b726-4002-9f8b-3246d5ebe06b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\External">
+      <UniqueIdentifier>{2704672b-bb6d-4500-9608-55f139bd172d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="XML Scenes">
+      <UniqueIdentifier>{57168ad3-b621-4196-a935-31771aaf63ad}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="mars.lua">
@@ -136,5 +159,13 @@
     <None Include="inputTest.lua">
       <Filter>Lua Scripts</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="xmlTest.xml">
+      <Filter>XML Scenes</Filter>
+    </Xml>
+    <Xml Include="Scenes.xml">
+      <Filter>XML Scenes</Filter>
+    </Xml>
   </ItemGroup>
 </Project>

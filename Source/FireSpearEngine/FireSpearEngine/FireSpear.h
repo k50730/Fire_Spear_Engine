@@ -11,6 +11,7 @@
 #include <iostream>
 #include "ScriptingSystem.h"
 #include "InputSystem.h"
+#include "SceneManager.h"
 
 class FireSpear
 {
@@ -25,7 +26,8 @@ public:
 	PhysicEngine* physicEngine;
 	ScriptingSystem* scriptingSystem;
 	InputSystem* inputSystem;
-	
+	SceneManager* sceneManager;
+
 private:
 
 	bool IsExiting();
