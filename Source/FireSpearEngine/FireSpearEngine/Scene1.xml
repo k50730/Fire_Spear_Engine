@@ -71,7 +71,7 @@
       <obeysGravity>true</obeysGravity>
       <mass>4</mass>
     </RigidbodyComponent>
-    <ScriptComponent>inputTest.lua</ScriptComponent>
+    <ScriptComponent>player.lua</ScriptComponent>
   </GameObject>
   
 </Scene>

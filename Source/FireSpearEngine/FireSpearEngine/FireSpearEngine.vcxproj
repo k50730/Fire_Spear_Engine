@@ -216,7 +216,7 @@ xcopy /Y "$(ProjectDir)..\..\..\Lib\luaplus51-1201.pdb" "$(TargetDir)luaplus51-1
   </ItemGroup>
   <ItemGroup>
     <None Include="earth.lua" />
-    <None Include="inputTest.lua" />
+    <None Include="player.lua" />
     <None Include="mars.lua" />
   </ItemGroup>
   <ItemGroup>

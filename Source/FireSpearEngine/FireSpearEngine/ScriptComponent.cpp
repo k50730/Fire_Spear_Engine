@@ -77,7 +77,6 @@ void ScriptComponent::RegisterFunctions()
 	transform.SetObject(1, transform);
 	transform.RegisterDirect("SetPosition", *this, &ScriptComponent::LuaSetPosition);
 	transform.RegisterDirect("SetRotation", *this, &ScriptComponent::LuaSetRotation);
-	transform.RegisterDirect("AddForce", *this, &ScriptComponent::LuaAddForce);
 
 	LuaObject render = mLuaState->GetGlobals().CreateTable("render");
 	render.SetObject(1, transform);
@@ -87,6 +86,13 @@ void ScriptComponent::RegisterFunctions()
 	LuaObject input = mLuaState->GetGlobals().CreateTable("input");
 	input.SetObject(1, transform);
 	input.RegisterDirect("IsKeyDown", *this, &ScriptComponent::LuaIsKeyDown);
+
+	LuaObject rigidBody = mLuaState->GetGlobals().CreateTable("rigidBody");
+	rigidBody.RegisterDirect("AddForce", *this, &ScriptComponent::LuaAddForce);
+	rigidBody.RegisterDirect("Stop", *this, &ScriptComponent::LuaStop);
+
+	LuaObject gameObject = mLuaState->GetGlobals().CreateTable("gameObject");
+	gameObject.RegisterDirect("AddComponent", *this, &ScriptComponent::LuaAddComponent);
 }
 
 
@@ -137,6 +143,31 @@ void ScriptComponent::LuaAddForce(float x, float y)
 	if (owner->GetComponent<RigidbodyComponent*>() != nullptr)
 	{
 		owner->GetComponent<RigidbodyComponent*>()->AddForce(sf::Vector2f(x, y));
+	}
+}
+
+void ScriptComponent::LuaStop()
+{
+	if (owner->GetComponent<RigidbodyComponent*>() != nullptr)
+	{
+		owner->GetComponent<RigidbodyComponent*>()->Stop();
+	}
+}
+
+void ScriptComponent::LuaAddComponent(const char* ComponentName)
+{
+	std::string compName = ComponentName;
+	if (compName == "TransformComponent")
+	{
+		owner->AddComponent(new TransformComponent());
+	}
+	else if (compName == "RenderComponent")
+	{
+		owner->AddComponent(new RenderComponent());
+	}
+	else if (compName == "RigidBodyComponent")
+	{
+		owner->AddComponent(new RigidbodyComponent());
 	}
 }
 

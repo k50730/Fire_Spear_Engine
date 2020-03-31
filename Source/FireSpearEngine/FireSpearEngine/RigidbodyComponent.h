@@ -17,7 +17,7 @@ public:
 	void Update(sf::Time t) override;
 	void LateUpdate() override;
 
-	sf::Vector2f velecity;
+	sf::Vector2f velocity;
 	float mass = 1;
 	float bounciness = 0.8f; // The bounciness factor (value between 0 and 1, 0 being no bounce, and 1 being super bouncy!)
 	bool obeysGravity = true; // Whether or not this body obeys gravity

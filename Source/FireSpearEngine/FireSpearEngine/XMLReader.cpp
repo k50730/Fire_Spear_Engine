@@ -171,7 +171,7 @@ void XMLReader::ReadRigidbodyProperties(GameObject* g, tinyxml2::XMLElement* c)
 			float x, y;
 			property->FirstChildElement("x")->QueryFloatText(&x);
 			property->FirstChildElement("y")->QueryFloatText(&y);
-			rid->velecity = sf::Vector2f(x, y);
+			rid->velocity = sf::Vector2f(x, y);
 			break;
 
 		case * "mass":

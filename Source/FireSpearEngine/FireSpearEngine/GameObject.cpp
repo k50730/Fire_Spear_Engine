@@ -4,6 +4,7 @@
 
 GameObject::GameObject()
 {
+	compExist = false;
 }
 
 GameObject::GameObject(int newID) : id(newID), parent(nullptr)
@@ -56,15 +57,28 @@ void GameObject::AddChild(GameObject* child)
 
 void GameObject::AddComponent(BaseComponent* c)
 {
-	components.push_back(c);
+	compExist = false;
+	for (auto it : components)
+	{
+		if (it->GetComponentID() == c->GetComponentID())
+			compExist = true;
+	}
+	if (!compExist)
+	{
+		components.push_back(c);
+	}
 }
 
 template <typename ComponentName>
 ComponentName GameObject::GetComponent() 
 {
-	BaseComponent::ComponentID id = BaseComponent::ComponentID::NONE;
+	BaseComponent::ComponentID id = BaseComponent::ComponentID::None;
 
-	if (typeid(ComponentName) == typeid(RenderComponent*))
+	if (typeid(ComponentName) == typeid(BaseComponent*))
+	{
+		id = BaseComponent::ComponentID::Base;
+	}
+	else if (typeid(ComponentName) == typeid(RenderComponent*))
 	{
 		id = BaseComponent::ComponentID::Render;
 	}

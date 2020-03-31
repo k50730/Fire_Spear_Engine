@@ -39,6 +39,8 @@ private:
 	void LuaSetPosition(float, float);
 	void LuaSetRotation(float);
 	void LuaAddForce(float x, float y);
+	void LuaStop();
+	void LuaAddComponent(const char* ComponentName);
 	sf::Vector2f LuaGetPosition() const;
 #pragma endregion
 };

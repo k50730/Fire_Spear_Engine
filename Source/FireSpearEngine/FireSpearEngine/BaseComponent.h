@@ -5,7 +5,8 @@ class BaseComponent
 public:
     enum ComponentID
     {
-        NONE,
+        None,
+        Base,
         Transform,
         Render,
         Lua,

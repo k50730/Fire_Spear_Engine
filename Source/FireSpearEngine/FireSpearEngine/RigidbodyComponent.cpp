@@ -3,6 +3,8 @@
 RigidbodyComponent::RigidbodyComponent() 
 {
     id = BaseComponent::ComponentID::Rigidbody;
+    obeysGravity = false;
+    mass = 1;
 }
 
 RigidbodyComponent::~RigidbodyComponent()
@@ -41,7 +43,7 @@ void RigidbodyComponent::AddForce(sf::Vector2f force)
 
 void RigidbodyComponent::Stop()
 {
-    velecity = sf::Vector2f(0.0f, 0.0f);
+    velocity = sf::Vector2f(0.0f, 0.0f);
     totalForces = sf::Vector2f(0.0f, 0.0f);
 }
 
@@ -54,18 +56,18 @@ void RigidbodyComponent::Integrate(float dT)
     }
     else
     {
-        if (std::abs(velecity.y) < 2.0f) velecity.y = 0;
+        if (std::abs(velocity.y) < 2.0f) velocity.y = 0;
     }
    
     acceleration += totalForces / mass;
     if (mass == 0)
         acceleration = sf::Vector2f(0.0f, 0.0f);
 
-    velecity += acceleration * dT;
+    velocity += acceleration * dT;
 
     sf::Vector2f temp = owner->transformComponent.position;
     
-    temp += velecity * dT;
+    temp += velocity * dT;
     owner->transformComponent.position = temp;
     
     SetAABB();

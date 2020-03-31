@@ -41,6 +41,7 @@ private:
 	GameObject* parent;
 	std::vector<GameObject*> children;
 	std::vector<BaseComponent*> components;
-	
+
+	bool compExist;
 };
 

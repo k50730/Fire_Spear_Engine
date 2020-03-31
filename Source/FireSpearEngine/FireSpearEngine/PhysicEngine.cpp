@@ -48,7 +48,7 @@ void PhysicEngine::IsGrounded()
                     {
                         if (std::abs(rigidBodies[j]->owner->transformComponent.position.y + rigidBodies[i]->aabb.bLeft.y - rigidBodies[j]->aabb.tRight.y - rigidBodies[i]->owner->transformComponent.position.y) < groundedTol)
                         {
-                            if (std::abs(rigidBodies[i]->velecity.y) < 0.1f) rigidBodies[i]->grounded = true;
+                            if (std::abs(rigidBodies[i]->velocity.y) < 0.1f) rigidBodies[i]->grounded = true;
                         }
                     }
                 }
@@ -172,7 +172,7 @@ void PhysicEngine::ResolveCollisions()
             float minBounce = std::min(c.first->rigidBodyA->bounciness, c.first->rigidBodyB->bounciness);
 
             // dot product of relativeVelocity and collisionNormal
-            float velAlongNormal = ((c.first->rigidBodyB->velecity - c.first->rigidBodyA->velecity).x * collisions[c.first]->collisionNormal.x) + ((c.first->rigidBodyB->velecity - c.first->rigidBodyA->velecity).y * collisions[c.first]->collisionNormal.y);
+            float velAlongNormal = ((c.first->rigidBodyB->velocity - c.first->rigidBodyA->velocity).x * collisions[c.first]->collisionNormal.x) + ((c.first->rigidBodyB->velocity - c.first->rigidBodyA->velocity).y * collisions[c.first]->collisionNormal.y);
 
             if (velAlongNormal > 0) continue; // the contact is either stationary or seperating -> no impluse is needed
 
@@ -187,8 +187,8 @@ void PhysicEngine::ResolveCollisions()
             sf::Vector2f impulse = j * collisions[c.first]->collisionNormal;
 
             // update velocities
-            c.first->rigidBodyA->velecity = c.first->rigidBodyA->velecity - impulse * invMassA;
-            c.first->rigidBodyB->velecity = c.first->rigidBodyB->velecity + impulse * invMassB;
+            c.first->rigidBodyA->velocity = c.first->rigidBodyA->velocity - impulse * invMassA;
+            c.first->rigidBodyB->velocity = c.first->rigidBodyB->velocity + impulse * invMassB;
 
             if (std::abs(collisions[c.first]->penetration) > 0.01f)
             {

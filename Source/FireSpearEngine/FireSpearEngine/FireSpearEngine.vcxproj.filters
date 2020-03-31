@@ -160,7 +160,7 @@
     <None Include="earth.lua">
       <Filter>Lua Scripts</Filter>
     </None>
-    <None Include="inputTest.lua">
+    <None Include="player.lua">
       <Filter>Lua Scripts</Filter>
     </None>
   </ItemGroup>
