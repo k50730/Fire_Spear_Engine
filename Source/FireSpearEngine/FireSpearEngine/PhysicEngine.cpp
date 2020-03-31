@@ -44,7 +44,7 @@ void PhysicEngine::IsGrounded()
                     && rigidBodies[i]->owner->transformComponent.position.x + rigidBodies[i]->aabb.tRight.x > rigidBodies[j]->owner->transformComponent.position.x + rigidBodies[j]->aabb.bLeft.x
                     )
                 {
-                    if (rigidBodies[i]->mass != 0)
+                    if (rigidBodies[i]->GetMass() != 0)
                     {
                         if (std::abs(rigidBodies[j]->owner->transformComponent.position.y + rigidBodies[i]->aabb.bLeft.y - rigidBodies[j]->aabb.tRight.y - rigidBodies[i]->owner->transformComponent.position.y) < groundedTol)
                         {
@@ -169,7 +169,7 @@ void PhysicEngine::ResolveCollisions()
     {
         if (c.second != nullptr)
         {
-            float minBounce = std::min(c.first->rigidBodyA->bounciness, c.first->rigidBodyB->bounciness);
+            float minBounce = std::min(c.first->rigidBodyA->GetBounciness(), c.first->rigidBodyB->GetBounciness());
 
             // dot product of relativeVelocity and collisionNormal
             float velAlongNormal = ((c.first->rigidBodyB->velocity - c.first->rigidBodyA->velocity).x * collisions[c.first]->collisionNormal.x) + ((c.first->rigidBodyB->velocity - c.first->rigidBodyA->velocity).y * collisions[c.first]->collisionNormal.y);
@@ -178,9 +178,9 @@ void PhysicEngine::ResolveCollisions()
 
             float j = -(1 + minBounce) * velAlongNormal;
 
-            float invMassA = c.first->rigidBodyA->mass == 0 ? 0 : 1 / c.first->rigidBodyA->mass;
+            float invMassA = c.first->rigidBodyA->GetMass() == 0 ? 0 : 1 / c.first->rigidBodyA->GetMass();
 
-            float invMassB = c.first->rigidBodyB->mass == 0 ? 0 : 1 / c.first->rigidBodyB->mass;
+            float invMassB = c.first->rigidBodyB->GetMass() == 0 ? 0 : 1 / c.first->rigidBodyB->GetMass();
 
             j /= invMassA + invMassB;
 
@@ -205,8 +205,8 @@ void PhysicEngine::PositionalCorrection(CollisionPair* c)
 
     const float percent = 0.2f; // what is this ?????
 
-    float invMassA = c->rigidBodyA->mass == 0 ? 0 : 1 / c->rigidBodyA->mass;
-    float invMassB = c->rigidBodyB->mass == 0 ? 0 : 1 / c->rigidBodyB->mass;
+    float invMassA = c->rigidBodyA->GetMass() == 0 ? 0 : 1 / c->rigidBodyA->GetMass();
+    float invMassB = c->rigidBodyB->GetMass() == 0 ? 0 : 1 / c->rigidBodyB->GetMass();
 
     sf::Vector2f correction = ((collisions[c]->penetration / (invMassA + invMassB)) * percent) * -collisions[c]->collisionNormal;
 

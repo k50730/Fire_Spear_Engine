@@ -177,19 +177,19 @@ void XMLReader::ReadRigidbodyProperties(GameObject* g, tinyxml2::XMLElement* c)
 		case * "mass":
 			float m;
 			property->QueryFloatText(&m);
-			rid->mass = m;
+			rid->SetMass(m);
 			break;
 
 		case * "bounciness":
 			float b;
 			property->QueryFloatText(&b);
-			rid->bounciness = b;
+			rid->SetBounciness(b);
 			break;
 
 		case * "obeysGravity":
 			bool o;
 			property->QueryBoolText(&o);
-			rid->obeysGravity = o;
+			rid->SetObeyGravity(o);
 			break;
 
 		case * "isTrigger":
