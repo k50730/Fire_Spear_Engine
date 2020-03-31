@@ -22,6 +22,7 @@ void RigidbodyComponent::Start()
 
 void RigidbodyComponent::Update(sf::Time deltaTime)
 {
+
 }
 
 void RigidbodyComponent::LateUpdate()
@@ -40,7 +41,6 @@ void RigidbodyComponent::AddForce(sf::Vector2f force)
 {
     totalForces += force;
 }
-
 void RigidbodyComponent::Stop()
 {
     velocity = sf::Vector2f(0.0f, 0.0f);
@@ -74,3 +74,6 @@ void RigidbodyComponent::Integrate(float dT)
 
     totalForces = sf::Vector2f(0.0f, 0.0f);
 }
+
+
+

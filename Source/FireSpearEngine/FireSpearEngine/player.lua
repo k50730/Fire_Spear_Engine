@@ -2,6 +2,9 @@ function Awake()
 end
 
 function Start()
+    rigidBody.ObeyGravity(true)
+    rigidBody.SetMass(10)
+    rigidBody.SetBounciness(0.5)
 end
 
 function Update(dt)
@@ -24,9 +27,7 @@ function Update(dt)
     if(input.IsKeyDown("Space")) then
         rigidBody.Stop();
     end
-    if(input.IsKeyDown("G")) then
-        gameObject.AddComponent("RigidBodyComponent")
-    end
+    
 
 end
 

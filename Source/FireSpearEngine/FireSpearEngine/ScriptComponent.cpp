@@ -90,9 +90,12 @@ void ScriptComponent::RegisterFunctions()
 	LuaObject rigidBody = mLuaState->GetGlobals().CreateTable("rigidBody");
 	rigidBody.RegisterDirect("AddForce", *this, &ScriptComponent::LuaAddForce);
 	rigidBody.RegisterDirect("Stop", *this, &ScriptComponent::LuaStop);
+	rigidBody.RegisterDirect("ObeyGravity", *this, &ScriptComponent::LuaObeyGravity);
+	rigidBody.RegisterDirect("SetMass", *this, &ScriptComponent::LuaSetMass);
+	rigidBody.RegisterDirect("SetBounciness", *this, &ScriptComponent::LuaSetBounciness);
 
 	LuaObject gameObject = mLuaState->GetGlobals().CreateTable("gameObject");
-	gameObject.RegisterDirect("AddComponent", *this, &ScriptComponent::LuaAddComponent);
+	//gameObject.RegisterDirect("AddComponent", *this, &ScriptComponent::LuaAddComponent);
 }
 
 
@@ -154,22 +157,46 @@ void ScriptComponent::LuaStop()
 	}
 }
 
-void ScriptComponent::LuaAddComponent(const char* ComponentName)
+void ScriptComponent::LuaObeyGravity(bool _obeyGravity)
 {
-	std::string compName = ComponentName;
-	if (compName == "TransformComponent")
+	if (owner->GetComponent<RigidbodyComponent*>() != nullptr)
 	{
-		owner->AddComponent(new TransformComponent());
-	}
-	else if (compName == "RenderComponent")
-	{
-		owner->AddComponent(new RenderComponent());
-	}
-	else if (compName == "RigidBodyComponent")
-	{
-		owner->AddComponent(new RigidbodyComponent());
+		owner->GetComponent<RigidbodyComponent*>()->SetObeyGravity(_obeyGravity);
 	}
 }
+
+void ScriptComponent::LuaSetMass(float _mass)
+{
+	if (owner->GetComponent<RigidbodyComponent*>() != nullptr)
+	{
+		owner->GetComponent<RigidbodyComponent*>()->SetMass(_mass);
+	}
+}
+
+void ScriptComponent::LuaSetBounciness(float _bounciness)
+{
+	if (owner->GetComponent<RigidbodyComponent*>() != nullptr)
+	{
+		owner->GetComponent<RigidbodyComponent*>()->SetBounciness(_bounciness);
+	}
+}
+
+//void ScriptComponent::LuaAddComponent(const char* ComponentName)
+//{
+//	std::string compName = ComponentName;
+//	if (compName == "TransformComponent")
+//	{
+//		owner->AddComponent(new TransformComponent());
+//	}
+//	else if (compName == "RenderComponent")
+//	{
+//		owner->AddComponent(new RenderComponent());
+//	}
+//	else if (compName == "RigidBodyComponent")
+//	{
+//		owner->AddComponent(new RigidbodyComponent());
+//	}
+//}
 
 sf::Vector2f ScriptComponent::LuaGetPosition() const
 {

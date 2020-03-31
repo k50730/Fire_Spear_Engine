@@ -68,8 +68,6 @@
       </color>
     </RenderComponent>
     <RigidbodyComponent>
-      <obeysGravity>true</obeysGravity>
-      <mass>4</mass>
     </RigidbodyComponent>
     <ScriptComponent>player.lua</ScriptComponent>
   </GameObject>

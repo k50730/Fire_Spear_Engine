@@ -34,6 +34,13 @@ public:
 	void AddForce(sf::Vector2f force);
 	void Stop();
 	void Integrate(float);
+	//Get
+	const float GetMass() const { return mass; }
+	//Set
+	void SetObeyGravity(bool _obeyGravity) { obeysGravity = _obeyGravity; }
+	void SetMass(float _mass) { mass = _mass; }
+	void SetBounciness(float _bounciness) { bounciness = _bounciness; }
+	void IsTrigger(bool _isTrigger) { isTrigger = _isTrigger; }
 
 	AABB aabb;
 	GameObject* owner;
