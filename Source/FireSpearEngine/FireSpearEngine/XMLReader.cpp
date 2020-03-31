@@ -3,15 +3,10 @@
 #include "ScriptComponent.h"
 using namespace tinyxml2;
 
-XMLError XMLReader::XMLLoad(const char* path, GameObjectManager* gameObjectManager)
+XMLError XMLReader::XMLLoad(XMLDocument* xmlDoc, GameObjectManager* gameObjectManager)
 {
-	XMLDocument xmlDoc;
-
-	// Check if the file load correctly
-	XMLError eResult = xmlDoc.LoadFile(path);
-	XMLCheckResult(eResult);
 	// Go through the scene root node
-	XMLNode* scene = xmlDoc.FirstChildElement("Scene");
+	XMLNode* scene = xmlDoc->FirstChildElement("Scene");
 	if (scene == nullptr) return XML_ERROR_FILE_READ_ERROR;
 	// Go through the first element 
 	XMLElement* element = scene->FirstChildElement("GameObject");
@@ -34,6 +29,7 @@ XMLError XMLReader::XMLLoad(const char* path, GameObjectManager* gameObjectManag
 		}
 	
 		element = element->NextSiblingElement("GameObject");
+		
 	}
 }
 
