@@ -12,7 +12,8 @@ XMLError XMLReader::XMLLoad(XMLDocument* xmlDoc, GameObjectManager* gameObjectMa
 	XMLElement* element = scene->FirstChildElement("GameObject");
 	if (element == nullptr) { 
 		std::cout << "Element null" << std::endl;
-		return XML_ERROR_PARSING_ELEMENT; }
+		return XML_ERROR_PARSING_ELEMENT; 
+	}
 
 	
 	//int i = 0;
@@ -47,15 +48,9 @@ XMLError XMLReader::XMLSave(const char* path, std::list<GameObject> GameObjects)
 		XMLElement* rootElement = xmlDoc.NewElement("GameObject");
 
 		// Adding details of gameobject
-		// Adding id element
-		XMLElement* goElement = xmlDoc.NewElement("ID");
-		goElement->SetText(it->GetID());
-
-		// Close the id element
-		scene->InsertEndChild(goElement);
-
+		
 		// Adding position element
-		goElement = xmlDoc.NewElement("position");
+		XMLElement* goElement = xmlDoc.NewElement("position");
 
 		// Adding x and y position under position element
 		XMLElement* posElement = xmlDoc.NewElement("x");
@@ -203,4 +198,57 @@ void XMLReader::ReadRigidbodyProperties(GameObject* g, tinyxml2::XMLElement* c)
 		}
 		property = property->NextSiblingElement();
 	}
+}
+
+void XMLReader::SaveComponentToXML(GameObject* g, XMLElement* c) 
+{
+	
+}
+
+void XMLReader::SaveTransformComponent(GameObject* g, XMLDocument* xDoc, XMLElement* e)
+{
+	XMLElement* newTransform = xDoc->NewElement("TransformComponent");
+
+	float px, py;
+	px = g->GetComponent<TransformComponent>().position.x;
+	py = g->GetComponent<TransformComponent>().position.y;
+
+	float sx, sy;
+	sx = g->GetComponent<TransformComponent>().scale.x;
+	sy = g->GetComponent<TransformComponent>().scale.y;
+
+	float a;
+	a = g->GetComponent<TransformComponent>().rotation;
+
+	XMLElement* position = xDoc->NewElement("position");
+	// x position
+	XMLElement* posElement = xDoc->NewElement("x");
+	posElement->SetText(px);
+	position->InsertEndChild(posElement);
+	// y position
+	posElement = xDoc->NewElement("y");
+	posElement->SetText(py);
+	position->InsertEndChild(posElement);
+	// End Child position
+	newTransform->InsertEndChild(position);
+
+	XMLElement* scale = xDoc->NewElement("scale");
+	// x scale
+	XMLElement* scaleElement = xDoc->NewElement("x");
+	scaleElement->SetText(sx);
+	scale->InsertEndChild(scaleElement);
+	// y scale
+	scaleElement = xDoc->NewElement("y");
+	scaleElement->SetText(sy);
+	scale->InsertEndChild(scaleElement);
+	// End Child scale
+	newTransform->InsertEndChild(scale);
+
+	XMLElement* rotation = xDoc->NewElement("rotation");
+	rotation->SetText(a);
+	newTransform->InsertEndChild(rotation);
+
+
+	e->InsertEndChild(newTransform);
+
 }

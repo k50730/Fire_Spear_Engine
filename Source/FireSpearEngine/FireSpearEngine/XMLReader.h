@@ -31,9 +31,12 @@ public:
 
 private:
 	void ReadComponentFromXML(GameObject* g, tinyxml2::XMLElement* c);
-	void ReadTransformProperties(GameObject* g, tinyxml2::XMLElement* t);
-	void ReadRenderProperties(GameObject* g, tinyxml2::XMLElement* t);
-	void ReadRigidbodyProperties(GameObject* g, tinyxml2::XMLElement* t);
+	void ReadTransformProperties(GameObject* g, tinyxml2::XMLElement* c);
+	void ReadRenderProperties(GameObject* g, tinyxml2::XMLElement* c);
+	void ReadRigidbodyProperties(GameObject* g, tinyxml2::XMLElement* c);
+
+	void SaveComponentToXML(GameObject* g, tinyxml2::XMLElement* e);
+	void SaveTransformComponent(GameObject* g, tinyxml2::XMLDocument* c, tinyxml2::XMLElement* e);
 };
 
 
