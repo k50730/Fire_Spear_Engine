@@ -34,7 +34,7 @@ XMLError XMLReader::XMLLoad(XMLDocument* xmlDoc, GameObjectManager* gameObjectMa
 	}
 }
 
-XMLError XMLReader::XMLSave(const char* path, std::list<GameObject> GameObjects)
+XMLError XMLReader::XMLSave(const char* path, std::list<GameObject*> GameObjects)
 {
 	XMLDocument xmlDoc;
 
@@ -43,27 +43,16 @@ XMLError XMLReader::XMLSave(const char* path, std::list<GameObject> GameObjects)
 	xmlDoc.InsertFirstChild(scene);
 
 
-	for (std::list<GameObject>::iterator it = GameObjects.begin(); it != GameObjects.end(); ++it) {
+	for (std::list<GameObject*>::iterator it = GameObjects.begin(); it != GameObjects.end(); ++it) {
 		// Add a gameobject element to xml
 		XMLElement* rootElement = xmlDoc.NewElement("GameObject");
 
 		// Adding details of gameobject
-		
-		// Adding position element
-		XMLElement* goElement = xmlDoc.NewElement("position");
+		SaveTransformProperties(*it, xmlDoc.ToDocument(), rootElement);
+		SaveRenderProperties(*it, xmlDoc.ToDocument(), rootElement);
+		SaveRigidbodyProperties(*it, xmlDoc.ToDocument(), rootElement);
 
-		// Adding x and y position under position element
-		XMLElement* posElement = xmlDoc.NewElement("x");
-		posElement->SetText(200);
-		//posElement->SetText(it->GetComponent<TransformComponent>().position.x);
-		goElement->InsertEndChild(posElement);
-		// add y
-		posElement = xmlDoc.NewElement("y");
-		posElement->SetText(200);
-		//posElement->SetText(it->GetComponent<TransformComponent>().position.y);
-		goElement->InsertEndChild(posElement);
-		// closing Position element
-		scene->InsertEndChild(goElement);
+		scene->InsertEndChild(rootElement);
 
 	}
 	XMLError eResult = xmlDoc.SaveFile(path);
@@ -162,7 +151,7 @@ void XMLReader::ReadRigidbodyProperties(GameObject* g, tinyxml2::XMLElement* c)
 	{
 		switch (*property->Name())
 		{
-		case * "velecity":
+		case * "velocity":
 			float x, y;
 			property->FirstChildElement("x")->QueryFloatText(&x);
 			property->FirstChildElement("y")->QueryFloatText(&y);
@@ -205,20 +194,20 @@ void XMLReader::SaveComponentToXML(GameObject* g, XMLElement* c)
 	
 }
 
-void XMLReader::SaveTransformComponent(GameObject* g, XMLDocument* xDoc, XMLElement* e)
+void XMLReader::SaveTransformProperties(GameObject* g, XMLDocument* xDoc, XMLElement* e)
 {
 	XMLElement* newTransform = xDoc->NewElement("TransformComponent");
 
 	float px, py;
-	px = g->GetComponent<TransformComponent>().position.x;
-	py = g->GetComponent<TransformComponent>().position.y;
+	px = g->transformComponent.position.x;
+	py = g->transformComponent.position.y;
 
 	float sx, sy;
-	sx = g->GetComponent<TransformComponent>().scale.x;
-	sy = g->GetComponent<TransformComponent>().scale.y;
+	sx = g->transformComponent.scale.x;
+	sy = g->transformComponent.scale.y;
 
 	float a;
-	a = g->GetComponent<TransformComponent>().rotation;
+	a = g->transformComponent.rotation;
 
 	XMLElement* position = xDoc->NewElement("position");
 	// x position
@@ -250,5 +239,119 @@ void XMLReader::SaveTransformComponent(GameObject* g, XMLDocument* xDoc, XMLElem
 
 
 	e->InsertEndChild(newTransform);
+}
 
+void XMLReader::SaveRenderProperties(GameObject* g, XMLDocument* xDoc, XMLElement* e)
+{
+	auto render = g->GetComponent<RenderComponent*>();
+	if (render != nullptr) {
+		XMLElement* newRender = xDoc->NewElement("RenderComponent");
+
+		float sx, sy;
+		sx = render->GetSize().x;
+		sy = render->GetSize().y;
+
+		float r, gr, b, a;
+		r = render->GetColor().r;
+		gr = render->GetColor().g;
+		b = render->GetColor().b;
+		a = render->GetColor().a;
+
+		XMLElement* size = xDoc->NewElement("size");
+		// Save size x
+		XMLElement* sizeElement = xDoc->NewElement("x");
+		sizeElement->SetText(sx);
+		size->InsertEndChild(sizeElement);
+		// Save size y
+		sizeElement = xDoc->NewElement("y");
+		sizeElement->SetText(sy);
+		size->InsertEndChild(sizeElement);
+
+		// Close size properties
+		newRender->InsertEndChild(size);
+
+		XMLElement* color = xDoc->NewElement("color");
+		// Save Red value
+		XMLElement* colorElement = xDoc->NewElement("r");
+		colorElement->SetText(r);
+		color->InsertEndChild(colorElement);
+		// Save Green value
+		colorElement = xDoc->NewElement("g");
+		colorElement->SetText(gr);
+		color->InsertEndChild(colorElement);
+		// Save Blue value
+		colorElement = xDoc->NewElement("b");
+		colorElement->SetText(b);
+		color->InsertEndChild(colorElement);
+
+		// Save Alpha value 
+		colorElement = xDoc->NewElement("a");
+		colorElement->SetText(a);
+		color->InsertEndChild(colorElement);
+
+		newRender->InsertEndChild(color);
+
+		e->InsertEndChild(newRender);
+	}
+}
+
+void XMLReader::SaveRigidbodyProperties(GameObject* g, tinyxml2::XMLDocument* xDoc, tinyxml2::XMLElement* e)
+{
+	auto rb = g->GetComponent<RigidbodyComponent*>();
+	if (rb != nullptr) {
+		bool obey;
+		obey = rb->obeysGravity;
+
+		float m;
+		m = rb->mass;
+		float vx, vy;
+		vx = rb->velecity.x;
+		vy = rb->velecity.y;
+
+		float bounciness;
+		bounciness = rb->bounciness;
+
+		bool isTrigger;
+		isTrigger = rb->isTrigger;
+
+		XMLElement* newRB = xDoc->NewElement("RigidbodyComponent");
+		// Obey Grivity
+		XMLElement* og = xDoc->NewElement("obeysGravity");
+		og->SetText(obey);
+		//Close obey
+		newRB->InsertEndChild(og);
+
+		// Mass
+		XMLElement* mass = xDoc->NewElement("mass");
+		mass->SetText(mass);
+		// Close mass
+		newRB->InsertEndChild(mass);
+
+		// Velocity
+		XMLElement* velocity = xDoc->NewElement("velocity");
+		// Velocity x
+		XMLElement* velocityElement = xDoc->NewElement("x");
+		velocityElement->SetText(vx);
+		velocity->InsertEndChild(velocityElement);
+		// Velocity y
+		velocityElement = xDoc->NewElement("y");
+		velocityElement->SetText(vy);
+		velocity->InsertEndChild(velocityElement);
+		// Close vel
+		newRB->InsertEndChild(velocity);
+
+		// Bounciness
+		XMLElement* boun = xDoc->NewElement("bounciness");
+		boun->SetText(bounciness);
+		// Close bounciness
+		newRB->InsertEndChild(boun);
+
+		// isTrigger
+		XMLElement* isTrig = xDoc->NewElement("isTrigger");
+		isTrig->SetText(isTrigger);
+		// Close Trigger
+		newRB->InsertEndChild(isTrig);
+
+		e->InsertEndChild(newRB);
+	}
 }

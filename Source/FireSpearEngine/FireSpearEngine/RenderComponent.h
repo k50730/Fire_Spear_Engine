@@ -9,6 +9,8 @@ public:
 	RenderComponent();
 	void SetColor(sf::Color c);
 	void SetSize(sf::Vector2f);
+	sf::Color GetColor();
+	sf::Vector2f GetSize();
 	void Awake();
 	void Start();
 	void Update(sf::Time t);

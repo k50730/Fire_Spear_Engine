@@ -21,6 +21,16 @@ void RenderComponent::SetSize(sf::Vector2f s)
     shape.setOrigin(shape.getSize().x / 2, shape.getSize().y / 2);
 }
 
+sf::Color RenderComponent::GetColor() 
+{
+	return shape.getFillColor();
+}
+
+sf::Vector2f RenderComponent::GetSize()
+{
+	return shape.getSize();
+}
+
 void RenderComponent::Awake()
 {
 	
