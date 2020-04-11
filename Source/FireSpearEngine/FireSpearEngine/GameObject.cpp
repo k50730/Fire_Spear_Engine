@@ -110,6 +110,9 @@ void GameObject::Awake()
 	{
 		(*i)->Awake();
 	}
+
+	worldTransform = parent != nullptr ? parent->GetWorldTransform() * transformComponent.matrix : transformComponent.matrix;
+	Render();
 }
 
 void GameObject::Start()

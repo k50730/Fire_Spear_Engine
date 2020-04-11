@@ -205,7 +205,7 @@ void FireSpear::CreateSplashScreen(sf::RenderWindow& window)
 {
 	sf::Image backgroundImg;
 	sf::Texture backgroundTex;
-	if (backgroundImg.loadFromFile("../../Images/NeZhas_Logo.png") != true) {
+	if (backgroundImg.loadFromFile("../../../Assets/Images/NeZhas_Logo.png") != true) {
 		return;
 	}
 	backgroundTex.loadFromImage(backgroundImg);
@@ -233,7 +233,7 @@ void FireSpear::Run()
 		return;
 
 	CreateEngineWindow("Fire Spear Engine", SCREEN_WIDTH, SCREEN_HEIGHT);
-	_gameState = FireSpear::Playing;
+	_gameState = Paused;
 
 	CreateSplashScreen(_mainWindow);
 	InstantiateSystems();
@@ -283,14 +283,21 @@ void FireSpear::Start()
 
 void FireSpear::Update(sf::Time deltaTime)
 {
-	gameObjectManager->Update(deltaTime);
-	scriptingSystem->Update(deltaTime);
-	inputSystem->Update(deltaTime);
+	if (_gameState == Playing)
+	{
+		gameObjectManager->Update(deltaTime);
+		scriptingSystem->Update(deltaTime);
+		inputSystem->Update(deltaTime);
+	}
 }
 
 void FireSpear::FixUpdate()
 {
-	physicEngine->FixedUpdate(FPS);
+	if (_gameState == Playing)
+	{
+		physicEngine->FixedUpdate(FPS);
+	}
+	
 }
 
 void FireSpear::Render()
@@ -317,10 +324,34 @@ void FireSpear::ProcessEvent()
 			_mainWindow.close();
 			break;
 
+		case sf::Event::KeyPressed:
+			KeyboardInput(event.key.code, true);
+			break;
+
+		case sf::Event::KeyReleased:
+			KeyboardInput(event.key.code, false);
+			break;
+
 		default:
 			break;
 		}
 
+	}
+}
+
+void FireSpear::KeyboardInput(sf::Keyboard::Key keyCode, bool isPressed)
+{
+	switch (keyCode)
+	{
+	case sf::Keyboard::Space:
+		if (isPressed)
+		{
+			_gameState = Playing;
+		}
+		break;
+
+	default:
+		break;
 	}
 }
 

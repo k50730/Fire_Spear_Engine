@@ -55,6 +55,9 @@
     <ClCompile Include="SceneManager.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="LevelEditor.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FireSpear.h">
@@ -118,6 +121,9 @@
       <Filter>Headers\External</Filter>
     </ClInclude>
     <ClInclude Include="SceneManager.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelEditor.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>

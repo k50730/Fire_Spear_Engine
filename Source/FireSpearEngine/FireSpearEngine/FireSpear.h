@@ -58,5 +58,7 @@ private:
 	void Start();
 	void Update(sf::Time deltaTime); //fixed update function
 	void FixUpdate();
+
+	void KeyboardInput(sf::Keyboard::Key keyCode, bool isPressed);
 };
 
