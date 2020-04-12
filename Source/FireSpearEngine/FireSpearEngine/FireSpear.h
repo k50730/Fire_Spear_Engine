@@ -21,6 +21,7 @@ public:
 
 	void InitilizeSystem(); // initilizing system and play splash screen
 	void Run(); // start of every components
+	void Pause();
 	
 	GameObjectManager* gameObjectManager;
 	PhysicEngine* physicEngine;

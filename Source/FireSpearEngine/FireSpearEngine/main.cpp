@@ -3,20 +3,20 @@
 
 int main()
 {
-	FireSpear* engine = new FireSpear();
-	engine->InitilizeSystem();
+	//FireSpear* engine = new FireSpear();
+	//engine->InitilizeSystem();
 
-	engine->sceneManager->LoadScene("../../../Assets/Scenes/Scene1.xml");
-	engine->sceneManager->LoadScene("../../../Assets/Scenes/Scene2.xml");
-	engine->sceneManager->SetActive(0);
-	//engine->sceneManager->SetActive(1);
+	//engine->sceneManager->LoadScene("../../../Assets/Scenes/Scene1.xml");
+	//engine->sceneManager->LoadScene("../../../Assets/Scenes/Scene2.xml");
+	//engine->sceneManager->SetActive(0);
+	////engine->sceneManager->SetActive(1);
 
-	engine->Run();
-	delete engine;
+	//engine->Run();
+	//delete engine;
 
-	/*LevelEditor* levelEditor = new LevelEditor();
-	levelEditor->run();
-	delete levelEditor;*/
+	LevelEditor* levelEditor = new LevelEditor();
+	levelEditor->Run();
+	delete levelEditor;
 
 	return 0;
 }

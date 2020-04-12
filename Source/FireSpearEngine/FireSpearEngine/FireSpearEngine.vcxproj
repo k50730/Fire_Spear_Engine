@@ -217,14 +217,14 @@ xcopy /Y "$(ProjectDir)..\..\..\Lib\luaplus51-1201.pdb" "$(TargetDir)luaplus51-1
     <ClInclude Include="XMLReader.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="earth.lua" />
-    <None Include="inputTest.lua" />
-    <None Include="mars.lua" />
+    <Xml Include="..\..\..\Assets\Scenes\Scene1.xml" />
+    <Xml Include="..\..\..\Assets\Scenes\Scene2.xml" />
+    <Xml Include="Scenes.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="Scene2.xml" />
-    <Xml Include="Scenes.xml" />
-    <Xml Include="Scene1.xml" />
+    <None Include="..\..\..\Assets\Scripts\earth.lua" />
+    <None Include="..\..\..\Assets\Scripts\inputTest.lua" />
+    <None Include="..\..\..\Assets\Scripts\mars.lua" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

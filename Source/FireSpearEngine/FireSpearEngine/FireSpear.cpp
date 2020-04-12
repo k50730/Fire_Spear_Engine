@@ -233,7 +233,7 @@ void FireSpear::Run()
 		return;
 
 	CreateEngineWindow("Fire Spear Engine", SCREEN_WIDTH, SCREEN_HEIGHT);
-	_gameState = Paused;
+	_gameState = Playing;
 
 	CreateSplashScreen(_mainWindow);
 	InstantiateSystems();
@@ -243,6 +243,11 @@ void FireSpear::Run()
 
 	Tick();
 	_mainWindow.close();
+}
+
+void FireSpear::Pause()
+{
+	_gameState = Paused;
 }
 
 void FireSpear::Tick()

@@ -1,92 +1,243 @@
 #include "LevelEditor.h"
 
-void LevelEditor::login(tgui::EditBox::Ptr username, tgui::EditBox::Ptr password)
+LevelEditor::LevelEditor()
 {
-	std::cout << "Username: " << username->getText().toAnsiString() << std::endl;
-	std::cout << "Password: " << password->getText().toAnsiString() << std::endl;
+    StartEngine();
 }
 
-void LevelEditor::loadWidgets(tgui::Gui& gui)
+LevelEditor::~LevelEditor()
 {
-    // Create the background image
-// The picture is of type tgui::Picture::Ptr which is actually just a typedef for std::shared_widget<Picture>
-// The picture will fit the entire window and will scale with it
-/* auto picture = tgui::Picture::create("../xubuntu_bg_aluminium.jpg");
- picture->setSize({ "100%", "100%" });
- gui.add(picture);*/
-
- // Create the username edit box
- // Similar to the picture, we set a relative position and size
- // In case it isn't obvious, the default text is the text that is displayed when the edit box is empty
-    auto editBoxUsername = tgui::EditBox::create();
-    editBoxUsername->setSize({ "66.67%", "12.5%" });
-    editBoxUsername->setPosition({ "16.67%", "16.67%" });
-    editBoxUsername->setDefaultText("Username");
-    gui.add(editBoxUsername);
-
-    // Create the password edit box
-    // We copy the previous edit box here and keep the same size
-    auto editBoxPassword = tgui::EditBox::copy(editBoxUsername);
-    editBoxPassword->setPosition({ "16.67%", "41.6%" });
-    editBoxPassword->setPasswordCharacter('*');
-    editBoxPassword->setDefaultText("Password");
-    gui.add(editBoxPassword);
-
-    // Create the login button
-    auto button = tgui::Button::create("Login");
-    button->setSize({ "50%", "16.67%" });
-    button->setPosition({ "25%", "70%" });
-    gui.add(button);
-
-    // Call the login function when the button is pressed and pass the edit boxes that we created as parameters
-    button->connect("pressed", login, editBoxUsername, editBoxPassword);
 }
 
-int LevelEditor::run()
+void LevelEditor::StartEngine()
 {
-    // Create the window
-    sf::RenderWindow window(sf::VideoMode(400, 300), "TGUI window");
+    engine = new FireSpear();
+    engine->InitilizeSystem();
+
+    engine->sceneManager->LoadScene("../../../Assets/Scenes/Scene1.xml");
+    engine->sceneManager->LoadScene("../../../Assets/Scenes/Scene2.xml");
+    engine->sceneManager->SetActive(0);
+}
+
+void LevelEditor::CreateGameObject(std::string name)
+{
+    if (name == "Empty" || name == "Rectangle")
+    {
+        auto b = tgui::ChildWindow::create();
+        b->setTitle("GameObject");
+        b->setSize(100, 100);
+        auto object = tgui::Button::create("Game Object");
+        object->setSize(hierarchy->getSize().x, 30);
+        object->moveToFront();
+        hierarchy->add(object);
+        object->setPosition(0, 30 * gameObjectId);
+        gameObjectId++;
+
+        if (name == "Rectangle")
+        {
+            b->getRenderer()->setBackgroundColor(tgui::Color(255, 1, 0, 255));
+        }
+
+        editor->add(b);
+    }
+}
+
+int LevelEditor::Run()
+{
+    sf::RenderWindow window(sf::VideoMode(1850, 900), "Fire Spear Engine");
+    window.setFramerateLimit(60);
+
     tgui::Gui gui(window);
 
     try
     {
-        loadWidgets(gui);
+        hierarchy = tgui::ChildWindow::create();
+        hierarchy->setSize("15%", 768);
+        hierarchy->setPosition(0, "2.5%");
+        hierarchy->setTitle("Hierarchy");
+        hierarchy->moveWidgetToBack(hierarchy);
+        gui.add(hierarchy);
+        
+
+        inspector = tgui::ChildWindow::create();
+        inspector->setSize("15%", 768);
+        inspector->setPosition("15%", "2.5%");
+        inspector->setTitle("Inspector");
+        gui.add(inspector);
+
+        editor = tgui::ChildWindow::create();
+        editor->setSize(1280, 768);
+        editor->setPosition("30%", "2.5%");
+        editor->setTitle("Editor");
+        gui.add(editor);
+
+        auto runBtn = tgui::Button::create();
+        runBtn->setPosition("40%", "95%");
+        runBtn->setText("Run");
+        runBtn->setSize(100, 30);
+        runBtn->connect("pressed", [&]() {engine->Run(); });
+        gui.add(runBtn);
+
+        auto pauseBtn = tgui::Button::create();
+        pauseBtn->setPosition("60%", "95%");
+        pauseBtn->setText("Pause");
+        pauseBtn->setSize(100, 30);
+        
+       // pauseBtn->connect("pressed", [&]() {engine->Pause(); }, this);
+        gui.add(pauseBtn);
+
+        auto menu = tgui::MenuBar::create();
+        menu->setSize(static_cast<float>(window.getSize().x), "2%");
+        menu->addMenu("Scenes");
+        menu->addMenuItem("Load");
+        menu->addMenuItem("Save");
+        menu->addMenuItem("Exit");
+        menu->connect("MenuItemClicked", &LevelEditor::CreateGameObject, this);
+        menu->addMenu("Game Object");
+        menu->addMenuItem("Empty");
+        menu->addMenuItem("Rectangle");
+        menu->addMenu("Help");
+        menu->addMenuItem("About");
+        gui.add(menu);
+
+      /*  auto tabs = tgui::Tabs::create();
+        tabs->setTabHeight(30);
+        tabs->setPosition(70, 40);
+        tabs->add("Tab - 1");
+        tabs->add("Tab - 2");
+        tabs->add("Tab - 3");
+        gui.add(tabs);*/
+
+        //auto label = tgui::Label::create();
+        ////label->setRenderer(theme.getRenderer("Label"));
+        //label->setText("This is a label.\nAnd these are radio buttons:");
+        //label->setPosition(10, 90);
+        //label->setTextSize(18);
+        //gui.add(label);
+
+     //   auto radioButton = tgui::RadioButton::create();
+     ////   radioButton->setRenderer(theme.getRenderer("RadioButton"));
+     //   radioButton->setPosition(20, 140);
+     //   radioButton->setText("Yep!");
+     //   radioButton->setSize(25, 25);
+     //   gui.add(radioButton);
+
+      //  auto editBox = tgui::EditBox::create();
+      ////  editBox->setRenderer(theme.getRenderer("EditBox"));
+      //  editBox->setSize(200, 25);
+      //  editBox->setTextSize(18);
+      //  editBox->setPosition(10, 270);
+      //  editBox->setDefaultText("Game Object");
+      //  gui.add(editBox);
+
+      //  auto listBox = tgui::ListBox::create();
+      ////  listBox->setRenderer(theme.getRenderer("ListBox"));
+      //  listBox->setSize(250, 120);
+      //  listBox->setItemHeight(24);
+      //  listBox->setPosition(10, 340);
+      //  listBox->addItem("Item 1");
+      //  listBox->addItem("Item 2");
+      //  listBox->addItem("Item 3");
+      //  gui.add(listBox);
+
+
+    //    auto progressBar = tgui::ProgressBar::create();
+    // //   progressBar->setRenderer(theme.getRenderer("ProgressBar"));
+    //    progressBar->setPosition(10, 500);
+    //    progressBar->setSize(200, 20);
+    //    progressBar->setValue(50);
+    //    gui.add(progressBar);
+
+
+    //    auto slider = tgui::Slider::create();
+    ////    slider->setRenderer(theme.getRenderer("Slider"));
+    //    slider->setPosition(10, 560);
+    //    slider->setSize(200, 18);
+    //    slider->setValue(4);
+    //    gui.add(slider);
+
+    //    auto scrollbar = tgui::Scrollbar::create();
+    ////    scrollbar->setRenderer(theme.getRenderer("Scrollbar"));
+    //    scrollbar->setPosition(380, 40);
+    //    scrollbar->setSize(18, 540);
+    //    scrollbar->setMaximum(100);
+    //    scrollbar->setViewportSize(70);
+    //    gui.add(scrollbar);
+
+      //  auto comboBox = tgui::ComboBox::create();
+      ////  comboBox->setRenderer(theme.getRenderer("ComboBox"));
+      //  comboBox->setSize(120, 21);
+      //  comboBox->setPosition(420, 40);
+      //  comboBox->addItem("Item 1");
+      //  comboBox->addItem("Item 2");
+      //  comboBox->addItem("Item 3");
+      //  comboBox->setSelectedItem("Item 2");
+      //  gui.add(comboBox);
+
+
+    //    auto button = tgui::Button::create();
+    // //   button->setRenderer(theme.getRenderer("Button"));
+    //    button->setPosition(75, 70);
+    //    button->setText("OK");
+    //    button->setSize(100, 30);
+    //    button->connect("pressed", [=]() { child->setVisible(false); });
+    //    child->add(button);
+
+    //    auto checkbox = tgui::CheckBox::create();
+    //  //  checkbox->setRenderer(theme.getRenderer("CheckBox"));
+    //    checkbox->setPosition(420, 240);
+    //    checkbox->setText("Ok, I got it");
+    //    checkbox->setSize(25, 25);
+    //    gui.add(checkbox);
+
+
+    //    auto chatbox = tgui::ChatBox::create();
+    //   // chatbox->setRenderer(theme.getRenderer("ChatBox"));
+    //    chatbox->setSize(300, 100);
+    //    chatbox->setTextSize(18);
+    //    chatbox->setPosition(420, 310);
+    //    chatbox->setLinesStartFromTop();
+    //    chatbox->addLine("texus: Hey, this is TGUI!", sf::Color::Green);
+    //    chatbox->addLine("Me: Looks awesome! ;)", sf::Color::Yellow);
+    //    chatbox->addLine("texus: Thanks! :)", sf::Color::Green);
+    //    chatbox->addLine("Me: The widgets rock ^^", sf::Color::Yellow);
+    //    gui.add(chatbox);
+
+    /*    sf::Texture texture;
+        sf::Sprite  sprite;
+        texture.loadFromFile("../../../Assets/Images/NeZhas_Logo.png");
+        sprite.setTexture(texture);
+        sprite.setScale(200.f / texture.getSize().x, 140.f / texture.getSize().y);
+
+        auto canvas = tgui::Canvas::create({ 200, 140 });
+        canvas->setPosition(0, 0);
+        canvas->clear();
+        canvas->draw(sprite);
+        canvas->display();
+        gui.add(canvas);*/
+
     }
     catch (const tgui::Exception & e)
     {
-        std::cerr << "Failed to load TGUI widgets: " << e.what() << std::endl;
-        return 1;
+        std::cerr << "TGUI Exception: " << e.what() << std::endl;
+        return EXIT_FAILURE;
     }
 
-    // Main loop
     while (window.isOpen())
     {
         sf::Event event;
         while (window.pollEvent(event))
         {
-            // When the window is closed, the application ends
             if (event.type == sf::Event::Closed)
                 window.close();
 
-            // When the window is resized, the view is changed
-            else if (event.type == sf::Event::Resized)
-            {
-                window.setView(sf::View(sf::FloatRect(0.f, 0.f, static_cast<float>(event.size.width), static_cast<float>(event.size.height))));
-                gui.setView(window.getView());
-            }
-
-            // Pass the event to all the widgets
             gui.handleEvent(event);
         }
 
         window.clear();
-
-        // Draw all created widgets
         gui.draw();
-
         window.display();
     }
-
 
     return EXIT_SUCCESS;
 }
