@@ -23,22 +23,42 @@ void LevelEditor::CreateGameObject(std::string name)
 {
     if (name == "Empty" || name == "Rectangle")
     {
-        auto b = tgui::ChildWindow::create();
-        b->setTitle("GameObject");
-        b->setSize(100, 100);
-        auto object = tgui::Button::create("Game Object");
-        object->setSize(hierarchy->getSize().x, 30);
-        object->moveToFront();
-        hierarchy->add(object);
-        object->setPosition(0, 30 * gameObjectId);
+        auto gameObject = new GameObjectEditor();
+        gameObject->container = tgui::ChildWindow::create();
+        gameObject->container->setTitle("GameObject");
+        gameObject->container->setSize(100, 100);
+        gameObject->id = gameObjectId;
+        editor->add(gameObject->container);
+       
+
+         gameObject->hierarchyTab = tgui::EditBox::create();
+         gameObject->hierarchyTab->setSize(hierarchy->getSize().x, 30);
+         gameObject->hierarchyTab->setTextSize(18);
+         gameObject->hierarchyTab->setPosition(0, 30 * gameObjectId);
+         gameObject->hierarchyTab->setDefaultText("Game Object");
+
+         gameObjects.push_back(gameObject);
+
+         gameObject->hierarchyTab->connect("TextChanged", [&](sf::String text) {
+            for (auto i : gameObjects)
+            {
+                if (i->hierarchyTab->isFocused())
+                {
+                    i->container->setTitle(text);
+                    return;
+                }
+            }
+        });
+
+        hierarchy->add(gameObject->hierarchyTab);
+       
         gameObjectId++;
 
         if (name == "Rectangle")
         {
-            b->getRenderer()->setBackgroundColor(tgui::Color(255, 1, 0, 255));
+            gameObject->container->getRenderer()->setBackgroundColor(tgui::Color(255, 1, 0, 255));
         }
 
-        editor->add(b);
     }
 }
 
@@ -51,6 +71,7 @@ int LevelEditor::Run()
 
     try
     {
+        
         hierarchy = tgui::ChildWindow::create();
         hierarchy->setSize("15%", 768);
         hierarchy->setPosition(0, "2.5%");
