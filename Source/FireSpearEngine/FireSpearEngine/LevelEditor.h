@@ -21,7 +21,6 @@ struct InspectorEditor
 class LevelEditor
 { 
 private:
-	FireSpear* engine;
 	ChildWindowPtr editor;
 	ChildWindowPtr inspector;
 	ChildWindowPtr hierarchy;

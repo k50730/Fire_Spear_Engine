@@ -2,7 +2,6 @@
 
 LevelEditor::LevelEditor()
 {
-    StartEngine();
 }
 
 LevelEditor::~LevelEditor()
@@ -11,12 +10,13 @@ LevelEditor::~LevelEditor()
 
 void LevelEditor::StartEngine()
 {
-    engine = new FireSpear();
+    FireSpear* engine = new FireSpear();
     engine->InitilizeSystem();
 
     engine->sceneManager->LoadScene("../../../Assets/Scenes/Scene1.xml");
     engine->sceneManager->LoadScene("../../../Assets/Scenes/Scene2.xml");
     engine->sceneManager->SetActive(0);
+    engine->Run();
 }
 
 void LevelEditor::CreateGameObject(std::string name)
@@ -27,6 +27,20 @@ void LevelEditor::CreateGameObject(std::string name)
         gameObject->container = tgui::ChildWindow::create();
         gameObject->container->setTitle("GameObject");
         gameObject->container->setSize(100, 100);
+        gameObject->container->connect("closed", [&]() { 
+            for (int i = 0; i < gameObjects.size(); i++)
+            {
+                if (gameObjects[i]->container->isFocused())
+                {
+                    hierarchy->remove(gameObjects[i]->hierarchyTab);
+                    editor->remove(gameObjects[i]->container);
+                    delete gameObjects[i];  
+                    gameObjects.erase(gameObjects.begin() + i);
+                    return;
+                }
+            }
+           
+        });
         gameObject->id = gameObjectId;
         editor->add(gameObject->container);
        
@@ -96,7 +110,7 @@ int LevelEditor::Run()
         runBtn->setPosition("40%", "95%");
         runBtn->setText("Run");
         runBtn->setSize(100, 30);
-        runBtn->connect("pressed", [&]() {engine->Run(); });
+        runBtn->connect("pressed", &LevelEditor::StartEngine, this);
         gui.add(runBtn);
 
         auto pauseBtn = tgui::Button::create();
