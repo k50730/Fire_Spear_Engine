@@ -27,6 +27,8 @@ void LevelEditor::CreateGameObject(std::string name)
         gameObject->container = tgui::ChildWindow::create();
         gameObject->container->setTitle("GameObject");
         gameObject->container->setSize(100, 100);
+        sf::Vector2f position = sf::Vector2f(100, 100);
+        gameObject->container->setPosition(position.x - gameObject->container->getSize().x / 2.f, position.y - gameObject->container->getSize().y / 2.f);
         gameObject->container->connect("closed", [&]() { 
             for (int i = 0; i < gameObjects.size(); i++)
             {
@@ -59,12 +61,44 @@ void LevelEditor::CreateGameObject(std::string name)
                 if (i->hierarchyTab->isFocused())
                 {
                     i->container->setTitle(text);
+                    i->inspectorTab->editor->setTitle(text);
                     return;
                 }
             }
         });
 
         hierarchy->add(gameObject->hierarchyTab);
+
+        gameObject->inspectorTab = new InspectorEditor(inspector->getSize().x, 100, position);
+        inspector->add(gameObject->inspectorTab->editor);
+
+        // Change object position x using inspector value
+        gameObject->inspectorTab->positionX->connect("TextChanged", [&](std::string text) {
+            int x = std::stoi(text);
+            for (auto i : gameObjects)
+            {
+                if (i->inspectorTab->positionX->isFocused())
+                {
+                    auto p = sf::Vector2f(x, i->container->getPosition().y);
+                    i->container->setPosition(p.x - i->container->getSize().x / 2.f, p.y);
+                    return;
+                }
+            }
+        });
+
+        // Change object position y using inspector value
+        gameObject->inspectorTab->positionY->connect("TextChanged", [&](std::string text) {
+            int y = std::stoi(text);
+            for (auto i : gameObjects)
+            {
+                if (i->inspectorTab->positionY->isFocused())
+                {
+                    auto p = sf::Vector2f(i->container->getPosition().x, y);
+                    i->container->setPosition(p.x, p.y - i->container->getSize().y / 2.f);
+                    return;
+                }
+            }
+        });
        
         gameObjectId++;
 
@@ -199,6 +233,8 @@ int LevelEditor::Run()
     //    scrollbar->setViewportSize(70);
     //    gui.add(scrollbar);
 
+
+
       //  auto comboBox = tgui::ComboBox::create();
       ////  comboBox->setRenderer(theme.getRenderer("ComboBox"));
       //  comboBox->setSize(120, 21);
@@ -210,13 +246,13 @@ int LevelEditor::Run()
       //  gui.add(comboBox);
 
 
-    //    auto button = tgui::Button::create();
-    // //   button->setRenderer(theme.getRenderer("Button"));
-    //    button->setPosition(75, 70);
-    //    button->setText("OK");
-    //    button->setSize(100, 30);
-    //    button->connect("pressed", [=]() { child->setVisible(false); });
-    //    child->add(button);
+     //   auto button = tgui::Button::create();
+     ////   button->setRenderer(theme.getRenderer("Button"));
+     //   button->setPosition(75, 70);
+     //   button->setText("OK");
+     //   button->setSize(100, 30);
+     //   button->connect("pressed", [=]() { child->setVisible(false); });
+     //   child->add(button);
 
     //    auto checkbox = tgui::CheckBox::create();
     //  //  checkbox->setRenderer(theme.getRenderer("CheckBox"));
