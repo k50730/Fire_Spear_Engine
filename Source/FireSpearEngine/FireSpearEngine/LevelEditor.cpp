@@ -26,11 +26,12 @@ void LevelEditor::CreateGameObject(std::string name)
         auto gameObject = new GameObjectEditor();
         gameObject->container = tgui::ChildWindow::create();
         gameObject->container->setTitle("GameObject");
-        gameObject->container->setSize(100, 100);
+        gameObject->container->setSize(110, 0);
         sf::Vector2f position = sf::Vector2f(100, 100);
         gameObject->container->setPosition(position.x - gameObject->container->getSize().x / 2.f, position.y - gameObject->container->getSize().y / 2.f);
         gameObject->container->setResizable();
         gameObject->container->getRenderer()->setBorders(5);
+
         // destroy object
         gameObject->container->connect("closed", [&]() { 
             for (int i = 0; i < gameObjects.size(); i++)
@@ -74,7 +75,7 @@ void LevelEditor::CreateGameObject(std::string name)
 
         hierarchy->add(gameObject->hierarchyTab);
 
-        gameObject->inspectorTab = new InspectorEditor(inspector->getSize().x, 100, position);
+        gameObject->inspectorTab = new InspectorEditor(inspector->getSize().x, 300, position);
         inspector->add(gameObject->inspectorTab->editor);
 
         // Change object position x using inspector value
