@@ -29,6 +29,9 @@ void LevelEditor::CreateGameObject(std::string name)
         gameObject->container->setSize(100, 100);
         sf::Vector2f position = sf::Vector2f(100, 100);
         gameObject->container->setPosition(position.x - gameObject->container->getSize().x / 2.f, position.y - gameObject->container->getSize().y / 2.f);
+        gameObject->container->setResizable();
+        gameObject->container->getRenderer()->setBorders(5);
+        // destroy object
         gameObject->container->connect("closed", [&]() { 
             for (int i = 0; i < gameObjects.size(); i++)
             {
@@ -36,6 +39,7 @@ void LevelEditor::CreateGameObject(std::string name)
                 {
                     hierarchy->remove(gameObjects[i]->hierarchyTab);
                     editor->remove(gameObjects[i]->container);
+                    inspector->remove(gameObjects[i]->inspectorTab->editor);
                     delete gameObjects[i];  
                     gameObjects.erase(gameObjects.begin() + i);
                     return;
@@ -67,6 +71,7 @@ void LevelEditor::CreateGameObject(std::string name)
             }
         });
 
+
         hierarchy->add(gameObject->hierarchyTab);
 
         gameObject->inspectorTab = new InspectorEditor(inspector->getSize().x, 100, position);
@@ -74,7 +79,7 @@ void LevelEditor::CreateGameObject(std::string name)
 
         // Change object position x using inspector value
         gameObject->inspectorTab->positionX->connect("TextChanged", [&](std::string text) {
-            int x = std::stoi(text);
+            int x = text.empty() ? 0 : std::stoi(text);
             for (auto i : gameObjects)
             {
                 if (i->inspectorTab->positionX->isFocused())
@@ -88,7 +93,9 @@ void LevelEditor::CreateGameObject(std::string name)
 
         // Change object position y using inspector value
         gameObject->inspectorTab->positionY->connect("TextChanged", [&](std::string text) {
-            int y = std::stoi(text);
+
+            int y = text.empty() ? 0: std::stoi(text);
+
             for (auto i : gameObjects)
             {
                 if (i->inspectorTab->positionY->isFocused())
@@ -296,12 +303,28 @@ int LevelEditor::Run()
 
     while (window.isOpen())
     {
+        for (auto i : gameObjects)
+        {
+            // select object using the hierarchy
+            if (i->hierarchyTab->isFocused())
+                i->inspectorTab->editor->moveToFront();
+
+            // update position value when drag
+            i->inspectorTab->positionY->setDefaultText(std::to_string(i->container->getPosition().y + i->container->getSize().y / 2.0f));
+            i->inspectorTab->positionX->setDefaultText(std::to_string(i->container->getPosition().x + i->container->getSize().x / 2.0f));
+
+            if (!i->inspectorTab->positionY->isFocused())
+                i->inspectorTab->positionY->setText(std::to_string(i->container->getPosition().y + i->container->getSize().y / 2.0f));
+
+            if(!i->inspectorTab->positionX->isFocused())
+                i->inspectorTab->positionX->setText(std::to_string(i->container->getPosition().x + i->container->getSize().x / 2.0f));
+        }
+       
         sf::Event event;
         while (window.pollEvent(event))
         {
             if (event.type == sf::Event::Closed)
                 window.close();
-
             gui.handleEvent(event);
         }
 
