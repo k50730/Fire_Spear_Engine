@@ -82,6 +82,7 @@ void ScriptComponent::RegisterFunctions()
 	render.SetObject(1, transform);
 	render.RegisterDirect("SetColor", *this, &ScriptComponent::SetColor);
 	render.RegisterDirect("SetSize", *this, &ScriptComponent::SetSize);
+	render.RegisterDirect("SetScale", *this, &ScriptComponent::SetScale);
 
 	LuaObject input = mLuaState->GetGlobals().CreateTable("input");
 	input.SetObject(1, transform);
@@ -128,6 +129,14 @@ void ScriptComponent::SetSize(float x, float y)
 	if (owner->GetComponent<RenderComponent*>() != nullptr)
 	{
 		owner->GetComponent<RenderComponent*>()->SetSize(sf::Vector2f(x,y));
+	}
+}
+
+void ScriptComponent::SetScale(float x, float y)
+{
+	if (owner->GetComponent<RenderComponent*>() != nullptr)
+	{
+		owner->GetComponent<RenderComponent*>()->SetScale(sf::Vector2f(x, y));
 	}
 }
 
@@ -197,6 +206,10 @@ void ScriptComponent::LuaAddComponent(const char* ComponentName)
 	{
 		owner->AddComponent(new RigidbodyComponent());
 	}
+}
+
+void ScriptComponent::LuaRemoveComponent(const char* ComponentName)
+{
 }
 
 sf::Vector2f ScriptComponent::LuaGetPosition() const

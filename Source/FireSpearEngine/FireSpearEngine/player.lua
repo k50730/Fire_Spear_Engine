@@ -2,6 +2,7 @@ function Awake()
 end
 
 function Start()
+    render.SetScale(0.5, 0.5)
     rigidBody.ObeyGravity(true)
     rigidBody.SetMass(10)
     rigidBody.SetBounciness(0.5)
@@ -30,8 +31,7 @@ function Update(dt)
     if(input.IsKeyDown("G")) then
         gameObject.AddComponent("RigidBodyComponent");
     end
-    
-
+   
 end
 
 function  LateUpdate()

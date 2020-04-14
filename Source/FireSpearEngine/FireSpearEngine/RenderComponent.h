@@ -1,6 +1,7 @@
 #pragma once
 #include "BaseComponent.h"
 #include "SFML/Graphics.hpp"
+#include "GameObject.h"
 
 
 class RenderComponent : public BaseComponent
@@ -20,9 +21,8 @@ public:
 	//set
 	void SetColor(sf::Color c);
 	void SetTransform(sf::Transform t);
-	void SetSize(sf::Vector2f);
-	void DrawRectangleShape(sf::Vector2f size);
-	void DrawCircleShape(float radius);
+	void SetSize(sf::Vector2f size);
+	void SetScale(sf::Vector2f scale);
 
 	// Change to private later
 private:

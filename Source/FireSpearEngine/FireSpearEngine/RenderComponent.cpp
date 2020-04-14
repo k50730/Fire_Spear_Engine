@@ -40,16 +40,15 @@ void RenderComponent::SetTransform(sf::Transform t)
 	transform = t;
 }
 
-void RenderComponent::SetSize(sf::Vector2f s)
+void RenderComponent::SetSize(sf::Vector2f size)
 {
-	shape.setSize(s);
+	shape.setSize(size);
 	shape.setOrigin(shape.getSize().x / 2, shape.getSize().y / 2);
 }
 
-void RenderComponent::DrawRectangleShape(sf::Vector2f size)
+void RenderComponent::SetScale(sf::Vector2f scale)
 {
+	SetSize(sf::Vector2f(shape.getSize().x * scale.x, shape.getSize().y * scale.y));
+	
 }
 
-void RenderComponent::DrawCircleShape(float radius)
-{
-}
