@@ -1,8 +1,6 @@
 #pragma once
 #include "BaseComponent.h"
 #include "SFML/Graphics.hpp"
-#include "GameObject.h"
-
 
 class RenderComponent : public BaseComponent
 {

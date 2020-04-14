@@ -31,6 +31,12 @@ private:
 	void RegisterFunctions();
 
 #pragma region Lua Functions
+	LuaObject transform;
+	LuaObject render;
+	LuaObject input;
+	LuaObject rigidBody;
+	LuaObject gameObject;
+
 	bool LuaIsKeyDown(const char* KeyName);
 	float LuaRandom(float, float);
 	//Render
