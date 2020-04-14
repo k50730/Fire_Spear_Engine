@@ -2,6 +2,8 @@
 #include "TGUI/TGUI.hpp"
 #include <iostream>
 #include "FireSpear.h"
+#include <sstream>
+#include <string>
 #define ChildWindowPtr std::shared_ptr<tgui::ChildWindow>
 
 
@@ -28,7 +30,7 @@ public:
 		positionX = tgui::EditBox::create();
 		positionX->setDefaultText(std::to_string(p.x));
 		positionX->setPosition(positionXLabel->getSize().x, 0);
-		positionX->setInputValidator(tgui::EditBox::Validator::Float);
+		positionX->setInputValidator(tgui::EditBox::Validator::UInt);
 		transformComponent->add(positionX);
 
 		positionYLabel = tgui::Label::create("position y");
@@ -38,7 +40,7 @@ public:
 		positionY = tgui::EditBox::create();
 		positionY->setDefaultText(std::to_string(p.y));
 		positionY->setPosition(positionYLabel->getSize().x, positionXLabel->getSize().y);
-		positionY->setInputValidator(tgui::EditBox::Validator::Float);
+		positionY->setInputValidator(tgui::EditBox::Validator::UInt);
 		transformComponent->add(positionY);
 
 		editor->add(transformComponent);
@@ -108,7 +110,7 @@ public:
 
 		sizeX = tgui::EditBox::create();
 		sizeX->setPosition(sizeXLabel->getSize().x, 0);
-		sizeX->setInputValidator(tgui::EditBox::Validator::Float);
+		sizeX->setInputValidator(tgui::EditBox::Validator::UInt);
 		sizeX->setDefaultText(std::to_string(gameObject->getSize().x));
 		renderComponent->add(sizeX);
 
@@ -119,7 +121,7 @@ public:
 		sizeY = tgui::EditBox::create();
 		sizeY->setDefaultText(std::to_string(gameObject->getSize().y));
 		sizeY->setPosition(sizeYLabel->getSize().x, sizeXLabel->getSize().y);
-		sizeY->setInputValidator(tgui::EditBox::Validator::Float);
+		sizeY->setInputValidator(tgui::EditBox::Validator::UInt);
 		renderComponent->add(sizeY);
 
 		rLabel = tgui::Label::create("R");
@@ -220,7 +222,7 @@ public:
 			mass->setDefaultText("1");
 			mass->setSize(20, 20);
 			mass->setPosition(70, 40);
-			mass->setInputValidator(tgui::EditBox::Validator::Float);
+			mass->setInputValidator(tgui::EditBox::Validator::UInt);
 			rigidbodyComponent->add(mass);
 
 			lastItem = rigidbodyComponent->getPosition().y + rigidbodyComponent->getSize().y + 20;
@@ -260,6 +262,10 @@ private:
 	std::vector<GameObjectEditor*> gameObjects; // game objects in editor
 	FireSpear* engine;
 	int gameObjectId = 0;
+	bool changedMass = false;
+	bool changedVelocityX = false;
+	bool changedVelocityY = false;
+	bool changedObbeyGravity = false;
 public:
 	LevelEditor(FireSpear* e);
 	~LevelEditor();

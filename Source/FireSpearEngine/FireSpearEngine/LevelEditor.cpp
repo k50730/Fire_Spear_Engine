@@ -1,5 +1,6 @@
 #include "LevelEditor.h"
 
+
 LevelEditor::LevelEditor(FireSpear* e)
 {
     engine = e;
@@ -17,6 +18,57 @@ void LevelEditor::StartEngine()
    /* engine->sceneManager->LoadScene("../../../Assets/Scenes/Scene1.xml");
     engine->sceneManager->LoadScene("../../../Assets/Scenes/Scene2.xml");
     engine->sceneManager->SetActive(0);*/
+
+    // make a scene
+    for (auto i : gameObjects)
+    {
+        for (auto g : engine->gameObjectManager->gameObjects)
+        {
+            if (g.second->GetID() == i->id)
+            {
+                g.second->transformComponent.position = sf::Vector2f(i->container->getPosition().x + i->container->getSize().x / 2, i->container->getPosition().y + i->container->getSize().y / 2);
+
+                if (i->hasRenderComponent)
+                {
+                    g.second->GetComponent<RenderComponent*>()->SetSize(i->container->getSize());
+                    g.second->GetComponent<RenderComponent*>()->SetColor(i->container->getRenderer()->getBackgroundColor());
+                }
+
+                if (i->hasRigidbodyComponent)
+                {
+                    g.second->GetComponent<RigidbodyComponent*>()->obeysGravity = i->inspectorTab->checkbox->isChecked();
+
+                    g.second->GetComponent<RigidbodyComponent*>()->mass = i->inspectorTab->mass->getText().isEmpty() ? 1 : std::stoi(std::string(i->inspectorTab->mass->getText()));
+
+                    if (!i->inspectorTab->velocityX->getText().isEmpty())
+                    {
+                        int x;
+                        std::stringstream(i->inspectorTab->velocityX->getText()) >> x;
+                        g.second->GetComponent<RigidbodyComponent*>()->velecity.x = x;
+                    }
+                    else
+                    {
+                        g.second->GetComponent<RigidbodyComponent*>()->velecity.x = 0;
+                    }
+
+                    if (!i->inspectorTab->velocityY->getText().isEmpty())
+                    {
+                        int y;
+                        std::stringstream(i->inspectorTab->velocityY->getText()) >> y;
+                        g.second->GetComponent<RigidbodyComponent*>()->velecity.y = y;
+                    }
+                    else
+                    {
+                        g.second->GetComponent<RigidbodyComponent*>()->velecity.y = 0;
+                    }
+
+
+                }
+            }
+        }
+    }
+
+
     engine->Run();
 }
 
@@ -202,7 +254,11 @@ void LevelEditor::CreateGameObject(std::string name)
 
                             i->hasRigidbodyComponent = true;
                             i->inspectorTab->AddRigidbodyComponent();
-
+                            i->inspectorTab->checkbox->connect("checked", [&]() {changedObbeyGravity = true; });
+                            i->inspectorTab->checkbox->connect("unchecked", [&]() {changedObbeyGravity = true; });
+                            i->inspectorTab->velocityX->connect("TextChanged", [&]() {changedVelocityX = true; });
+                            i->inspectorTab->velocityY->connect("TextChanged", [&]() {changedVelocityY = true; });
+                            i->inspectorTab->mass->connect("TextChanged", [&]() {changedMass = true; });
                             return;
                         }
                        
@@ -392,30 +448,6 @@ int LevelEditor::Run()
 
             if(!i->inspectorTab->positionX->isFocused())
                 i->inspectorTab->positionX->setText(std::to_string(i->container->getPosition().x));
-
-
-            // make a scene
-            for (auto g : engine->gameObjectManager->gameObjects)
-            {
-                if (g.second->GetID() == i->id)
-                {
-                    g.second->transformComponent.position = sf::Vector2f(i->container->getPosition().x + i->container->getSize().x/2, i->container->getPosition().y + i->container->getSize().y / 2);
-
-                    if (i->hasRenderComponent)
-                    {
-                        g.second->GetComponent<RenderComponent*>()->SetSize(i->container->getSize());
-                        g.second->GetComponent<RenderComponent*>()->SetColor(i->container->getRenderer()->getBackgroundColor());
-                    }
-
-                    if (i->hasRigidbodyComponent)
-                    {
-                        g.second->GetComponent<RigidbodyComponent*>()->obeysGravity = i->inspectorTab->checkbox->isChecked();
-                        g.second->GetComponent<RigidbodyComponent*>()->mass = i->inspectorTab->mass->getText().isEmpty() ? 1 :  std::stoi(std::string(i->inspectorTab->mass->getText()));
-                        g.second->GetComponent<RigidbodyComponent*>()->velecity.x = i->inspectorTab->velocityX->getText().isEmpty() ? 0 : std::stoi(std::string(i->inspectorTab->velocityX->getText()));
-                        g.second->GetComponent<RigidbodyComponent*>()->velecity.y = i->inspectorTab->velocityY->getText().isEmpty() ? 0 : std::stoi(std::string(i->inspectorTab->velocityY->getText()));
-                    }
-                }
-            }
         }
        
         sf::Event event;
@@ -429,6 +461,8 @@ int LevelEditor::Run()
         window.clear(sf::Color(255, 230, 171, 100));
         gui.draw();
         window.display();
+
+
     }
 
     return EXIT_SUCCESS;
