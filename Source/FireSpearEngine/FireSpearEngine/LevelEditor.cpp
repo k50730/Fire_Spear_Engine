@@ -119,55 +119,93 @@ void LevelEditor::CreateGameObject(std::string name)
             }
         });
 
-        // Add render component
+        gameObject->inspectorTab->componentsBtn->connect("MouseEntered", [&]() {
+            for (auto i : gameObjects)
+            {
+                i->inspectorTab->componentsBtn->moveToFront();
+            }
+        });
+
+        // Add component components
         gameObject->inspectorTab->componentsBtn->connect("MenuItemClicked", [&](std::string text) {
+         
             if (text == "Render Component")
             {
                 for (auto i : gameObjects)
                 {
-                   
                     if (i->inspectorTab->componentsBtn->isFocused())
                     {
-                        for (auto g : engine->gameObjectManager->gameObjects)
+                        if (!i->hasRenderComponent)
                         {
-                            if (g.second->GetID() == i->id)
+                            for (auto g : engine->gameObjectManager->gameObjects)
                             {
-                                g.second->AddComponent(new RenderComponent());
-                                break;
+                                if (g.second->GetID() == i->id)
+                                {
+                                    g.second->AddComponent(new RenderComponent());
+                                    break;
+                                }
                             }
+
+                            i->hasRenderComponent = true;
+                            i->inspectorTab->AddRenderComponent(i->container);
+                            i->container->setResizable();
+
+                            i->inspectorTab->sizeX->connect("TextChanged", [&](std::string text) {
+                                float x = text.empty() ? 0 : std::stoi(text);
+                                for (auto j : gameObjects)
+                                {
+                                    if (j->inspectorTab->sizeX->isFocused())
+                                    {
+                                        auto s = sf::Vector2f(x, j->container->getPosition().y);
+                                        j->container->setSize(s.x, s.y);
+                                        return;
+                                    }
+                                }
+                            });
+
+                            i->inspectorTab->sizeY->connect("TextChanged", [&](std::string text) {
+                                float y = text.empty() ? 0 : std::stoi(text);
+                                for (auto k : gameObjects)
+                                {
+                                    if (k->inspectorTab->sizeY->isFocused())
+                                    {
+                                        auto s = sf::Vector2f(k->container->getPosition().x, y);
+                                        k->container->setSize(s.x, s.y);
+                                        return;
+                                    }
+                                }
+                            });
+
+                            return;
                         }
+                       
+                    }
+                }
+            }
 
-                        i->hasRenderComponent = true;
-                        i->inspectorTab->AddRenderComponent(i->container);
-                        i->container->setResizable();
-
-                        i->inspectorTab->sizeX->connect("TextChanged", [&](std::string text) {
-                            float x = text.empty() ? 0 : std::stoi(text);
-                            for (auto j : gameObjects)
+            if (text == "Rigidbody Component")
+            {
+                for (auto i : gameObjects)
+                {
+                    if (i->inspectorTab->componentsBtn->isFocused())
+                    {
+                        if (!i->hasRigidbodyComponent)
+                        {
+                            for (auto g : engine->gameObjectManager->gameObjects)
                             {
-                                if (j->inspectorTab->sizeX->isFocused())
+                                if (g.second->GetID() == i->id)
                                 {
-                                    auto s = sf::Vector2f(x, j->container->getPosition().y);
-                                    j->container->setSize(s.x, s.y);
-                                    return;
+                                    g.second->AddComponent(new RigidbodyComponent());
+                                    break;
                                 }
                             }
-                        });
 
-                        i->inspectorTab->sizeY->connect("TextChanged", [&](std::string text) {
-                            float y = text.empty() ? 0 : std::stoi(text);
-                            for (auto k : gameObjects)
-                            {
-                                if (k->inspectorTab->sizeY->isFocused())
-                                {
-                                    auto s = sf::Vector2f(k->container->getPosition().x, y);
-                                    k->container->setSize(s.x, s.y);
-                                    return;
-                                }
-                            }
-                        });
+                            i->hasRigidbodyComponent = true;
+                            i->inspectorTab->AddRigidbodyComponent();
 
-                        return;
+                            return;
+                        }
+                       
                     }
                 }
             }
@@ -183,6 +221,7 @@ int LevelEditor::Run()
 {
     sf::RenderWindow window(sf::VideoMode(1850, 900), "Fire Spear Engine");
     window.setFramerateLimit(60);
+ 
 
     tgui::Gui gui(window);
 
@@ -191,7 +230,7 @@ int LevelEditor::Run()
         
         hierarchy = tgui::ChildWindow::create();
         hierarchy->setSize("15%", 768);
-        hierarchy->setPosition(0, "2.5%");
+        hierarchy->setPosition(0, "5%");
         hierarchy->setTitle("Hierarchy");
         hierarchy->moveWidgetToBack(hierarchy);
         gui.add(hierarchy);
@@ -199,13 +238,13 @@ int LevelEditor::Run()
 
         inspector = tgui::ChildWindow::create();
         inspector->setSize("15%", 768);
-        inspector->setPosition("15%", "2.5%");
+        inspector->setPosition("15%", "5%");
         inspector->setTitle("Inspector");
         gui.add(inspector);
 
         editor = tgui::ChildWindow::create();
         editor->setSize(1280, 768);
-        editor->setPosition("30%", "2.5%");
+        editor->setPosition("30%", "5%");
         editor->setTitle("Editor");
         gui.add(editor);
 
@@ -247,7 +286,6 @@ int LevelEditor::Run()
 
 
      //   auto radioButton = tgui::RadioButton::create();
-     ////   radioButton->setRenderer(theme.getRenderer("RadioButton"));
      //   radioButton->setPosition(20, 140);
      //   radioButton->setText("Yep!");
      //   radioButton->setSize(25, 25);
@@ -266,7 +304,6 @@ int LevelEditor::Run()
 
 
     //    auto progressBar = tgui::ProgressBar::create();
-    // //   progressBar->setRenderer(theme.getRenderer("ProgressBar"));
     //    progressBar->setPosition(10, 500);
     //    progressBar->setSize(200, 20);
     //    progressBar->setValue(50);
@@ -274,7 +311,6 @@ int LevelEditor::Run()
 
 
     //    auto scrollbar = tgui::Scrollbar::create();
-    ////    scrollbar->setRenderer(theme.getRenderer("Scrollbar"));
     //    scrollbar->setPosition(380, 40);
     //    scrollbar->setSize(18, 540);
     //    scrollbar->setMaximum(100);
@@ -282,9 +318,7 @@ int LevelEditor::Run()
     //    gui.add(scrollbar);
 
 
-
       //  auto comboBox = tgui::ComboBox::create();
-      ////  comboBox->setRenderer(theme.getRenderer("ComboBox"));
       //  comboBox->setSize(120, 21);
       //  comboBox->setPosition(420, 40);
       //  comboBox->addItem("Item 1");
@@ -294,17 +328,7 @@ int LevelEditor::Run()
       //  gui.add(comboBox);
 
 
-
-    //    auto checkbox = tgui::CheckBox::create();
-    //  //  checkbox->setRenderer(theme.getRenderer("CheckBox"));
-    //    checkbox->setPosition(420, 240);
-    //    checkbox->setText("Ok, I got it");
-    //    checkbox->setSize(25, 25);
-    //    gui.add(checkbox);
-
-
     //    auto chatbox = tgui::ChatBox::create();
-    //   // chatbox->setRenderer(theme.getRenderer("ChatBox"));
     //    chatbox->setSize(300, 100);
     //    chatbox->setTextSize(18);
     //    chatbox->setPosition(420, 310);
@@ -349,8 +373,17 @@ int LevelEditor::Run()
 
             if (i->hasRenderComponent)
             {
+                //update size
                 i->inspectorTab->sizeX->setDefaultText(std::to_string(i->container->getSize().x));
                 i->inspectorTab->sizeY->setDefaultText(std::to_string(i->container->getSize().y));
+
+                //update color
+                auto r = i->inspectorTab->rSlider->getValue();
+                auto g = i->inspectorTab->gSlider->getValue();
+                auto b = i->inspectorTab->bSlider->getValue();
+                auto a = i->inspectorTab->aSlider->getValue();
+                i->container->getRenderer()->setBackgroundColor(tgui::Color(r, g, b, a));
+             
             }
             
 
@@ -360,17 +393,26 @@ int LevelEditor::Run()
             if(!i->inspectorTab->positionX->isFocused())
                 i->inspectorTab->positionX->setText(std::to_string(i->container->getPosition().x));
 
+
             // make a scene
             for (auto g : engine->gameObjectManager->gameObjects)
             {
                 if (g.second->GetID() == i->id)
                 {
-                    g.second->transformComponent.position = i->container->getPosition();
+                    g.second->transformComponent.position = sf::Vector2f(i->container->getPosition().x + i->container->getSize().x/2, i->container->getPosition().y + i->container->getSize().y / 2);
 
                     if (i->hasRenderComponent)
                     {
                         g.second->GetComponent<RenderComponent*>()->SetSize(i->container->getSize());
                         g.second->GetComponent<RenderComponent*>()->SetColor(i->container->getRenderer()->getBackgroundColor());
+                    }
+
+                    if (i->hasRigidbodyComponent)
+                    {
+                        g.second->GetComponent<RigidbodyComponent*>()->obeysGravity = i->inspectorTab->checkbox->isChecked();
+                        g.second->GetComponent<RigidbodyComponent*>()->mass = i->inspectorTab->mass->getText().isEmpty() ? 1 :  std::stoi(std::string(i->inspectorTab->mass->getText()));
+                        g.second->GetComponent<RigidbodyComponent*>()->velecity.x = i->inspectorTab->velocityX->getText().isEmpty() ? 0 : std::stoi(std::string(i->inspectorTab->velocityX->getText()));
+                        g.second->GetComponent<RigidbodyComponent*>()->velecity.y = i->inspectorTab->velocityY->getText().isEmpty() ? 0 : std::stoi(std::string(i->inspectorTab->velocityY->getText()));
                     }
                 }
             }
@@ -384,7 +426,7 @@ int LevelEditor::Run()
             gui.handleEvent(event);
         }
 
-        window.clear();
+        window.clear(sf::Color(255, 230, 171, 100));
         gui.draw();
         window.display();
     }

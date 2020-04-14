@@ -13,7 +13,7 @@ public:
 	{
 		editor = tgui::ChildWindow::create();
 		editor->setSize(x, y);
-		editor->getRenderer()->setBackgroundColor(sf::Color::Red);
+		editor->getRenderer()->setBackgroundColor(sf::Color(255, 230, 171, 255));
 		editor->setTitle("Game Object");
 
 #pragma region Transform Component
@@ -54,8 +54,8 @@ public:
 		componentsBtn->addMenuItem("Script Component");
 		componentsBtn->addMenuItem("Rigidbody Component");
 		componentsBtn->addMenuItem("Audio Component");
-
 		editor->add(componentsBtn);
+		lastItem = componentsBtn->getPosition().y + componentsBtn->getSize().y;
 #pragma endregion
 
 	};
@@ -100,7 +100,7 @@ public:
 		renderComponent = tgui::ChildWindow::create();
 		renderComponent->setSize(transformComponent->getSize().x, 150);
 		renderComponent->setTitle("Render");
-		renderComponent->setPosition(0, componentsBtn->getPosition().y + componentsBtn->getSize().y + 80);
+		renderComponent->setPosition(0, lastItem + 10);
 
 		sizeXLabel = tgui::Label::create("size x");
 		sizeXLabel->setPosition(0, 0);
@@ -166,12 +166,76 @@ public:
 		aSlider->setValue(255);
 		renderComponent->add(aSlider);
 
+		lastItem = renderComponent->getPosition().y + renderComponent->getSize().y + 20;
 		editor->add(renderComponent);
+
 	}
 
 #pragma endregion
 
+#pragma region Rigidbody Component
+	public:
+		ChildWindowPtr rigidbodyComponent;
+		std::shared_ptr<tgui::EditBox> velocityX;
+		std::shared_ptr<tgui::EditBox> velocityY;
+		std::shared_ptr<tgui::EditBox> mass;
+		std::shared_ptr<tgui::CheckBox> checkbox;
+
+		void AddRigidbodyComponent()
+		{
+			rigidbodyComponent = tgui::ChildWindow::create();
+			rigidbodyComponent->setSize(transformComponent->getSize().x, 70);
+			rigidbodyComponent->setTitle("Rigidbody");
+			rigidbodyComponent->setPosition(0, lastItem + 10);
+
+			velocityLabel = tgui::Label::create("Velocity");
+			velocityLabel->setPosition(5, 10);
+			rigidbodyComponent->add(velocityLabel);
+
+			velocityX = tgui::EditBox::create();
+			velocityX->setDefaultText("0");
+			velocityX->setSize(20, 20);
+			velocityX->setPosition(70, 5);
+			velocityX->setInputValidator(tgui::EditBox::Validator::Float);
+			rigidbodyComponent->add(velocityX);
+
+			velocityY = tgui::EditBox::create();
+			velocityY->setDefaultText("0");
+			velocityY->setSize(20, 20);
+			velocityY->setPosition(100, 5);
+			velocityY->setInputValidator(tgui::EditBox::Validator::Float);
+			rigidbodyComponent->add(velocityY);
+
+			checkbox = tgui::CheckBox::create();
+			checkbox->setText("Obbey Gravity");
+			checkbox->setChecked(true);
+			checkbox->setPosition(150, 5);
+			rigidbodyComponent->add(checkbox);
+
+			massLabel = tgui::Label::create("Mass");
+			massLabel->setPosition(5, 40);
+			rigidbodyComponent->add(massLabel);
+
+			mass = tgui::EditBox::create();
+			mass->setDefaultText("1");
+			mass->setSize(20, 20);
+			mass->setPosition(70, 40);
+			mass->setInputValidator(tgui::EditBox::Validator::Float);
+			rigidbodyComponent->add(mass);
+
+			lastItem = rigidbodyComponent->getPosition().y + rigidbodyComponent->getSize().y + 20;
+			editor->add(rigidbodyComponent);
+		}
+private:
+	std::shared_ptr<tgui::Label> velocityLabel;
+	std::shared_ptr<tgui::Label> massLabel;
+#pragma endregion
+
+public:
 	std::shared_ptr<tgui::MenuBar> componentsBtn;
+
+	private:
+		float lastItem; // y position of the last item in the inspector list
 };
 
 struct GameObjectEditor
@@ -181,6 +245,7 @@ struct GameObjectEditor
 	InspectorEditor* inspectorTab;
 	int id;
 	bool hasRenderComponent = false;
+	bool hasRigidbodyComponent = false;
 };
 
 class LevelEditor
