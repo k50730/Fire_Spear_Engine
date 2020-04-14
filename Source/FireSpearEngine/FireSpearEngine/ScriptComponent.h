@@ -31,14 +31,30 @@ private:
 	void RegisterFunctions();
 
 #pragma region Lua Functions
+	LuaObject transform;
+	LuaObject render;
+	LuaObject input;
+	LuaObject rigidBody;
+	LuaObject gameObject;
+
 	bool LuaIsKeyDown(const char* KeyName);
-	float LusTest(float x);
 	float LuaRandom(float, float);
+	//Render
 	void SetColor(float r, float g, float b, float);
 	void SetSize(float, float);
+	void SetScale(float, float);
+	//Transform
 	void LuaSetPosition(float, float);
 	void LuaSetRotation(float);
+	//RigidBody
 	void LuaAddForce(float x, float y);
+	void LuaStop();
+	void LuaObeyGravity(bool _obeyGravity);
+	void LuaSetMass(float _mass);
+	void LuaSetBounciness(float _bounciness);
+	//GameObject
+	void LuaAddComponent(const char* ComponentName);
+	void LuaRemoveComponent(const char* ComponentName);
 	sf::Vector2f LuaGetPosition() const;
 #pragma endregion
 };

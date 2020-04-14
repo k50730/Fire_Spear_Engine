@@ -4,11 +4,28 @@
 
 GameObject::GameObject()
 {
+	compExist = false;
 }
 
 GameObject::GameObject(int newID) : id(newID), parent(nullptr)
 {
 	AddComponent(&transformComponent);
+
+	if (components.empty())
+	{
+		hasAudioComponent = false;
+		hasRenderComponent = false;
+		hasScriptComponent = false;
+		hasTransfromComponent = false;
+		hasRigidbodyComponent = false;
+	}
+	else
+	{
+		for (auto c : components) //check hascomponent
+		{
+			AddHasComponent(c->GetComponentID());
+		}
+	}
 }
 
 GameObject::~GameObject()
@@ -56,15 +73,45 @@ void GameObject::AddChild(GameObject* child)
 
 void GameObject::AddComponent(BaseComponent* c)
 {
-	components.push_back(c);
+	compExist = false;
+	for (auto it : components)
+	{
+		if (it->GetComponentID() == c->GetComponentID())
+			compExist = true;
+	}
+	if (!compExist)
+	{
+		components.push_back(c);
+		AddHasComponent(c->GetComponentID()); //gameobject tracks component it owns
+	}
+}
+
+void GameObject::RemoveComponent(BaseComponent* component)
+{
+	if (!components.empty())
+	{
+		for (auto c = components.begin(); c <= components.end(); ++c)
+		{
+			if ((*c)->GetComponentID() == component->GetComponentID())
+			{
+				components.erase(c);
+				RemoveHasComponent(component->GetComponentID());
+			}
+		}
+	}
+	delete component;
 }
 
 template <typename ComponentName>
 ComponentName GameObject::GetComponent() 
 {
-	BaseComponent::ComponentID id = BaseComponent::ComponentID::NONE;
+	BaseComponent::ComponentID id = BaseComponent::ComponentID::None;
 
-	if (typeid(ComponentName) == typeid(RenderComponent*))
+	if (typeid(ComponentName) == typeid(BaseComponent*))
+	{
+		id = BaseComponent::ComponentID::Base;
+	}
+	else if (typeid(ComponentName) == typeid(RenderComponent*))
 	{
 		id = BaseComponent::ComponentID::Render;
 	}
@@ -146,7 +193,7 @@ void GameObject::Render()
 {
 	if (GetComponent<RenderComponent*>() != nullptr)
 	{
-		GetComponent<RenderComponent*>()->transform = worldTransform;
+		GetComponent<RenderComponent*>()->SetTransform(worldTransform);
 	}
 }
 
@@ -163,5 +210,59 @@ GameObject* GameObject::GetParent() const
 std::vector<GameObject*> GameObject::GetChildren() const
 {
 	return children;
+}
+
+void GameObject::AddHasComponent(BaseComponent::ComponentID id)
+{
+	switch (id)
+	{
+	case BaseComponent::ComponentID::Base:
+		hasBaseComponent = true;
+		break;
+	case BaseComponent::ComponentID::Transform:
+		hasTransfromComponent = true;
+		break;
+	case BaseComponent::ComponentID::Render:
+		hasRenderComponent = true;
+		break;
+	case BaseComponent::ComponentID::Lua:
+		hasScriptComponent = true;
+		break;
+	case BaseComponent::ComponentID::Rigidbody:
+		hasRigidbodyComponent = true;
+		break;
+	case BaseComponent::ComponentID::Audio:
+		hasAudioComponent = true;
+		break;
+	default:
+		break;
+	}
+}
+
+void GameObject::RemoveHasComponent(BaseComponent::ComponentID id)
+{
+	switch (id)
+	{
+	case BaseComponent::ComponentID::Base:
+		hasBaseComponent = false;
+		break;
+	case BaseComponent::ComponentID::Transform:
+		hasTransfromComponent = false;
+		break;
+	case BaseComponent::ComponentID::Render:
+		hasRenderComponent = false;
+		break;
+	case BaseComponent::ComponentID::Lua:
+		hasScriptComponent = false;
+		break;
+	case BaseComponent::ComponentID::Rigidbody:
+		hasRigidbodyComponent = false;
+		break;
+	case BaseComponent::ComponentID::Audio:
+		hasAudioComponent = false;
+		break;
+	default:
+		break;
+	}
 }
 

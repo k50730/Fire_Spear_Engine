@@ -72,21 +72,38 @@ bool ScriptComponent::CheckLua(int r)
 void ScriptComponent::RegisterFunctions()
 {
 	mLuaState->GetGlobals().RegisterDirect("Random", *this, &ScriptComponent::LuaRandom);
+	if (owner->hasTransfromComponent)
+	{
+		transform = mLuaState->GetGlobals().CreateTable("transform");
+		transform.SetObject(1, transform);
+		transform.RegisterDirect("SetPosition", *this, &ScriptComponent::LuaSetPosition);
+		transform.RegisterDirect("SetRotation", *this, &ScriptComponent::LuaSetRotation);
+	}
+	if (owner->hasRenderComponent)
+	{
+		render = mLuaState->GetGlobals().CreateTable("render");
+		render.SetObject(1, render);
+		render.RegisterDirect("SetColor", *this, &ScriptComponent::SetColor);
+		render.RegisterDirect("SetSize", *this, &ScriptComponent::SetSize);
+		render.RegisterDirect("SetScale", *this, &ScriptComponent::SetScale);
+	}
+	if (owner->hasRigidbodyComponent)
+	{
+		input = mLuaState->GetGlobals().CreateTable("input");
+		input.SetObject(1, input);
+		input.RegisterDirect("IsKeyDown", *this, &ScriptComponent::LuaIsKeyDown);
 
-	LuaObject transform = mLuaState->GetGlobals().CreateTable("transform");
-	transform.SetObject(1, transform);
-	transform.RegisterDirect("SetPosition", *this, &ScriptComponent::LuaSetPosition);
-	transform.RegisterDirect("SetRotation", *this, &ScriptComponent::LuaSetRotation);
-	transform.RegisterDirect("AddForce", *this, &ScriptComponent::LuaAddForce);
-
-	LuaObject render = mLuaState->GetGlobals().CreateTable("render");
-	render.SetObject(1, transform);
-	render.RegisterDirect("SetColor", *this, &ScriptComponent::SetColor);
-	render.RegisterDirect("SetSize", *this, &ScriptComponent::SetSize);
-
-	LuaObject input = mLuaState->GetGlobals().CreateTable("input");
-	input.SetObject(1, transform);
-	input.RegisterDirect("IsKeyDown", *this, &ScriptComponent::LuaIsKeyDown);
+		rigidBody = mLuaState->GetGlobals().CreateTable("rigidBody");
+		rigidBody.SetObject(1, rigidBody);
+		rigidBody.RegisterDirect("AddForce", *this, &ScriptComponent::LuaAddForce);
+		rigidBody.RegisterDirect("Stop", *this, &ScriptComponent::LuaStop);
+		rigidBody.RegisterDirect("ObeyGravity", *this, &ScriptComponent::LuaObeyGravity);
+		rigidBody.RegisterDirect("SetMass", *this, &ScriptComponent::LuaSetMass);
+		rigidBody.RegisterDirect("SetBounciness", *this, &ScriptComponent::LuaSetBounciness);
+	}
+	// delete ?
+	gameObject = mLuaState->GetGlobals().CreateTable("gameObject");
+	gameObject.RegisterDirect("AddComponent", *this, &ScriptComponent::LuaAddComponent);
 }
 
 
@@ -122,6 +139,14 @@ void ScriptComponent::SetSize(float x, float y)
 	}
 }
 
+void ScriptComponent::SetScale(float x, float y)
+{
+	if (owner->GetComponent<RenderComponent*>() != nullptr)
+	{
+		owner->GetComponent<RenderComponent*>()->SetScale(sf::Vector2f(x, y));
+	}
+}
+
 void ScriptComponent::LuaSetPosition(float x, float y)
 {
 	owner->transformComponent.position = sf::Vector2f(x, y);
@@ -138,6 +163,93 @@ void ScriptComponent::LuaAddForce(float x, float y)
 	{
 		owner->GetComponent<RigidbodyComponent*>()->AddForce(sf::Vector2f(x, y));
 	}
+}
+
+void ScriptComponent::LuaStop()
+{
+	if (owner->GetComponent<RigidbodyComponent*>() != nullptr)
+	{
+		owner->GetComponent<RigidbodyComponent*>()->Stop();
+	}
+}
+
+void ScriptComponent::LuaObeyGravity(bool _obeyGravity)
+{
+	if (owner->GetComponent<RigidbodyComponent*>() != nullptr)
+	{
+		owner->GetComponent<RigidbodyComponent*>()->SetObeyGravity(_obeyGravity);
+	}
+}
+
+void ScriptComponent::LuaSetMass(float _mass)
+{
+	if (owner->GetComponent<RigidbodyComponent*>() != nullptr)
+	{
+		owner->GetComponent<RigidbodyComponent*>()->SetMass(_mass);
+	}
+}
+
+void ScriptComponent::LuaSetBounciness(float _bounciness)
+{
+	if (owner->GetComponent<RigidbodyComponent*>() != nullptr)
+	{
+		owner->GetComponent<RigidbodyComponent*>()->SetBounciness(_bounciness);
+	}
+}
+
+void ScriptComponent::LuaAddComponent(const char* ComponentName)
+{
+	std::string compName = ComponentName;
+	std::cout << compName << "Added" << std::endl;
+	if (compName == "TransformComponent")
+	{
+		owner->AddComponent(new TransformComponent());
+	}
+	else if (compName == "RenderComponent")
+	{
+		owner->AddComponent(new RenderComponent());
+	}
+	else if (compName == "RigidBodyComponent")
+	{
+		owner->AddComponent(new RigidbodyComponent());
+	}
+	else if (compName == "AudioComponent")
+	{
+		owner->AddComponent(new AudioPlayerComponent());
+	}
+}
+
+void ScriptComponent::LuaRemoveComponent(const char* ComponentName)
+{
+	std::string compName = ComponentName;
+	std::cout << compName << "Removed" << std::endl;
+	if (compName == "TransformComponent")
+	{
+		owner->RemoveComponent(new TransformComponent());
+		rigidBody.Unregister("SetPosition");
+		rigidBody.Unregister("SetRotation");
+	}
+	else if (compName == "RenderComponent")
+	{
+		owner->RemoveComponent(new RenderComponent());
+		render.Unregister("SetColor");
+		render.Unregister("SetSize");
+		render.Unregister("SetScale");
+	}
+	else if (compName == "RigidBodyComponent")
+	{
+		owner->RemoveComponent(new RigidbodyComponent());
+		input.Unregister("IsKeyDown");
+		input.Unregister("AddForce");
+		input.Unregister("Stop");
+		input.Unregister("ObeyGravity");
+		input.Unregister("SetMass");
+		input.Unregister("SetBounciness");
+	}
+	else if (compName == "AudioComponent")
+	{
+		owner->RemoveComponent(new AudioPlayerComponent());
+	}	
 }
 
 sf::Vector2f ScriptComponent::LuaGetPosition() const
