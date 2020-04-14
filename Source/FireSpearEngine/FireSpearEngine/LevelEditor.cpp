@@ -21,16 +21,16 @@ void LevelEditor::StartEngine()
 
 void LevelEditor::CreateGameObject(std::string name)
 {
-    if (name == "Empty" || name == "Rectangle")
+    if (name == "Empty")
     {
         auto gameObject = new GameObjectEditor();
         gameObject->container = tgui::ChildWindow::create();
         gameObject->container->setTitle("GameObject");
         gameObject->container->setSize(110, 0);
         sf::Vector2f position = sf::Vector2f(100, 100);
-        gameObject->container->setPosition(position.x - gameObject->container->getSize().x / 2.f, position.y - gameObject->container->getSize().y / 2.f);
-        gameObject->container->setResizable();
-        gameObject->container->getRenderer()->setBorders(5);
+       // gameObject->container->setPosition(position.x - gameObject->container->getSize().x / 2.f, position.y - gameObject->container->getSize().y / 2.f);
+        gameObject->container->setPosition(position.x, position.y);
+        gameObject->container->getRenderer()->setMinimumResizableBorderWidth(20);
 
         // destroy object
         gameObject->container->connect("closed", [&]() { 
@@ -72,10 +72,9 @@ void LevelEditor::CreateGameObject(std::string name)
             }
         });
 
-
         hierarchy->add(gameObject->hierarchyTab);
 
-        gameObject->inspectorTab = new InspectorEditor(inspector->getSize().x, 300, position);
+        gameObject->inspectorTab = new InspectorEditor(inspector->getSize().x, 600, position);
         inspector->add(gameObject->inspectorTab->editor);
 
         // Change object position x using inspector value
@@ -86,7 +85,7 @@ void LevelEditor::CreateGameObject(std::string name)
                 if (i->inspectorTab->positionX->isFocused())
                 {
                     auto p = sf::Vector2f(x, i->container->getPosition().y);
-                    i->container->setPosition(p.x - i->container->getSize().x / 2.f, p.y);
+                    i->container->setPosition(p.x, p.y);
                     return;
                 }
             }
@@ -102,8 +101,54 @@ void LevelEditor::CreateGameObject(std::string name)
                 if (i->inspectorTab->positionY->isFocused())
                 {
                     auto p = sf::Vector2f(i->container->getPosition().x, y);
-                    i->container->setPosition(p.x, p.y - i->container->getSize().y / 2.f);
+                    i->container->setPosition(p.x, p.y);
                     return;
+                }
+            }
+        });
+
+        gameObject->inspectorTab->componentsBtn->connect("MenuItemClicked", [&](std::string text) {
+
+           
+            if (text == "Render Component")
+            {
+                for (auto i : gameObjects)
+                {
+                   
+                    if (i->inspectorTab->componentsBtn->isFocused())
+                    {
+                        i->hasRenderComponent = true;
+                        i->inspectorTab->AddRenderComponent(i->container);
+                        i->container->setResizable();
+
+                        i->inspectorTab->sizeX->connect("TextChanged", [&](std::string text) {
+                            float x = text.empty() ? 0 : std::stoi(text);
+                            for (auto j : gameObjects)
+                            {
+                                if (j->inspectorTab->sizeX->isFocused())
+                                {
+                                    auto s = sf::Vector2f(x, j->container->getPosition().y);
+                                    j->container->setSize(s.x, s.y);
+                                    return;
+                                }
+                            }
+                        });
+
+                        i->inspectorTab->sizeY->connect("TextChanged", [&](std::string text) {
+                            float y = text.empty() ? 0 : std::stoi(text);
+                            for (auto k : gameObjects)
+                            {
+                                if (k->inspectorTab->sizeY->isFocused())
+                                {
+                                    auto s = sf::Vector2f(k->container->getPosition().x, y);
+                                    k->container->setSize(s.x, s.y);
+                                    return;
+                                }
+                            }
+                        });
+
+                        return;
+                    }
                 }
             }
         });
@@ -172,7 +217,6 @@ int LevelEditor::Run()
         menu->connect("MenuItemClicked", &LevelEditor::CreateGameObject, this);
         menu->addMenu("Game Object");
         menu->addMenuItem("Empty");
-        menu->addMenuItem("Rectangle");
         menu->addMenu("Help");
         menu->addMenuItem("About");
         gui.add(menu);
@@ -185,12 +229,6 @@ int LevelEditor::Run()
         tabs->add("Tab - 3");
         gui.add(tabs);*/
 
-        //auto label = tgui::Label::create();
-        ////label->setRenderer(theme.getRenderer("Label"));
-        //label->setText("This is a label.\nAnd these are radio buttons:");
-        //label->setPosition(10, 90);
-        //label->setTextSize(18);
-        //gui.add(label);
 
      //   auto radioButton = tgui::RadioButton::create();
      ////   radioButton->setRenderer(theme.getRenderer("RadioButton"));
@@ -199,13 +237,6 @@ int LevelEditor::Run()
      //   radioButton->setSize(25, 25);
      //   gui.add(radioButton);
 
-      //  auto editBox = tgui::EditBox::create();
-      ////  editBox->setRenderer(theme.getRenderer("EditBox"));
-      //  editBox->setSize(200, 25);
-      //  editBox->setTextSize(18);
-      //  editBox->setPosition(10, 270);
-      //  editBox->setDefaultText("Game Object");
-      //  gui.add(editBox);
 
       //  auto listBox = tgui::ListBox::create();
       ////  listBox->setRenderer(theme.getRenderer("ListBox"));
@@ -225,13 +256,6 @@ int LevelEditor::Run()
     //    progressBar->setValue(50);
     //    gui.add(progressBar);
 
-
-    //    auto slider = tgui::Slider::create();
-    ////    slider->setRenderer(theme.getRenderer("Slider"));
-    //    slider->setPosition(10, 560);
-    //    slider->setSize(200, 18);
-    //    slider->setValue(4);
-    //    gui.add(slider);
 
     //    auto scrollbar = tgui::Scrollbar::create();
     ////    scrollbar->setRenderer(theme.getRenderer("Scrollbar"));
@@ -254,13 +278,6 @@ int LevelEditor::Run()
       //  gui.add(comboBox);
 
 
-     //   auto button = tgui::Button::create();
-     ////   button->setRenderer(theme.getRenderer("Button"));
-     //   button->setPosition(75, 70);
-     //   button->setText("OK");
-     //   button->setSize(100, 30);
-     //   button->connect("pressed", [=]() { child->setVisible(false); });
-     //   child->add(button);
 
     //    auto checkbox = tgui::CheckBox::create();
     //  //  checkbox->setRenderer(theme.getRenderer("CheckBox"));
@@ -311,14 +328,21 @@ int LevelEditor::Run()
                 i->inspectorTab->editor->moveToFront();
 
             // update position value when drag
-            i->inspectorTab->positionY->setDefaultText(std::to_string(i->container->getPosition().y + i->container->getSize().y / 2.0f));
-            i->inspectorTab->positionX->setDefaultText(std::to_string(i->container->getPosition().x + i->container->getSize().x / 2.0f));
+            i->inspectorTab->positionY->setDefaultText(std::to_string(i->container->getPosition().y));
+            i->inspectorTab->positionX->setDefaultText(std::to_string(i->container->getPosition().x));
+
+            if (i->hasRenderComponent)
+            {
+                i->inspectorTab->sizeX->setDefaultText(std::to_string(i->container->getSize().x));
+                i->inspectorTab->sizeY->setDefaultText(std::to_string(i->container->getSize().y));
+            }
+            
 
             if (!i->inspectorTab->positionY->isFocused())
-                i->inspectorTab->positionY->setText(std::to_string(i->container->getPosition().y + i->container->getSize().y / 2.0f));
+                i->inspectorTab->positionY->setText(std::to_string(i->container->getPosition().y ));
 
             if(!i->inspectorTab->positionX->isFocused())
-                i->inspectorTab->positionX->setText(std::to_string(i->container->getPosition().x + i->container->getSize().x / 2.0f));
+                i->inspectorTab->positionX->setText(std::to_string(i->container->getPosition().x));
         }
        
         sf::Event event;
