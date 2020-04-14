@@ -21,6 +21,7 @@ public:
 
 	void InitilizeSystem(); // initilizing system and play splash screen
 	void Run(); // start of every components
+	void Pause();
 	
 	GameObjectManager* gameObjectManager;
 	PhysicEngine* physicEngine;
@@ -58,5 +59,7 @@ private:
 	void Start();
 	void Update(sf::Time deltaTime); //fixed update function
 	void FixUpdate();
+
+	void KeyboardInput(sf::Keyboard::Key keyCode, bool isPressed);
 };
 
