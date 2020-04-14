@@ -1,7 +1,8 @@
 #include "LevelEditor.h"
 
-LevelEditor::LevelEditor()
+LevelEditor::LevelEditor(FireSpear* e)
 {
+    engine = e;
 }
 
 LevelEditor::~LevelEditor()
@@ -10,12 +11,12 @@ LevelEditor::~LevelEditor()
 
 void LevelEditor::StartEngine()
 {
-    FireSpear* engine = new FireSpear();
+   // FireSpear* engine = new FireSpear();
     engine->InitilizeSystem();
 
-    engine->sceneManager->LoadScene("../../../Assets/Scenes/Scene1.xml");
+   /* engine->sceneManager->LoadScene("../../../Assets/Scenes/Scene1.xml");
     engine->sceneManager->LoadScene("../../../Assets/Scenes/Scene2.xml");
-    engine->sceneManager->SetActive(0);
+    engine->sceneManager->SetActive(0);*/
     engine->Run();
 }
 
@@ -23,6 +24,8 @@ void LevelEditor::CreateGameObject(std::string name)
 {
     if (name == "Empty")
     {
+        auto g = engine->gameObjectManager->CreateObject();
+
         auto gameObject = new GameObjectEditor();
         gameObject->container = tgui::ChildWindow::create();
         gameObject->container->setTitle("GameObject");
@@ -38,6 +41,15 @@ void LevelEditor::CreateGameObject(std::string name)
             {
                 if (gameObjects[i]->container->isFocused())
                 {
+                    for (auto g : engine->gameObjectManager->gameObjects)
+                    {
+                        if (g.second->GetID() == gameObjects[i]->id)
+                        {
+                            engine->gameObjectManager->DestroyObject(g.second);
+                            break;
+                        }
+                    }
+
                     hierarchy->remove(gameObjects[i]->hierarchyTab);
                     editor->remove(gameObjects[i]->container);
                     inspector->remove(gameObjects[i]->inspectorTab->editor);
@@ -107,9 +119,8 @@ void LevelEditor::CreateGameObject(std::string name)
             }
         });
 
+        // Add render component
         gameObject->inspectorTab->componentsBtn->connect("MenuItemClicked", [&](std::string text) {
-
-           
             if (text == "Render Component")
             {
                 for (auto i : gameObjects)
@@ -117,6 +128,15 @@ void LevelEditor::CreateGameObject(std::string name)
                    
                     if (i->inspectorTab->componentsBtn->isFocused())
                     {
+                        for (auto g : engine->gameObjectManager->gameObjects)
+                        {
+                            if (g.second->GetID() == i->id)
+                            {
+                                g.second->AddComponent(new RenderComponent());
+                                break;
+                            }
+                        }
+
                         i->hasRenderComponent = true;
                         i->inspectorTab->AddRenderComponent(i->container);
                         i->container->setResizable();
@@ -155,10 +175,6 @@ void LevelEditor::CreateGameObject(std::string name)
        
         gameObjectId++;
 
-        if (name == "Rectangle")
-        {
-            gameObject->container->getRenderer()->setBackgroundColor(tgui::Color(255, 1, 0, 255));
-        }
 
     }
 }
@@ -343,6 +359,21 @@ int LevelEditor::Run()
 
             if(!i->inspectorTab->positionX->isFocused())
                 i->inspectorTab->positionX->setText(std::to_string(i->container->getPosition().x));
+
+            // make a scene
+            for (auto g : engine->gameObjectManager->gameObjects)
+            {
+                if (g.second->GetID() == i->id)
+                {
+                    g.second->transformComponent.position = i->container->getPosition();
+
+                    if (i->hasRenderComponent)
+                    {
+                        g.second->GetComponent<RenderComponent*>()->SetSize(i->container->getSize());
+                        g.second->GetComponent<RenderComponent*>()->SetColor(i->container->getRenderer()->getBackgroundColor());
+                    }
+                }
+            }
         }
        
         sf::Event event;

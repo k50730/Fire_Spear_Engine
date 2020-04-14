@@ -190,12 +190,13 @@ private:
 	ChildWindowPtr inspector;
 	ChildWindowPtr hierarchy;
 	void StartEngine();
-
+	
 	void CreateGameObject(std::string name);
-	std::vector<GameObjectEditor*> gameObjects;
+	std::vector<GameObjectEditor*> gameObjects; // game objects in editor
+	FireSpear* engine;
 	int gameObjectId = 0;
 public:
-	LevelEditor();
+	LevelEditor(FireSpear* e);
 	~LevelEditor();
 	int Run();
 };

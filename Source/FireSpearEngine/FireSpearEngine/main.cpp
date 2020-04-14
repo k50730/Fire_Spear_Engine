@@ -3,7 +3,7 @@
 
 int main()
 {
-	//FireSpear* engine = new FireSpear();
+	FireSpear* engine = new FireSpear();
 	//engine->InitilizeSystem();
 
 	//engine->sceneManager->LoadScene("../../../Assets/Scenes/Scene1.xml");
@@ -14,7 +14,7 @@ int main()
 	//engine->Run();
 	//delete engine;
 
-	LevelEditor* levelEditor = new LevelEditor();
+	LevelEditor* levelEditor = new LevelEditor(engine);
 	levelEditor->Run();
 	delete levelEditor;
 
