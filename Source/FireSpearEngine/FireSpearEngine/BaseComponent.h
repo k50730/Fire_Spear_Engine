@@ -1,11 +1,13 @@
 #pragma once
 #include "SFML/Graphics.hpp"
+
 class BaseComponent
 {
 public:
     enum ComponentID
     {
-        NONE,
+        None,
+        Base,
         Transform,
         Render,
         Lua,

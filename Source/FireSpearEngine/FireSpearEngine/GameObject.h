@@ -17,6 +17,7 @@ public:
 	void SetParent(GameObject& parent);
 	void AddChild(GameObject* child);
 	void AddComponent(BaseComponent* component);
+	void RemoveComponent(BaseComponent* component);
 
 	template <typename ComponentName>
 	ComponentName GetComponent();
@@ -34,6 +35,17 @@ public:
 	GameObject* GetParent() const;
 	std::vector<GameObject*> GetChildren() const;
 
+	//Component Check
+	bool hasBaseComponent;
+	bool hasAudioComponent;
+	bool hasRenderComponent;
+	bool hasScriptComponent;
+	bool hasTransfromComponent;
+	bool hasRigidbodyComponent;
+
+	void AddHasComponent(BaseComponent::ComponentID id);
+	void RemoveHasComponent(BaseComponent::ComponentID id);
+
 private:
 	
 	sf::Transform worldTransform;
@@ -41,6 +53,7 @@ private:
 	GameObject* parent;
 	std::vector<GameObject*> children;
 	std::vector<BaseComponent*> components;
-	
+
+	bool compExist;
 };
 

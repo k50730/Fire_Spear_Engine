@@ -171,25 +171,25 @@ void XMLReader::ReadRigidbodyProperties(GameObject* g, tinyxml2::XMLElement* c)
 			float x, y;
 			property->FirstChildElement("x")->QueryFloatText(&x);
 			property->FirstChildElement("y")->QueryFloatText(&y);
-			rid->velecity = sf::Vector2f(x, y);
+			rid->velocity = sf::Vector2f(x, y);
 			break;
 
 		case * "mass":
 			float m;
 			property->QueryFloatText(&m);
-			rid->mass = m;
+			rid->SetMass(m);
 			break;
 
 		case * "bounciness":
 			float b;
 			property->QueryFloatText(&b);
-			rid->bounciness = b;
+			rid->SetBounciness(b);
 			break;
 
 		case * "obeysGravity":
 			bool o;
 			property->QueryBoolText(&o);
-			rid->obeysGravity = o;
+			rid->SetObeyGravity(o);
 			break;
 
 		case * "isTrigger":
