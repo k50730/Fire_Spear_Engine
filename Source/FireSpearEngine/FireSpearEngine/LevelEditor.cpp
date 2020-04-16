@@ -57,30 +57,30 @@ void LevelEditor::StartEngine()
 
                 if (i->hasRigidbodyComponent)
                 {
-                    g.second->GetComponent<RigidbodyComponent*>()->obeysGravity = i->inspectorTab->checkbox->isChecked();
+                    g.second->GetComponent<RigidbodyComponent*>()->SetObeyGravity(i->inspectorTab->checkbox->isChecked());
 
-                    g.second->GetComponent<RigidbodyComponent*>()->mass = i->inspectorTab->mass->getText().isEmpty() ? 1 : std::stoi(std::string(i->inspectorTab->mass->getText()));
+                    g.second->GetComponent<RigidbodyComponent*>()->SetMass(i->inspectorTab->mass->getText().isEmpty() ? 1 : std::stoi(std::string(i->inspectorTab->mass->getText())));
 
                     if (!i->inspectorTab->velocityX->getText().isEmpty())
                     {
                         int x;
                         std::stringstream(i->inspectorTab->velocityX->getText()) >> x;
-                        g.second->GetComponent<RigidbodyComponent*>()->velecity.x = x;
+                        g.second->GetComponent<RigidbodyComponent*>()->velocity.x = x;
                     }
                     else
                     {
-                        g.second->GetComponent<RigidbodyComponent*>()->velecity.x = 0;
+                        g.second->GetComponent<RigidbodyComponent*>()->velocity.x = 0;
                     }
 
                     if (!i->inspectorTab->velocityY->getText().isEmpty())
                     {
                         int y;
                         std::stringstream(i->inspectorTab->velocityY->getText()) >> y;
-                        g.second->GetComponent<RigidbodyComponent*>()->velecity.y = y;
+                        g.second->GetComponent<RigidbodyComponent*>()->velocity.y = y;
                     }
                     else
                     {
-                        g.second->GetComponent<RigidbodyComponent*>()->velecity.y = 0;
+                        g.second->GetComponent<RigidbodyComponent*>()->velocity.y = 0;
                     }
 
 
