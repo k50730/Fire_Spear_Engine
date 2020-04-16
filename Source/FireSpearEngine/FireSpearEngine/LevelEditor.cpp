@@ -1,6 +1,27 @@
 #include "LevelEditor.h"
 
 
+std::string LevelEditor::OpenFileExplorer(HWND hWnd)
+{
+    OPENFILENAME ofn;
+
+    char fileName[100];
+
+    ZeroMemory(&ofn, sizeof(OPENFILENAME));
+
+    ofn.lStructSize = sizeof(OPENFILENAME);
+    ofn.hwndOwner = hWnd;
+    ofn.lpstrFile = fileName;
+    ofn.lpstrFile[0] = '\0';
+    ofn.nMaxFile = 100;
+    ofn.lpstrFilter = "Scripts\0*.lua*\0Scenes\0*.xml*\0";
+    ofn.nFilterIndex = 1;
+    GetOpenFileName(&ofn);
+
+    auto path = std::string(ofn.lpstrFile);
+    return path.substr(path.find("Scripts") + 8);
+}
+
 LevelEditor::LevelEditor(FireSpear* e)
 {
     engine = e;
@@ -15,9 +36,9 @@ void LevelEditor::StartEngine()
    // FireSpear* engine = new FireSpear();
     engine->InitilizeSystem();
 
-   /* engine->sceneManager->LoadScene("../../../Assets/Scenes/Scene1.xml");
-    engine->sceneManager->LoadScene("../../../Assets/Scenes/Scene2.xml");
-    engine->sceneManager->SetActive(0);*/
+    //engine->sceneManager->LoadScene("../../../Assets/Scenes/Scene1.xml");
+    //engine->sceneManager->LoadScene("../../../Assets/Scenes/Scene2.xml");
+    //engine->sceneManager->SetActive(0);
 
     // make a scene
     for (auto i : gameObjects)
@@ -197,10 +218,21 @@ void LevelEditor::CreateGameObject(std::string name)
                                     break;
                                 }
                             }
-
                             i->hasRenderComponent = true;
                             i->inspectorTab->AddRenderComponent(i->container);
                             i->container->setResizable();
+                            i->inspectorTab->renderComponent->connect("closed", [&]()
+                            {
+                                for (auto j : gameObjects)
+                                {
+                                    if (j->inspectorTab->editor->isFocused())
+                                    {
+                                        std::cout << "Close";
+                                      
+                                        return;
+                                    }
+                                }
+                            });
 
                             i->inspectorTab->sizeX->connect("TextChanged", [&](std::string text) {
                                 float x = text.empty() ? 0 : std::stoi(text);
@@ -265,6 +297,25 @@ void LevelEditor::CreateGameObject(std::string name)
                     }
                 }
             }
+
+            if (text == "Script Component")
+            {
+                auto path = OpenFileExplorer(window.getSystemHandle());
+                for (auto i : gameObjects)
+                {
+                    if (i->inspectorTab->componentsBtn->isFocused())
+                    {
+                        for (auto g : engine->gameObjectManager->gameObjects)
+                        {
+                            if (g.second->GetID() == i->id)
+                            {
+                                g.second->AddComponent(new ScriptComponent(path));
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
         });
        
         gameObjectId++;
@@ -275,9 +326,8 @@ void LevelEditor::CreateGameObject(std::string name)
 
 int LevelEditor::Run()
 {
-    sf::RenderWindow window(sf::VideoMode(1850, 900), "Fire Spear Engine");
+    window.create(sf::VideoMode(1850, 900), "Fire Spear Engine");
     window.setFramerateLimit(60);
- 
 
     tgui::Gui gui(window);
 
@@ -324,6 +374,7 @@ int LevelEditor::Run()
         menu->addMenu("Scenes");
         menu->addMenuItem("Load");
         menu->addMenuItem("Save");
+
         menu->addMenuItem("Exit");
         menu->connect("MenuItemClicked", &LevelEditor::CreateGameObject, this);
         menu->addMenu("Game Object");
@@ -439,7 +490,7 @@ int LevelEditor::Run()
                 auto b = i->inspectorTab->bSlider->getValue();
                 auto a = i->inspectorTab->aSlider->getValue();
                 i->container->getRenderer()->setBackgroundColor(tgui::Color(r, g, b, a));
-             
+            
             }
             
 
