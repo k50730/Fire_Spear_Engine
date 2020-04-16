@@ -253,6 +253,8 @@ struct GameObjectEditor
 class LevelEditor
 { 
 private:
+	sf::RenderWindow window;
+
 	ChildWindowPtr editor;
 	ChildWindowPtr inspector;
 	ChildWindowPtr hierarchy;
@@ -266,9 +268,12 @@ private:
 	bool changedVelocityX = false;
 	bool changedVelocityY = false;
 	bool changedObbeyGravity = false;
+
+	std::string OpenFileExplorer(HWND hWnd);
 public:
 	LevelEditor(FireSpear* e);
 	~LevelEditor();
 	int Run();
 };
+
 
