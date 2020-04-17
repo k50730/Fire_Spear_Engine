@@ -6,7 +6,7 @@ ScriptComponent::ScriptComponent(std::string _name)
 {
 	id = BaseComponent::ComponentID::Lua;
 	mLuaState = LuaState::Create();
-	name = "../../../Assets/Scripts/" + _name;
+	name = "..\\..\\Assets\\Scripts\\" + _name;
 	isFileAvailable = CheckLua(mLuaState->DoFile(name.c_str()));
 }
 
