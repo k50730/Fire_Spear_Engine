@@ -16,7 +16,7 @@ SceneManager::~SceneManager()
 	scenes.clear();
 }
 
-tinyxml2::XMLError SceneManager::LoadScene(const char* path)\
+tinyxml2::XMLError SceneManager::LoadScene(const char* path)
 {
 	tinyxml2::XMLDocument* xmlDoc = new tinyxml2::XMLDocument();
 
@@ -32,6 +32,10 @@ tinyxml2::XMLError SceneManager::LoadScene(const char* path)\
 	scenes.push_back(xmlDoc);
 }
 
+tinyxml2::XMLError SceneManager::SaveScene(const char* path)
+{
+	return xmlReader->XMLSave(path, gameObjectManager);
+}
 void SceneManager::SetActive(int index)
 {
 	DeleteScene();

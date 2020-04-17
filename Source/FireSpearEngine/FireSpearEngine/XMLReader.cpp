@@ -34,7 +34,7 @@ XMLError XMLReader::XMLLoad(XMLDocument* xmlDoc, GameObjectManager* gameObjectMa
 	}
 }
 
-XMLError XMLReader::XMLSave(const char* path, std::list<GameObject*> GameObjects)
+XMLError XMLReader::XMLSave(const char* path, GameObjectManager* GameObjectManager)
 {
 	XMLDocument xmlDoc;
 
@@ -42,15 +42,16 @@ XMLError XMLReader::XMLSave(const char* path, std::list<GameObject*> GameObjects
 
 	xmlDoc.InsertFirstChild(scene);
 
-
-	for (std::list<GameObject*>::iterator it = GameObjects.begin(); it != GameObjects.end(); ++it) {
+	for (std::map<int, GameObject*>::iterator i = GameObjectManager->gameObjects.begin(); i != GameObjectManager->gameObjects.end(); ++i)
+	{
+				
 		// Add a gameobject element to xml
 		XMLElement* rootElement = xmlDoc.NewElement("GameObject");
 
 		// Adding details of gameobject
-		SaveTransformProperties(*it, xmlDoc.ToDocument(), rootElement);
-		SaveRenderProperties(*it, xmlDoc.ToDocument(), rootElement);
-		SaveRigidbodyProperties(*it, xmlDoc.ToDocument(), rootElement);
+		SaveTransformProperties(i->second, xmlDoc.ToDocument(), rootElement);
+		SaveRenderProperties(i->second, xmlDoc.ToDocument(), rootElement);
+		SaveRigidbodyProperties(i->second, xmlDoc.ToDocument(), rootElement);
 
 		scene->InsertEndChild(rootElement);
 

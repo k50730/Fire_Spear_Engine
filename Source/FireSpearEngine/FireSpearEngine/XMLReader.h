@@ -25,7 +25,7 @@ class XMLReader
 {
 public:
 	tinyxml2::XMLError XMLLoad(tinyxml2::XMLDocument* xmlDoc, GameObjectManager* gameObjectManager);
-	tinyxml2::XMLError XMLSave(const char* path, std::list<GameObject*> GameObjects);
+	tinyxml2::XMLError XMLSave(const char* path, GameObjectManager* GameObjectManager);
 	
 	std::list<GameObject*> GameObjects;
 

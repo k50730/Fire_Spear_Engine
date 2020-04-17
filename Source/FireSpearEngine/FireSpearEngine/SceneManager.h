@@ -9,6 +9,8 @@ public:
 	~SceneManager();
 
 	tinyxml2::XMLError LoadScene(const char* path);
+	tinyxml2::XMLError SaveScene(const char* path);
+
 	void SetActive(int index);
 private:
 	std::vector<tinyxml2::XMLDocument*> scenes;
