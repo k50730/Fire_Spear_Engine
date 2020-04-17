@@ -309,9 +309,9 @@ void LevelEditor::CreateGameObject(std::string name)
                     {
                         for (auto g : engine->gameObjectManager->gameObjects)
                         {
-                            i->inspectorTab->AddScriptComponent(path);
                             if (g.second->GetID() == i->id)
                             {
+                                i->inspectorTab->AddScriptComponent(path);
                                 g.second->AddComponent(new ScriptComponent(path));
                                 break;
                             }
