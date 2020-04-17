@@ -233,6 +233,32 @@ private:
 	std::shared_ptr<tgui::Label> massLabel;
 #pragma endregion
 
+#pragma region  Script Componet
+
+public:
+
+	ChildWindowPtr scriptComponent;
+	void AddScriptComponent(std::string path)
+	{
+		scriptComponent = tgui::ChildWindow::create();
+		scriptComponent->setSize(transformComponent->getSize().x, 25);
+		scriptComponent->setTitle("Script");
+		scriptComponent->setPosition(0, lastItem + 10);
+
+		scriptName = tgui::Label::create(path);
+		scriptComponent->add(scriptName);
+
+		lastItem = scriptComponent->getPosition().y + scriptComponent->getSize().y + 20;
+		editor->add(scriptComponent);
+
+	}
+
+private:
+	std::shared_ptr<tgui::Label> scriptName;
+#pragma endregion
+
+	
+
 public:
 	std::shared_ptr<tgui::MenuBar> componentsBtn;
 
