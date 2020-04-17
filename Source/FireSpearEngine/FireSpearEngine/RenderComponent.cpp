@@ -30,6 +30,11 @@ void RenderComponent::LateUpdate()
 {
 }
 
+sf::Color RenderComponent::GetColor()
+{
+	return shape.getFillColor();
+}
+
 void RenderComponent::SetColor(sf::Color c)
 {
 	shape.setFillColor(c);

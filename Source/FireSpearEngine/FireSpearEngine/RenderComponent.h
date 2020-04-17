@@ -16,6 +16,7 @@ public:
 	const sf::Vector2f GetSize() { return shape.getSize(); }
 	const sf::RectangleShape GetShape() { return shape; }
 	const sf::Transform GetTransform() { return transform; }
+	sf::Color GetColor();
 	//set
 	void SetColor(sf::Color c);
 	void SetTransform(sf::Transform t);
