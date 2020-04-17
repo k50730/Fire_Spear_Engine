@@ -19,6 +19,7 @@ std::string LevelEditor::OpenFileExplorer(HWND hWnd)
     GetOpenFileName(&ofn);
 
     auto path = std::string(ofn.lpstrFile);
+    std::cout << path << std::endl;
     return path.substr(path.find("Scripts") + 8);
 }
 
@@ -301,6 +302,7 @@ void LevelEditor::CreateGameObject(std::string name)
             if (text == "Script Component")
             {
                 auto path = OpenFileExplorer(window.getSystemHandle());
+                std::cout << path << std::endl;
                 for (auto i : gameObjects)
                 {
                     if (i->inspectorTab->componentsBtn->isFocused())

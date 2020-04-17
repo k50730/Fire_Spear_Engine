@@ -1,27 +1,31 @@
-function Awake()
-end
-
 function Start()
+    render.SetScale(0.5, 0.5)
+    rigidBody.ObeyGravity(true)
+    rigidBody.SetMass(10)
+    rigidBody.SetBounciness(0.5)
 end
-
 function Update(dt)
-
     if(input.IsKeyDown("R")) then
-        transform.SetPosition(700, 100)
+        transform.SetPosition(600, 400)
     end
     if(input.IsKeyDown("W")) then
-        transform.AddForce(0, -50)
+        rigidBody.AddForce(0, -50)
     end
     if(input.IsKeyDown("S")) then
-        transform.AddForce(0, 50)
+        rigidBody.AddForce(0, 50)
     end
     if(input.IsKeyDown("A")) then
-        transform.AddForce(-50, 0)
+        rigidBody.AddForce(-50, 0)
     end
     if(input.IsKeyDown("D")) then
-        transform.AddForce(50, 0)
+        rigidBody.AddForce(50, 0)
+    end
+    if(input.IsKeyDown("Space")) then
+        rigidBody.Stop();
+    end
+    if(input.IsKeyDown("G")) then
+        gameObject.AddComponent("RigidBodyComponent");
     end
 end
-
 function  LateUpdate()
 end
