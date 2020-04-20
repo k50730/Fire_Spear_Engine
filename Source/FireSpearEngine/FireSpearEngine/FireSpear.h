@@ -3,6 +3,7 @@
 #include <string>
 #include <direct.h>
 #include <windows.h>
+#include <stdio.h>
 #include "GameObjectManager.h"
 #include "PhysicEngine.h"
 #include "RenderComponent.h"
@@ -32,6 +33,7 @@ public:
 private:
 
 	bool IsExiting();
+	HANDLE handle;
 
 	enum GameState
 	{
