@@ -25,7 +25,7 @@ class XMLReader
 {
 public:
 	tinyxml2::XMLError XMLLoad(tinyxml2::XMLDocument* xmlDoc, GameObjectManager* gameObjectManager);
-	tinyxml2::XMLError XMLSave(const char* path, std::list<GameObject> GameObjects);
+	tinyxml2::XMLError XMLSave(const char* path, GameObjectManager* gameObjectManager);
 	
 	std::list<GameObject> GameObjects;
 
@@ -34,6 +34,11 @@ private:
 	void ReadTransformProperties(GameObject* g, tinyxml2::XMLElement* t);
 	void ReadRenderProperties(GameObject* g, tinyxml2::XMLElement* t);
 	void ReadRigidbodyProperties(GameObject* g, tinyxml2::XMLElement* t);
+
+	void SaveComponentToXML(GameObject* g, tinyxml2::XMLElement* e);
+	void SaveTransformProperties(GameObject* g, tinyxml2::XMLDocument* xDoc, tinyxml2::XMLElement* e);
+	void SaveRenderProperties(GameObject* g, tinyxml2::XMLDocument* xDoc, tinyxml2::XMLElement* e);
+	void SaveRigidbodyProperties(GameObject* g, tinyxml2::XMLDocument* xDoc, tinyxml2::XMLElement* e);
 };
 
 

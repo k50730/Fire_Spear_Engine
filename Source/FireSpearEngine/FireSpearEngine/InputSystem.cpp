@@ -87,7 +87,7 @@ bool InputSystem::GetKeyDown(const char* Key)
         { "~", sf::Keyboard::Tilde},
         { "=", sf::Keyboard::Equal},
         { "Hyphen", sf::Keyboard::Hyphen}, //conflict with subtract
-        { " ", sf::Keyboard::Space},
+        { "Space", sf::Keyboard::Space},
         { "Enter", sf::Keyboard::Enter},
         { "Backspace", sf::Keyboard::Backspace},
         { "Tab", sf::Keyboard::Tab},
