@@ -59,8 +59,9 @@ LevelEditor::~LevelEditor()
 
 void LevelEditor::StartEngine()
 {
-   // FireSpear* engine = new FireSpear();
+    //FireSpear* engine = new FireSpear();
     engine->InitilizeSystem();
+    //std::cout << "EDITOR DEBUG: RUNNING A NEW INSTANCE" << std::endl;
 
     //engine->sceneManager->LoadScene("../../../Assets/Scenes/Scene1.xml");
     //engine->sceneManager->LoadScene("../../../Assets/Scenes/Scene2.xml");

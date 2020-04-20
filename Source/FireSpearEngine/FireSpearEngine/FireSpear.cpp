@@ -108,7 +108,7 @@ bool FireSpear::IsOnlyInstance(LPCTSTR gameTitle)
 		HWND hwnd = FindWindow(gameTitle, NULL);
 		if (hwnd)
 		{
-
+			std::cout << "Found window!" << std::endl;
 			MessageBox(NULL,
 				"There is another instance",
 				"Muti-Instances Detected",
@@ -128,6 +128,22 @@ bool FireSpear::IsOnlyInstance(LPCTSTR gameTitle)
 	}
 	OutputDebugString("CHECK MUTI-INSTANCES SUCCESS");
 	OutputDebugStringW(L"\n");
+	return true;
+}
+
+bool FireSpear::IsOnlyInstance(bool window)
+{
+	//std::cout << "DEBUG: WINDOW: " << window << std::endl;
+	if (window)
+	{
+		MessageBox(NULL,
+			"There is another instance",
+			"Muti-Instances Detected",
+			NULL);
+		std::cout << "Window open" << std::endl;
+		return false;
+	}
+
 	return true;
 }
 
@@ -176,6 +192,7 @@ DWORD FireSpear::ReadCPUSpeed()
 
 void FireSpear::InitilizeSystem()
 {
+	//std::cout << "DEBUG: GAME IS INITIALIZING" << std::endl;
 	if (IsOnlyInstance("Fire Spear Engine")) // IF THE NAME IS UNIQUE
 	{
 		std::cout << "Welcome to Fire Spear Engine" << std::endl;
@@ -193,12 +210,15 @@ void FireSpear::InitilizeSystem()
 			}
 		}
 	}
+	std::cout << "DEBUG: GAME IS UNINITIALIZED" << std::endl;
 	_gameState = FireSpear::Uninitialized;
 }
 
 void FireSpear::CreateEngineWindow(std::string windowTitle, int width, int height)
 {
 	_mainWindow.create(sf::VideoMode(width, height), windowTitle);
+	std::cout << "DEBUG: WINDOW CREATED" << std::endl;
+	windowOpen = true;
 }
 
 void FireSpear::CreateSplashScreen(sf::RenderWindow& window)
@@ -327,6 +347,8 @@ void FireSpear::ProcessEvent()
 
 		case sf::Event::Closed:
 			_mainWindow.close();
+			windowOpen = false;
+			//std::cout << "DEBUG: WINDOW CLOSED" << std::endl;
 			break;
 
 		case sf::Event::KeyPressed:

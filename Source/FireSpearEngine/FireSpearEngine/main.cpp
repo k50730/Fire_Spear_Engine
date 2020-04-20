@@ -11,6 +11,8 @@ int main()
 	//engine->sceneManager->SetActive(0);
 	////engine->sceneManager->SetActive(1);
 
+	//engine->sceneManager->SaveScene("../../../Assets/Scenes/saveTest2.xml");
+
 	//engine->Run();
 	//delete engine;
 

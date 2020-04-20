@@ -32,6 +32,7 @@ public:
 private:
 
 	bool IsExiting();
+	bool windowOpen = false;
 
 	enum GameState
 	{
@@ -48,6 +49,7 @@ private:
 	bool CheckStorage(const DWORDLONG diskSpaceNeeded);
 	bool CheckMemory(const DWORDLONG physicalRAMNeeded, const DWORDLONG virtualRAMNeeded);
 	bool IsOnlyInstance(LPCTSTR gameTitle);
+	bool IsOnlyInstance(bool window);
 	const char* ReadCPUArchitecture();
 	DWORD ReadCPUSpeed();
 

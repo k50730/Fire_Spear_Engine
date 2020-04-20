@@ -39,6 +39,7 @@ private:
 	void SaveTransformProperties(GameObject* g, tinyxml2::XMLDocument* xDoc, tinyxml2::XMLElement* e);
 	void SaveRenderProperties(GameObject* g, tinyxml2::XMLDocument* xDoc, tinyxml2::XMLElement* e);
 	void SaveRigidbodyProperties(GameObject* g, tinyxml2::XMLDocument* xDoc, tinyxml2::XMLElement* e);
+	void SaveScriptProperties(GameObject* g, tinyxml2::XMLDocument* xDoc, tinyxml2::XMLElement* e);
 };
 
 
