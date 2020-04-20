@@ -286,7 +286,7 @@ private:
 	ChildWindowPtr hierarchy;
 	void StartEngine();
 	
-	void CreateGameObject(std::string name);
+	void ClickToolBar(std::string name);
 	std::vector<GameObjectEditor*> gameObjects; // game objects in editor
 	FireSpear* engine;
 	int gameObjectId = 0;
@@ -296,6 +296,7 @@ private:
 	bool changedObbeyGravity = false;
 
 	std::string OpenFileExplorer(HWND hWnd);
+	std::string SaveFileExplorer(HWND hWnd);
 public:
 	LevelEditor(FireSpear* e);
 	~LevelEditor();

@@ -1,6 +1,7 @@
 #include "LevelEditor.h"
 
 
+
 std::string LevelEditor::OpenFileExplorer(HWND hWnd)
 {
     OPENFILENAME ofn;
@@ -19,8 +20,32 @@ std::string LevelEditor::OpenFileExplorer(HWND hWnd)
     GetOpenFileName(&ofn);
 
     auto path = std::string(ofn.lpstrFile);
-    std::cout << path << std::endl;
-    return path.substr(path.find("Scripts") + 8);
+    if (path.empty()) return "";
+
+    return path;
+}
+
+std::string LevelEditor::SaveFileExplorer(HWND hWnd)
+{
+    OPENFILENAME ofn;
+
+    char fileName[100];
+
+    ZeroMemory(&ofn, sizeof(OPENFILENAME));
+
+    ofn.lStructSize = sizeof(OPENFILENAME);
+    ofn.hwndOwner = hWnd;
+    ofn.lpstrFile = fileName;
+    ofn.lpstrFile[0] = '\0';
+    ofn.nMaxFile = 100;
+    ofn.lpstrFilter = "Scene\0*.lxmlua*\Script\0*.lua*\0";
+    ofn.nFilterIndex = 1;
+    GetSaveFileName(&ofn);
+
+    auto path = std::string(ofn.lpstrFile);
+    if (path.empty()) return "";
+
+    return path;
 }
 
 LevelEditor::LevelEditor(FireSpear* e)
@@ -94,7 +119,7 @@ void LevelEditor::StartEngine()
     engine->Run();
 }
 
-void LevelEditor::CreateGameObject(std::string name)
+void LevelEditor::ClickToolBar(std::string name)
 {
     if (name == "Empty")
     {
@@ -302,28 +327,121 @@ void LevelEditor::CreateGameObject(std::string name)
             if (text == "Script Component")
             {
                 auto path = OpenFileExplorer(window.getSystemHandle());
-                std::cout << path << std::endl;
-                for (auto i : gameObjects)
+                if (!path.empty())
                 {
-                    if (i->inspectorTab->componentsBtn->isFocused())
+                    path = path.substr(path.find("Scripts") + 8);
+                    for (auto i : gameObjects)
                     {
-                        for (auto g : engine->gameObjectManager->gameObjects)
+                        if (i->inspectorTab->componentsBtn->isFocused())
                         {
-                            if (g.second->GetID() == i->id)
+                            for (auto g : engine->gameObjectManager->gameObjects)
                             {
-                                i->inspectorTab->AddScriptComponent(path);
-                                g.second->AddComponent(new ScriptComponent(path));
-                                break;
+                                if (g.second->GetID() == i->id)
+                                {
+                                    i->inspectorTab->AddScriptComponent(path);
+                                    g.second->AddComponent(new ScriptComponent(path));
+                                    break;
+                                }
                             }
                         }
                     }
                 }
+               
             }
         });
        
         gameObjectId++;
 
+    }
+    else if (name == "Exit")
+    {
+        exit(0);
+    }
+    else if (name == "About")
+    {
+    std::cout << "~~~~~~~~~~~~~Fire Spear Eninge~~~~~~~~~~~~~" << std::endl;
+    std::cout << "A Simple 2D Game Engine using Lua as a scripting language and SFML for graphic." << std::endl;
+    std::cout << "Features: Simple 2D Physics, Components Architecture, Lua Scripting, Level Editor." << std::endl;
+    std::cout << std::endl;
+    std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+    std::cout << "------------Made by NeZhaS team------------" << std::endl;
+    std::cout << "---------------Tuan Minh Vu----------------" << std::endl;
+    std::cout << "----------------Ding Zhang-----------------" << std::endl;
+    std::cout << "---------------Hsiaote Tang----------------" << std::endl;
+    std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+    std::cout << std::endl;
+    std::cout << "Libraries: SFML, luaPlus, tinyxml2, tgui" << std::endl;
+    }
+    else if(name == "Save")
+    {
 
+    auto file = SaveFileExplorer(window.getSystemHandle());
+    if(!file.empty())
+
+        // make a scene
+        for (auto i : gameObjects)
+        {
+            for (auto g : engine->gameObjectManager->gameObjects)
+            {
+                if (g.second->GetID() == i->id)
+                {
+                    g.second->transformComponent.position = sf::Vector2f(i->container->getPosition().x + i->container->getSize().x / 2, i->container->getPosition().y + i->container->getSize().y / 2);
+
+                    if (i->hasRenderComponent)
+                    {
+                        g.second->GetComponent<RenderComponent*>()->SetSize(i->container->getSize());
+                        g.second->GetComponent<RenderComponent*>()->SetColor(i->container->getRenderer()->getBackgroundColor());
+                    }
+
+                    if (i->hasRigidbodyComponent)
+                    {
+                        g.second->GetComponent<RigidbodyComponent*>()->SetObeyGravity(i->inspectorTab->checkbox->isChecked());
+
+                        g.second->GetComponent<RigidbodyComponent*>()->SetMass(i->inspectorTab->mass->getText().isEmpty() ? 1 : std::stoi(std::string(i->inspectorTab->mass->getText())));
+
+                        if (!i->inspectorTab->velocityX->getText().isEmpty())
+                        {
+                            int x;
+                            std::stringstream(i->inspectorTab->velocityX->getText()) >> x;
+                            g.second->GetComponent<RigidbodyComponent*>()->velocity.x = x;
+                        }
+                        else
+                        {
+                            g.second->GetComponent<RigidbodyComponent*>()->velocity.x = 0;
+                        }
+
+                        if (!i->inspectorTab->velocityY->getText().isEmpty())
+                        {
+                            int y;
+                            std::stringstream(i->inspectorTab->velocityY->getText()) >> y;
+                            g.second->GetComponent<RigidbodyComponent*>()->velocity.y = y;
+                        }
+                        else
+                        {
+                            g.second->GetComponent<RigidbodyComponent*>()->velocity.y = 0;
+                        }
+
+
+                    }
+                }
+            }
+        }
+    engine->sceneManager->SaveScene(file.c_str());
+    }
+    else if(name == "Load")
+    {
+    auto path = OpenFileExplorer(window.getSystemHandle());
+
+    if (!path.empty())
+    {
+        path = path.substr(path.find("Scenes") + 7);
+        path = "../../Assets/Scenes/" + path;
+        std::cout << path;
+        engine->InitilizeSystem();
+        engine->sceneManager->LoadScene(path.c_str());
+        engine->sceneManager->SetActive(0);
+        engine->Run();
+    }
     }
 }
 
@@ -379,7 +497,7 @@ int LevelEditor::Run()
         menu->addMenuItem("Save");
 
         menu->addMenuItem("Exit");
-        menu->connect("MenuItemClicked", &LevelEditor::CreateGameObject, this);
+        menu->connect("MenuItemClicked", &LevelEditor::ClickToolBar, this);
         menu->addMenu("Game Object");
         menu->addMenuItem("Empty");
         menu->addMenu("Help");
