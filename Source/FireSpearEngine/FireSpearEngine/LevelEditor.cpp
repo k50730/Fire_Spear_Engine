@@ -22,7 +22,7 @@ std::string LevelEditor::OpenFileExplorer(HWND hWnd)
     auto path = std::string(ofn.lpstrFile);
     if (path.empty()) return "";
 
-    return path.substr(path.find("Scripts") + 8);
+    return path;
 }
 
 std::string LevelEditor::SaveFileExplorer(HWND hWnd)
@@ -329,7 +329,7 @@ void LevelEditor::ClickToolBar(std::string name)
                 auto path = OpenFileExplorer(window.getSystemHandle());
                 if (!path.empty())
                 {
-                    std::cout << path << std::endl;
+                    path = path.substr(path.find("Scripts") + 8);
                     for (auto i : gameObjects)
                     {
                         if (i->inspectorTab->componentsBtn->isFocused())
@@ -374,9 +374,74 @@ void LevelEditor::ClickToolBar(std::string name)
     }
     else if(name == "Save")
     {
+
     auto file = SaveFileExplorer(window.getSystemHandle());
     if(!file.empty())
+
+        // make a scene
+        for (auto i : gameObjects)
+        {
+            for (auto g : engine->gameObjectManager->gameObjects)
+            {
+                if (g.second->GetID() == i->id)
+                {
+                    g.second->transformComponent.position = sf::Vector2f(i->container->getPosition().x + i->container->getSize().x / 2, i->container->getPosition().y + i->container->getSize().y / 2);
+
+                    if (i->hasRenderComponent)
+                    {
+                        g.second->GetComponent<RenderComponent*>()->SetSize(i->container->getSize());
+                        g.second->GetComponent<RenderComponent*>()->SetColor(i->container->getRenderer()->getBackgroundColor());
+                    }
+
+                    if (i->hasRigidbodyComponent)
+                    {
+                        g.second->GetComponent<RigidbodyComponent*>()->SetObeyGravity(i->inspectorTab->checkbox->isChecked());
+
+                        g.second->GetComponent<RigidbodyComponent*>()->SetMass(i->inspectorTab->mass->getText().isEmpty() ? 1 : std::stoi(std::string(i->inspectorTab->mass->getText())));
+
+                        if (!i->inspectorTab->velocityX->getText().isEmpty())
+                        {
+                            int x;
+                            std::stringstream(i->inspectorTab->velocityX->getText()) >> x;
+                            g.second->GetComponent<RigidbodyComponent*>()->velocity.x = x;
+                        }
+                        else
+                        {
+                            g.second->GetComponent<RigidbodyComponent*>()->velocity.x = 0;
+                        }
+
+                        if (!i->inspectorTab->velocityY->getText().isEmpty())
+                        {
+                            int y;
+                            std::stringstream(i->inspectorTab->velocityY->getText()) >> y;
+                            g.second->GetComponent<RigidbodyComponent*>()->velocity.y = y;
+                        }
+                        else
+                        {
+                            g.second->GetComponent<RigidbodyComponent*>()->velocity.y = 0;
+                        }
+
+
+                    }
+                }
+            }
+        }
     engine->sceneManager->SaveScene(file.c_str());
+    }
+    else if(name == "Load")
+    {
+    auto path = OpenFileExplorer(window.getSystemHandle());
+
+    if (!path.empty())
+    {
+        path = path.substr(path.find("Scenes") + 7);
+        path = "../../Assets/Scenes/" + path;
+        std::cout << path;
+        engine->InitilizeSystem();
+        engine->sceneManager->LoadScene(path.c_str());
+        engine->sceneManager->SetActive(0);
+        engine->Run();
+    }
     }
 }
 

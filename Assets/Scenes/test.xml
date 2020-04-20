@@ -2,8 +2,8 @@
     <GameObject>
         <TransformComponent>
             <position>
-                <x>0</x>
-                <y>0</y>
+                <x>150</x>
+                <y>150</y>
             </position>
             <scale>
                 <x>1</x>
@@ -18,10 +18,20 @@
             </size>
             <color>
                 <r>255</r>
-                <g>255</g>
-                <b>255</b>
+                <g>0</g>
+                <b>0</b>
                 <a>255</a>
             </color>
         </RenderComponent>
+        <RigidbodyComponent>
+            <obeysGravity>false</obeysGravity>
+            <mass>true</mass>
+            <velocity>
+                <x>0</x>
+                <y>0</y>
+            </velocity>
+            <bounciness>0.5</bounciness>
+            <isTrigger>false</isTrigger>
+        </RigidbodyComponent>
     </GameObject>
 </Scene>
