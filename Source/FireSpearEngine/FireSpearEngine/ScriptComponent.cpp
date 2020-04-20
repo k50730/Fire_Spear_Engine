@@ -6,6 +6,7 @@ ScriptComponent::ScriptComponent(std::string _name)
 {
 	id = BaseComponent::ComponentID::Lua;
 	mLuaState = LuaState::Create();
+	scriptName = _name;
 	name = "..\\..\\Assets\\Scripts\\" + _name;
 	isFileAvailable = CheckLua(mLuaState->DoFile(name.c_str()));
 }
@@ -67,6 +68,11 @@ bool ScriptComponent::CheckLua(int r)
 		std::cout << ("Can't load " + name);
 	}
 	return true;
+}
+
+std::string ScriptComponent::getScriptName()
+{
+	return scriptName;
 }
 
 void ScriptComponent::RegisterFunctions()

@@ -51,6 +51,7 @@ XMLError XMLReader::XMLSave(const char* path, GameObjectManager* GameObjectManag
 		SaveTransformProperties(i->second, xmlDoc.ToDocument(), rootElement);
 		SaveRenderProperties(i->second, xmlDoc.ToDocument(), rootElement);
 		SaveRigidbodyProperties(i->second, xmlDoc.ToDocument(), rootElement);
+		SaveScriptProperties(i->second, xmlDoc.ToDocument(), rootElement);
 
 		scene->InsertEndChild(rootElement);
 
@@ -353,5 +354,20 @@ void XMLReader::SaveRigidbodyProperties(GameObject* g, tinyxml2::XMLDocument* xD
 		newRB->InsertEndChild(isTrig);
 
 		e->InsertEndChild(newRB);
+	}
+}
+
+void XMLReader::SaveScriptProperties(GameObject* g, tinyxml2::XMLDocument* xDoc, tinyxml2::XMLElement* e)
+{
+	auto sc = g->GetComponent<ScriptComponent*>();
+	if (sc != nullptr)
+	{
+		std::string scriptName;
+		scriptName = sc->getScriptName();
+
+		XMLElement* luaScript = xDoc->NewElement("ScriptComponent");
+		luaScript->SetText(scriptName.c_str());
+		e->InsertEndChild(luaScript);
+
 	}
 }

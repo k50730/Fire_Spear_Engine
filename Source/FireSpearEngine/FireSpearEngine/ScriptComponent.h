@@ -21,14 +21,17 @@ public:
 	void Start() override;
 	void Update(sf::Time dt) override;
 	void LateUpdate() override;
+	std::string getScriptName();
 	GameObject* owner;
 
 private:
 	std::string name;
+	std::string scriptName;
 	bool CheckLua(int r);
 	bool isFileAvailable;
 	LuaState* mLuaState;
 	void RegisterFunctions();
+
 
 #pragma region Lua Functions
 	LuaObject transform;
