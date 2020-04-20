@@ -323,7 +323,7 @@ void XMLReader::SaveRigidbodyProperties(GameObject* g, tinyxml2::XMLDocument* xD
 
 		// Mass
 		XMLElement* mass = xDoc->NewElement("mass");
-		mass->SetText(mass);
+		mass->SetText(m);
 		// Close mass
 		newRB->InsertEndChild(mass);
 
