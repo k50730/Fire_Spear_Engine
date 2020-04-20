@@ -108,7 +108,7 @@ bool FireSpear::IsOnlyInstance(LPCTSTR gameTitle)
 		HWND hwnd = FindWindow(gameTitle, NULL);
 		if (hwnd)
 		{
-
+			std::cout << "Found window!" << std::endl;
 			MessageBox(NULL,
 				"There is another instance",
 				"Muti-Instances Detected",
@@ -128,6 +128,20 @@ bool FireSpear::IsOnlyInstance(LPCTSTR gameTitle)
 	}
 	OutputDebugString("CHECK MUTI-INSTANCES SUCCESS");
 	OutputDebugStringW(L"\n");
+	return true;
+}
+
+bool FireSpear::IsOnlyInstance(sf::RenderWindow& window)
+{
+	if (window.isOpen())
+	{
+		MessageBox(NULL,
+			"There is another instance",
+			"Muti-Instances Detected",
+			NULL);
+		std::cout << "Window open" << std::endl;
+		return false;
+	}
 	return true;
 }
 
@@ -176,7 +190,7 @@ DWORD FireSpear::ReadCPUSpeed()
 
 void FireSpear::InitilizeSystem()
 {
-	if (IsOnlyInstance("Fire Spear Engine")) // IF THE NAME IS UNIQUE
+	if (IsOnlyInstance(_mainWindow)) // IF THE NAME IS UNIQUE
 	{
 		std::cout << "Welcome to Fire Spear Engine" << std::endl;
 		std::cout << std::endl;
@@ -327,6 +341,7 @@ void FireSpear::ProcessEvent()
 
 		case sf::Event::Closed:
 			_mainWindow.close();
+			std::cout << "Window Closes" << std::endl;
 			break;
 
 		case sf::Event::KeyPressed:
