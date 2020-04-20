@@ -1,6 +1,7 @@
 #include "LevelEditor.h"
 
 
+
 std::string LevelEditor::OpenFileExplorer(HWND hWnd)
 {
     OPENFILENAME ofn;
@@ -19,7 +20,32 @@ std::string LevelEditor::OpenFileExplorer(HWND hWnd)
     GetOpenFileName(&ofn);
 
     auto path = std::string(ofn.lpstrFile);
+    if (path.empty()) return "";
+
     return path.substr(path.find("Scripts") + 8);
+}
+
+std::string LevelEditor::SaveFileExplorer(HWND hWnd)
+{
+    OPENFILENAME ofn;
+
+    char fileName[100];
+
+    ZeroMemory(&ofn, sizeof(OPENFILENAME));
+
+    ofn.lStructSize = sizeof(OPENFILENAME);
+    ofn.hwndOwner = hWnd;
+    ofn.lpstrFile = fileName;
+    ofn.lpstrFile[0] = '\0';
+    ofn.nMaxFile = 100;
+    ofn.lpstrFilter = "Scene\0*.lxmlua*\Script\0*.lua*\0";
+    ofn.nFilterIndex = 1;
+    GetSaveFileName(&ofn);
+
+    auto path = std::string(ofn.lpstrFile);
+    if (path.empty()) return "";
+
+    return path;
 }
 
 LevelEditor::LevelEditor(FireSpear* e)
@@ -93,7 +119,7 @@ void LevelEditor::StartEngine()
     engine->Run();
 }
 
-void LevelEditor::CreateGameObject(std::string name)
+void LevelEditor::ClickToolBar(std::string name)
 {
     if (name == "Empty")
     {
@@ -301,26 +327,56 @@ void LevelEditor::CreateGameObject(std::string name)
             if (text == "Script Component")
             {
                 auto path = OpenFileExplorer(window.getSystemHandle());
-                for (auto i : gameObjects)
+                if (!path.empty())
                 {
-                    if (i->inspectorTab->componentsBtn->isFocused())
+                    std::cout << path << std::endl;
+                    for (auto i : gameObjects)
                     {
-                        for (auto g : engine->gameObjectManager->gameObjects)
+                        if (i->inspectorTab->componentsBtn->isFocused())
                         {
-                            if (g.second->GetID() == i->id)
+                            for (auto g : engine->gameObjectManager->gameObjects)
                             {
-                                g.second->AddComponent(new ScriptComponent(path));
-                                break;
+                                if (g.second->GetID() == i->id)
+                                {
+                                    i->inspectorTab->AddScriptComponent(path);
+                                    g.second->AddComponent(new ScriptComponent(path));
+                                    break;
+                                }
                             }
                         }
                     }
                 }
+               
             }
         });
        
         gameObjectId++;
 
-
+    }
+    else if (name == "Exit")
+    {
+        exit(0);
+    }
+    else if (name == "About")
+    {
+    std::cout << "~~~~~~~~~~~~~Fire Spear Eninge~~~~~~~~~~~~~" << std::endl;
+    std::cout << "A Simple 2D Game Engine using Lua as a scripting language and SFML for graphic." << std::endl;
+    std::cout << "Features: Simple 2D Physics, Components Architecture, Lua Scripting, Level Editor." << std::endl;
+    std::cout << std::endl;
+    std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+    std::cout << "------------Made by NeZhaS team------------" << std::endl;
+    std::cout << "---------------Tuan Minh Vu----------------" << std::endl;
+    std::cout << "----------------Ding Zhang-----------------" << std::endl;
+    std::cout << "---------------Hsiaote Tang----------------" << std::endl;
+    std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+    std::cout << std::endl;
+    std::cout << "Libraries: SFML, luaPlus, tinyxml2, tgui" << std::endl;
+    }
+    else if(name == "Save")
+    {
+    auto file = SaveFileExplorer(window.getSystemHandle());
+    if(!file.empty())
+    engine->sceneManager->SaveScene(file.c_str());
     }
 }
 
@@ -376,7 +432,7 @@ int LevelEditor::Run()
         menu->addMenuItem("Save");
 
         menu->addMenuItem("Exit");
-        menu->connect("MenuItemClicked", &LevelEditor::CreateGameObject, this);
+        menu->connect("MenuItemClicked", &LevelEditor::ClickToolBar, this);
         menu->addMenu("Game Object");
         menu->addMenuItem("Empty");
         menu->addMenu("Help");

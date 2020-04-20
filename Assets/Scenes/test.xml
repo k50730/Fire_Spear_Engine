@@ -1,0 +1,27 @@
+<Scene>
+    <GameObject>
+        <TransformComponent>
+            <position>
+                <x>0</x>
+                <y>0</y>
+            </position>
+            <scale>
+                <x>1</x>
+                <y>1</y>
+            </scale>
+            <rotation>0</rotation>
+        </TransformComponent>
+        <RenderComponent>
+            <size>
+                <x>100</x>
+                <y>100</y>
+            </size>
+            <color>
+                <r>255</r>
+                <g>255</g>
+                <b>255</b>
+                <a>255</a>
+            </color>
+        </RenderComponent>
+    </GameObject>
+</Scene>
