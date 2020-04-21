@@ -3,6 +3,7 @@
 #include <string>
 #include <direct.h>
 #include <windows.h>
+#include <stdio.h>
 #include "GameObjectManager.h"
 #include "PhysicEngine.h"
 #include "RenderComponent.h"
@@ -28,11 +29,11 @@ public:
 	ScriptingSystem* scriptingSystem;
 	InputSystem* inputSystem;
 	SceneManager* sceneManager;
-
+	bool isRunning = false;
 private:
 
 	bool IsExiting();
-	bool windowOpen = false;
+	HANDLE handle;
 
 	enum GameState
 	{

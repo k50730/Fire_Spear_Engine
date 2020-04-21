@@ -101,7 +101,8 @@ bool FireSpear::CheckMemory(const DWORDLONG physicalRAMNeeded, const DWORDLONG v
 
 bool FireSpear::IsOnlyInstance(LPCTSTR gameTitle)
 {
-	HANDLE handle = CreateMutex(NULL, TRUE, gameTitle);
+	handle = CreateMutex(NULL, TRUE, gameTitle);
+	
 
 	if (GetLastError() == ERROR_ALREADY_EXISTS)
 	{
@@ -346,9 +347,10 @@ void FireSpear::ProcessEvent()
 		{
 
 		case sf::Event::Closed:
+			isRunning = false;
 			_mainWindow.close();
-			windowOpen = false;
-			//std::cout << "DEBUG: WINDOW CLOSED" << std::endl;
+			if (CloseHandle(handle)) {
+			}
 			break;
 
 		case sf::Event::KeyPressed:
