@@ -355,6 +355,10 @@ void FireSpear::ProcessEvent()
 			isRunning = false;
 			_mainWindow.close();
 			//gameObjectManager->DeleteAllGameObjects();
+			for (auto g : gameObjectManager->gameObjects)
+			{
+				g.second->GetComponent<AudioPlayerComponent*>()->Stop();
+			}
 			if (CloseHandle(handle)) {
 			}
 			break;

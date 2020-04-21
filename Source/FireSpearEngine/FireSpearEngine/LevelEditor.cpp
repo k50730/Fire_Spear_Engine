@@ -15,7 +15,7 @@ std::string LevelEditor::OpenFileExplorer(HWND hWnd)
     ofn.lpstrFile = fileName;
     ofn.lpstrFile[0] = '\0';
     ofn.nMaxFile = 100;
-    ofn.lpstrFilter = "Scripts\0*.lua*\0Scenes\0*.xml*\0";
+    ofn.lpstrFilter = "Scripts\0*.lua*\0Scenes\0*.xml*\0Audio\0*.wav*\0";
     ofn.nFilterIndex = 1;
     GetOpenFileName(&ofn);
 
@@ -38,7 +38,7 @@ std::string LevelEditor::SaveFileExplorer(HWND hWnd)
     ofn.lpstrFile = fileName;
     ofn.lpstrFile[0] = '\0';
     ofn.nMaxFile = 100;
-    ofn.lpstrFilter = "Scene\0*.lxmlua*\Script\0*.lua*\0";
+    ofn.lpstrFilter = "Scripts\0*.lua*\0Scenes\0*.xml*\0Audio\0*.wav*\0";
     ofn.nFilterIndex = 1;
     GetSaveFileName(&ofn);
 
@@ -244,6 +244,7 @@ void LevelEditor::ClickToolBar(std::string name)
                                 if (g.second->GetID() == i->id)
                                 {
                                     g.second->AddComponent(new RenderComponent());
+                                    g.second->hasRenderComponent = true;
                                     break;
                                 }
                             }
@@ -256,8 +257,13 @@ void LevelEditor::ClickToolBar(std::string name)
                                 {
                                     if (j->inspectorTab->editor->isFocused())
                                     {
-                                        std::cout << "Close";
-                                      
+                                        for (auto g : engine->gameObjectManager->gameObjects)
+                                        {
+                                            if (g.second->GetComponent<RenderComponent*>()) 
+                                            {
+                                                //g.second->RemoveComponent(3);
+                                            }
+                                        }
                                         return;
                                     }
                                 }
@@ -310,6 +316,7 @@ void LevelEditor::ClickToolBar(std::string name)
                                 {
                                     //std::cout << "DEBUG: ADD RIGIDBODY" << std::endl;
                                     g.second->AddComponent(new RigidbodyComponent());
+                                    g.second->hasRigidbodyComponent = true;
                                     engine->physicEngine->AddRigidBody(g.second->GetComponent<RigidbodyComponent*>());
                                     break;
                                 }
@@ -324,7 +331,6 @@ void LevelEditor::ClickToolBar(std::string name)
                             i->inspectorTab->mass->connect("TextChanged", [&]() {changedMass = true; });
                             return;
                         }
-                       
                     }
                 }
             }
@@ -345,13 +351,36 @@ void LevelEditor::ClickToolBar(std::string name)
                                 {
                                     i->inspectorTab->AddScriptComponent(path);
                                     g.second->AddComponent(new ScriptComponent(path));
+                                    g.second->hasScriptComponent = true;
                                     break;
                                 }
                             }
                         }
                     }
                 }
-               
+            }
+
+            if (text == "Audio Component")
+            {
+                auto path = OpenFileExplorer(window.getSystemHandle());
+                if (!path.empty())
+                {
+                    path = path.substr(path.find("Audio") + 6);
+                    for (auto i : gameObjects)
+                    {
+                        if (i->inspectorTab->componentsBtn->isFocused())
+                        {
+                            for (auto g : engine->gameObjectManager->gameObjects)
+                            {
+                                if (g.second->GetID() == i->id)
+                                {
+                                    i->inspectorTab->AddAudioComponent(path, g.second);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
             }
         });
        
@@ -555,8 +584,11 @@ int LevelEditor::Run()
         while (window.pollEvent(event))
         {
             if (event.type == sf::Event::Closed)
+            {
                 window.close();
+            }
             gui.handleEvent(event);
+            
         }
 
         window.clear(sf::Color(255, 230, 171, 100));

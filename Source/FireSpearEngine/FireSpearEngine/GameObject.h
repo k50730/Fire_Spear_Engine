@@ -17,7 +17,7 @@ public:
 	void SetParent(GameObject& parent);
 	void AddChild(GameObject* child);
 	void AddComponent(BaseComponent* component);
-	void RemoveComponent(BaseComponent* component);
+	void RemoveComponent(int CompnentID);
 
 	template <typename ComponentName>
 	ComponentName GetComponent();

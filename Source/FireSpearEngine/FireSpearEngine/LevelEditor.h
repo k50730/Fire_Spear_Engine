@@ -59,7 +59,6 @@ public:
 		editor->add(componentsBtn);
 		lastItem = componentsBtn->getPosition().y + componentsBtn->getSize().y;
 #pragma endregion
-
 	};
 	ChildWindowPtr editor;
 
@@ -255,6 +254,30 @@ public:
 
 private:
 	std::shared_ptr<tgui::Label> scriptName;
+#pragma endregion
+
+#pragma region Audio Component
+public:
+	ChildWindowPtr audioComponent;
+	void AddAudioComponent(std::string path, GameObject* gameObject)
+	{
+		audioComponent = tgui::ChildWindow::create();
+		audioComponent->setSize(transformComponent->getSize().x, 20);
+		audioComponent->setTitle("Audio");
+		audioComponent->setPosition(0, lastItem + 10);
+
+		gameObject->AddComponent(new AudioPlayerComponent(path));
+		gameObject->hasAudioComponent = true;
+
+		audioCompnentLabel = tgui::Label::create(path);
+		audioComponent->add(audioCompnentLabel);
+
+		lastItem = audioComponent->getPosition().y + audioComponent->getSize().y + 30;
+		editor->add(audioComponent);
+	}
+
+private:
+	std::shared_ptr<tgui::Label> audioCompnentLabel;
 #pragma endregion
 
 	
