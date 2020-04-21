@@ -263,9 +263,24 @@ public:
 	void AddAudioComponent(std::string path, GameObject* gameObject)
 	{
 		audioComponent = tgui::ChildWindow::create();
+		audioComponent->setSize(transformComponent->getSize().x, 10);
+		audioComponent->setTitle("Audio");
+		audioComponent->setPosition(0, lastItem + 10);
+
+		audioComponent = tgui::ChildWindow::create();
 		gameObject->AddComponent(new AudioPlayerComponent(path));
 		gameObject->hasAudioComponent = true;
+
+		audioCompnentName = tgui::Label::create(path);
+		audioComponent->add(audioCompnentName);
+
+		lastItem = audioComponent->getPosition().y + audioComponent->getSize().y + 20;
+		editor->add(audioComponent);
 	}
+
+private:
+	std::shared_ptr<tgui::Label> audioCompnentName;
+#pragma endregion
 
 	
 

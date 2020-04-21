@@ -359,8 +359,6 @@ void LevelEditor::ClickToolBar(std::string name)
                 if (!path.empty())
                 {
                     path = path.substr(path.find("Audio") + 6);
-                    //path = "../../Assets/Audio/" + path;
-                    std::cout << path << std::endl;
                     for (auto i : gameObjects)
                     {
                         if (i->inspectorTab->componentsBtn->isFocused())
