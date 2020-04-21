@@ -332,7 +332,7 @@ void LevelEditor::ClickToolBar(std::string name)
                 auto path = OpenFileExplorer(window.getSystemHandle());
                 if (!path.empty())
                 {
-                    path = path.substr(path.find("ScriptsScripts") + 8);
+                    path = path.substr(path.find("Scripts") + 8);
                     for (auto i : gameObjects)
                     {
                         if (i->inspectorTab->componentsBtn->isFocused())
