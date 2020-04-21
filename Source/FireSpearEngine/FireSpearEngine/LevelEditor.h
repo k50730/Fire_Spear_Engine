@@ -59,7 +59,6 @@ public:
 		editor->add(componentsBtn);
 		lastItem = componentsBtn->getPosition().y + componentsBtn->getSize().y;
 #pragma endregion
-
 	};
 	ChildWindowPtr editor;
 

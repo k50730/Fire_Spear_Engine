@@ -1,4 +1,5 @@
 #include "AudioPlayerComponent.h"
+#include <iostream>
 
 AudioPlayerComponent::AudioPlayerComponent() 
 {

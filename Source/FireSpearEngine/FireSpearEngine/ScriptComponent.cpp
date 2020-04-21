@@ -231,20 +231,20 @@ void ScriptComponent::LuaRemoveComponent(const char* ComponentName)
 	std::cout << compName << "Removed" << std::endl;
 	if (compName == "TransformComponent")
 	{
-		owner->RemoveComponent(new TransformComponent());
+		owner->RemoveComponent(2);
 		rigidBody.Unregister("SetPosition");
 		rigidBody.Unregister("SetRotation");
 	}
 	else if (compName == "RenderComponent")
 	{
-		owner->RemoveComponent(new RenderComponent());
+		owner->RemoveComponent(3);
 		render.Unregister("SetColor");
 		render.Unregister("SetSize");
 		render.Unregister("SetScale");
 	}
 	else if (compName == "RigidBodyComponent")
 	{
-		owner->RemoveComponent(new RigidbodyComponent());
+		owner->RemoveComponent(5);
 		input.Unregister("IsKeyDown");
 		input.Unregister("AddForce");
 		input.Unregister("Stop");
@@ -254,7 +254,7 @@ void ScriptComponent::LuaRemoveComponent(const char* ComponentName)
 	}
 	else if (compName == "AudioComponent")
 	{
-		owner->RemoveComponent(new AudioPlayerComponent());
+		owner->RemoveComponent(6);
 	}	
 }
 

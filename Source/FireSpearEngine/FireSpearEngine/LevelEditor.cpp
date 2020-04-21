@@ -244,6 +244,7 @@ void LevelEditor::ClickToolBar(std::string name)
                                 if (g.second->GetID() == i->id)
                                 {
                                     g.second->AddComponent(new RenderComponent());
+                                    g.second->hasRenderComponent = true;
                                     break;
                                 }
                             }
@@ -256,8 +257,13 @@ void LevelEditor::ClickToolBar(std::string name)
                                 {
                                     if (j->inspectorTab->editor->isFocused())
                                     {
-                                        std::cout << "Close";
-                                      
+                                        for (auto g : engine->gameObjectManager->gameObjects)
+                                        {
+                                            if (g.second->GetComponent<RenderComponent*>()) 
+                                            {
+                                                //g.second->RemoveComponent(3);
+                                            }
+                                        }
                                         return;
                                     }
                                 }
@@ -310,6 +316,7 @@ void LevelEditor::ClickToolBar(std::string name)
                                 {
                                     //std::cout << "DEBUG: ADD RIGIDBODY" << std::endl;
                                     g.second->AddComponent(new RigidbodyComponent());
+                                    g.second->hasRigidbodyComponent = true;
                                     engine->physicEngine->AddRigidBody(g.second->GetComponent<RigidbodyComponent*>());
                                     break;
                                 }
@@ -324,7 +331,6 @@ void LevelEditor::ClickToolBar(std::string name)
                             i->inspectorTab->mass->connect("TextChanged", [&]() {changedMass = true; });
                             return;
                         }
-                       
                     }
                 }
             }
@@ -345,6 +351,7 @@ void LevelEditor::ClickToolBar(std::string name)
                                 {
                                     i->inspectorTab->AddScriptComponent(path);
                                     g.second->AddComponent(new ScriptComponent(path));
+                                    g.second->hasScriptComponent = true;
                                     break;
                                 }
                             }
@@ -577,8 +584,11 @@ int LevelEditor::Run()
         while (window.pollEvent(event))
         {
             if (event.type == sf::Event::Closed)
+            {
                 window.close();
+            }
             gui.handleEvent(event);
+            
         }
 
         window.clear(sf::Color(255, 230, 171, 100));

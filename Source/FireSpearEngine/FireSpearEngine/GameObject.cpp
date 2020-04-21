@@ -73,7 +73,6 @@ void GameObject::AddChild(GameObject* child)
 
 void GameObject::AddComponent(BaseComponent* c)
 {
-	compExist = false;
 	for (auto it : components)
 	{
 		if (it->GetComponentID() == c->GetComponentID())
@@ -86,20 +85,17 @@ void GameObject::AddComponent(BaseComponent* c)
 	}
 }
 
-void GameObject::RemoveComponent(BaseComponent* component)
+void GameObject::RemoveComponent(int CompnentID)
 {
-	if (!components.empty())
+	for (auto c = components.begin(); c != components.end(); ++c)
 	{
-		for (auto c = components.begin(); c <= components.end(); ++c)
+		if ((*c)->GetComponentID() == CompnentID)
 		{
-			if ((*c)->GetComponentID() == component->GetComponentID())
-			{
-				components.erase(c);
-				RemoveHasComponent(component->GetComponentID());
-			}
+			//components.erase(c);
+			components.pop_back();
+			std::cout << (*c)->GetComponentID();
 		}
 	}
-	delete component;
 }
 
 template <typename ComponentName>
