@@ -15,7 +15,7 @@ std::string LevelEditor::OpenFileExplorer(HWND hWnd)
     ofn.lpstrFile = fileName;
     ofn.lpstrFile[0] = '\0';
     ofn.nMaxFile = 100;
-    ofn.lpstrFilter = "Scripts\0*.lua*\0Scenes\0*.xml*\0";
+    ofn.lpstrFilter = "Scripts\0*.lua*\0Scenes\0*.xml*\0Audio\0*.wav*\0";
     ofn.nFilterIndex = 1;
     GetOpenFileName(&ofn);
 
@@ -38,7 +38,7 @@ std::string LevelEditor::SaveFileExplorer(HWND hWnd)
     ofn.lpstrFile = fileName;
     ofn.lpstrFile[0] = '\0';
     ofn.nMaxFile = 100;
-    ofn.lpstrFilter = "Scene\0*.lxmlua*\Script\0*.lua*\0";
+    ofn.lpstrFilter = "Scripts\0*.lua*\0Scenes\0*.xml*\0Audio\0*.wav*\0";
     ofn.nFilterIndex = 1;
     GetSaveFileName(&ofn);
 
@@ -351,7 +351,31 @@ void LevelEditor::ClickToolBar(std::string name)
                         }
                     }
                 }
-               
+            }
+
+            if (text == "Audio Component")
+            {
+                auto path = OpenFileExplorer(window.getSystemHandle());
+                if (!path.empty())
+                {
+                    path = path.substr(path.find("Audio") + 6);
+                    //path = "../../Assets/Audio/" + path;
+                    std::cout << path << std::endl;
+                    for (auto i : gameObjects)
+                    {
+                        if (i->inspectorTab->componentsBtn->isFocused())
+                        {
+                            for (auto g : engine->gameObjectManager->gameObjects)
+                            {
+                                if (g.second->GetID() == i->id)
+                                {
+                                    i->inspectorTab->AddAudioComponent(path, g.second);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
             }
         });
        

@@ -5,6 +5,12 @@ AudioPlayerComponent::AudioPlayerComponent()
 	id = BaseComponent::ComponentID::Audio;
 }
 
+AudioPlayerComponent::AudioPlayerComponent(std::string path)
+{
+	id = BaseComponent::ComponentID::Audio;
+	this->PlaySoundFromFile(path);
+}
+
 AudioPlayerComponent::~AudioPlayerComponent()
 {
 
@@ -16,7 +22,6 @@ void AudioPlayerComponent::PlaySoundFromFile(const std::string audioFile)
 	if (!buffer.loadFromFile(audioFile))
 		return;
 	sound.setBuffer(buffer);
-	sound.play();
 }
 
 
@@ -38,6 +43,7 @@ void AudioPlayerComponent::SetVolume(float volume)
 
 void AudioPlayerComponent::Awake()
 {
+	sound.play();
 }
 
 void AudioPlayerComponent::Start()

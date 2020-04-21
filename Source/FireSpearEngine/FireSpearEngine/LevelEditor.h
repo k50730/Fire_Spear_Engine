@@ -257,6 +257,16 @@ private:
 	std::shared_ptr<tgui::Label> scriptName;
 #pragma endregion
 
+#pragma region Audio Component
+public:
+	ChildWindowPtr audioComponent;
+	void AddAudioComponent(std::string path, GameObject* gameObject)
+	{
+		audioComponent = tgui::ChildWindow::create();
+		gameObject->AddComponent(new AudioPlayerComponent(path));
+		gameObject->hasAudioComponent = true;
+	}
+
 	
 
 public:

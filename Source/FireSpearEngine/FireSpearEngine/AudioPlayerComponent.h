@@ -9,6 +9,7 @@ private:
 	sf::Sound sound;
 public:
 	AudioPlayerComponent();
+	AudioPlayerComponent(std::string path);
 	~AudioPlayerComponent();
 	void PlaySoundFromFile(const std::string audioFile);
 	void Stop();
