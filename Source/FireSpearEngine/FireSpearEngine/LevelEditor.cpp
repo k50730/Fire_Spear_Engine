@@ -308,7 +308,9 @@ void LevelEditor::ClickToolBar(std::string name)
                             {
                                 if (g.second->GetID() == i->id)
                                 {
+                                    //std::cout << "DEBUG: ADD RIGIDBODY" << std::endl;
                                     g.second->AddComponent(new RigidbodyComponent());
+                                    engine->physicEngine->AddRigidBody(g.second->GetComponent<RigidbodyComponent*>());
                                     break;
                                 }
                             }
@@ -442,6 +444,7 @@ void LevelEditor::ClickToolBar(std::string name)
         std::cout << path;
         engine->InitilizeSystem();
         engine->sceneManager->LoadScene(path.c_str());
+        
         engine->sceneManager->SetActive(0);
         engine->Run();
     }

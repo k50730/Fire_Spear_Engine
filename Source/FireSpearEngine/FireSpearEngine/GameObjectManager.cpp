@@ -9,12 +9,14 @@ GameObjectManager::~GameObjectManager()
 		delete p.second;
 	}
 	gameObjects.clear();
+	
 }
 
 GameObject* GameObjectManager::CreateObject()
 {
 	GameObject* newObj = new GameObject(nextObjectID++);
 	gameObjects[newObj->GetID()] = newObj;
+	//std::cout << "DEBUG: NUMBER OF GAMEOBJECTS: " << nextObjectID << std::endl;
 	return newObj;
 }
 
@@ -78,8 +80,10 @@ void GameObjectManager::DeleteAllGameObjects()
 {
 	for (auto g : gameObjects)
 	{
+		//std::cout << "DEBUG: DELETE GAMEOBJECT ID:" << g.second->GetID() << std::endl;
 		delete g.second;
 	}
+	//std::cout << "DEBUG: DELETE ALL GAMEOBJECTS" << std::endl;
 	gameObjects.clear();
 	nextObjectID = 0;
 }

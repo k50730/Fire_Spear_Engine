@@ -145,7 +145,7 @@ void XMLReader::ReadRigidbodyProperties(GameObject* g, tinyxml2::XMLElement* c)
 	g->AddComponent(new RigidbodyComponent());
 
 	auto rid = g->GetComponent<RigidbodyComponent*>();
-
+	
 	XMLElement* property = c->FirstChildElement();
 
 	while (property != nullptr)
@@ -186,6 +186,7 @@ void XMLReader::ReadRigidbodyProperties(GameObject* g, tinyxml2::XMLElement* c)
 		default:
 			break;
 		}
+
 		property = property->NextSiblingElement();
 	}
 }
