@@ -219,7 +219,6 @@ void FireSpear::CreateEngineWindow(std::string windowTitle, int width, int heigh
 {
 	_mainWindow.create(sf::VideoMode(width, height), windowTitle);
 	std::cout << "DEBUG: WINDOW CREATED" << std::endl;
-	windowOpen = true;
 }
 
 void FireSpear::CreateSplashScreen(sf::RenderWindow& window)
