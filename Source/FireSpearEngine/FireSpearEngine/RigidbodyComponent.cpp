@@ -1,5 +1,5 @@
 #include "RigidbodyComponent.h"
-#include <iostream>
+//#include <iostream>
 RigidbodyComponent::RigidbodyComponent() 
 {
     id = BaseComponent::ComponentID::Rigidbody;
@@ -13,6 +13,9 @@ RigidbodyComponent::~RigidbodyComponent()
 
 void RigidbodyComponent::Awake()
 {
+    
+    rbId = owner->GetID();
+    //std::cout << "DEBUG: RB ID: " << rbId << std::endl;
 }
 
 void RigidbodyComponent::Start()

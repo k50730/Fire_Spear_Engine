@@ -11,10 +11,12 @@ FireSpear::FireSpear()
 	scriptingSystem = new ScriptingSystem(gameObjectManager);
 	inputSystem = new InputSystem(gameObjectManager);
 	sceneManager = new SceneManager(gameObjectManager);
+	//std::cout << "DEBUG: CREATE NEW ENGINE" << std::endl;
 }
 
 FireSpear::~FireSpear()
 {
+	//std::cout << "DEBUG: DESTROY NEW ENGINE" << std::endl;
 	delete physicEngine;
 	delete gameObjectManager;
 	delete scriptingSystem;
@@ -211,14 +213,14 @@ void FireSpear::InitilizeSystem()
 			}
 		}
 	}
-	std::cout << "DEBUG: GAME IS UNINITIALIZED" << std::endl;
+	//std::cout << "DEBUG: GAME IS UNINITIALIZED" << std::endl;
 	_gameState = FireSpear::Uninitialized;
 }
 
 void FireSpear::CreateEngineWindow(std::string windowTitle, int width, int height)
 {
 	_mainWindow.create(sf::VideoMode(width, height), windowTitle);
-	std::cout << "DEBUG: WINDOW CREATED" << std::endl;
+	//std::cout << "DEBUG: WINDOW CREATED" << std::endl;
 }
 
 void FireSpear::CreateSplashScreen(sf::RenderWindow& window)
@@ -292,14 +294,18 @@ void FireSpear::Tick()
 
 void FireSpear::Awake()
 {
-	physicEngine->Awake();
+	//std::cout << "DEBUG: ENGINE AWAKE FUNCTION RUNNING" << std::endl;
+	
 	gameObjectManager->Awake();
 	scriptingSystem->Awake();
 	inputSystem->Awake();
+	physicEngine->Awake();
+	
 }
 
 void FireSpear::Start()
 {
+
 	physicEngine->Start();
 	gameObjectManager->Start();
 	scriptingSystem->Start();
@@ -348,6 +354,7 @@ void FireSpear::ProcessEvent()
 		case sf::Event::Closed:
 			isRunning = false;
 			_mainWindow.close();
+			//gameObjectManager->DeleteAllGameObjects();
 			if (CloseHandle(handle)) {
 			}
 			break;

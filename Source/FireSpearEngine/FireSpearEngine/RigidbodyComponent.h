@@ -16,7 +16,7 @@ public:
 	void Start() override;
 	void Update(sf::Time t) override;
 	void LateUpdate() override;
-
+	int rbId;
 	sf::Vector2f velocity;
 	sf::Vector2f gravity = sf::Vector2f(0, 98.0f);
 

@@ -1,5 +1,5 @@
 #include "PhysicEngine.h"
-
+#include <iostream>
 PhysicEngine::PhysicEngine(GameObjectManager* g)
 {
     gameObjectManager = g;
@@ -72,8 +72,18 @@ void PhysicEngine::Awake()
 {
     for (std::map<int, GameObject*>::iterator i = gameObjectManager->gameObjects.begin(); i != gameObjectManager->gameObjects.end(); ++i)
     {
+
         if ((i->second)->GetComponent<RigidbodyComponent*>() != nullptr)
         {
+            for (int j = 0; j < rigidBodies.size(); j++) {
+                //std::cout << "DEBUG: RB IDs: " << rigidBodies[j]->rbId << std::endl;
+                if (rigidBodies[j]->rbId == (i->second)->GetComponent<RigidbodyComponent*>()->rbId) {
+                    
+                    rigidBodies.erase(rigidBodies.begin() + j);
+                    
+                }
+           
+            }
             rigidBodies.push_back((i->second)->GetComponent<RigidbodyComponent*>());
         }
     }
@@ -85,10 +95,12 @@ void PhysicEngine::Start()
 
 void PhysicEngine::CheckCollisions()
 {
+    //std::cout << "DEBUG: COLLISIONCHECK" << std::endl;
     for (int i = 0; i < rigidBodies.size(); i++)
     {
         for (int j = 0; j < rigidBodies.size(); j++)
         {
+            //std::cout << "DEBUG: NUMBER OF RB " << rigidBodies.size() << std::endl;
             if (j != i)
             {
                 CollisionPair* pair = new CollisionPair();
