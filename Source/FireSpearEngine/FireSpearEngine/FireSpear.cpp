@@ -330,7 +330,6 @@ void FireSpear::ProcessEvent()
 			isRunning = false;
 			_mainWindow.close();
 			if (CloseHandle(handle)) {
-				printf("Game Window Close");
 			}
 			break;
 
