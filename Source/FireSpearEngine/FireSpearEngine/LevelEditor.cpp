@@ -57,10 +57,12 @@ LevelEditor::~LevelEditor()
 {
 }
 
-void LevelEditor::StartEngine()
+void LevelEditor::StartEngine() 
 {
    // FireSpear* engine = new FireSpear();
+    engine->isRunning = true;
     engine->InitilizeSystem();
+    runBtn->setEnabled(!engine->isRunning);
 
     //engine->sceneManager->LoadScene("../../../Assets/Scenes/Scene1.xml");
     //engine->sceneManager->LoadScene("../../../Assets/Scenes/Scene2.xml");
@@ -117,6 +119,7 @@ void LevelEditor::StartEngine()
 
 
     engine->Run();
+  
 }
 
 void LevelEditor::ClickToolBar(std::string name)
@@ -475,20 +478,18 @@ int LevelEditor::Run()
         editor->setTitle("Editor");
         gui.add(editor);
 
-        auto runBtn = tgui::Button::create();
-        runBtn->setPosition("40%", "95%");
+        runBtn = tgui::Button::create();
+        runBtn->setPosition("50%", "95%");
         runBtn->setText("Run");
         runBtn->setSize(100, 30);
         runBtn->connect("pressed", &LevelEditor::StartEngine, this);
         gui.add(runBtn);
 
-        auto pauseBtn = tgui::Button::create();
+        /*auto pauseBtn = tgui::Button::create();
         pauseBtn->setPosition("60%", "95%");
         pauseBtn->setText("Pause");
         pauseBtn->setSize(100, 30);
-        
-       // pauseBtn->connect("pressed", [&]() {engine->Pause(); }, this);
-        gui.add(pauseBtn);
+        gui.add(pauseBtn);*/
 
         auto menu = tgui::MenuBar::create();
         menu->setSize(static_cast<float>(window.getSize().x), "2%");
@@ -503,83 +504,6 @@ int LevelEditor::Run()
         menu->addMenu("Help");
         menu->addMenuItem("About");
         gui.add(menu);
-
-      /*  auto tabs = tgui::Tabs::create();
-        tabs->setTabHeight(30);
-        tabs->setPosition(70, 40);
-        tabs->add("Tab - 1");
-        tabs->add("Tab - 2");
-        tabs->add("Tab - 3");
-        gui.add(tabs);*/
-
-
-     //   auto radioButton = tgui::RadioButton::create();
-     //   radioButton->setPosition(20, 140);
-     //   radioButton->setText("Yep!");
-     //   radioButton->setSize(25, 25);
-     //   gui.add(radioButton);
-
-
-      //  auto listBox = tgui::ListBox::create();
-      ////  listBox->setRenderer(theme.getRenderer("ListBox"));
-      //  listBox->setSize(250, 120);
-      //  listBox->setItemHeight(24);
-      //  listBox->setPosition(10, 340);
-      //  listBox->addItem("Item 1");
-      //  listBox->addItem("Item 2");
-      //  listBox->addItem("Item 3");
-      //  gui.add(listBox);
-
-
-    //    auto progressBar = tgui::ProgressBar::create();
-    //    progressBar->setPosition(10, 500);
-    //    progressBar->setSize(200, 20);
-    //    progressBar->setValue(50);
-    //    gui.add(progressBar);
-
-
-    //    auto scrollbar = tgui::Scrollbar::create();
-    //    scrollbar->setPosition(380, 40);
-    //    scrollbar->setSize(18, 540);
-    //    scrollbar->setMaximum(100);
-    //    scrollbar->setViewportSize(70);
-    //    gui.add(scrollbar);
-
-
-      //  auto comboBox = tgui::ComboBox::create();
-      //  comboBox->setSize(120, 21);
-      //  comboBox->setPosition(420, 40);
-      //  comboBox->addItem("Item 1");
-      //  comboBox->addItem("Item 2");
-      //  comboBox->addItem("Item 3");
-      //  comboBox->setSelectedItem("Item 2");
-      //  gui.add(comboBox);
-
-
-    //    auto chatbox = tgui::ChatBox::create();
-    //    chatbox->setSize(300, 100);
-    //    chatbox->setTextSize(18);
-    //    chatbox->setPosition(420, 310);
-    //    chatbox->setLinesStartFromTop();
-    //    chatbox->addLine("texus: Hey, this is TGUI!", sf::Color::Green);
-    //    chatbox->addLine("Me: Looks awesome! ;)", sf::Color::Yellow);
-    //    chatbox->addLine("texus: Thanks! :)", sf::Color::Green);
-    //    chatbox->addLine("Me: The widgets rock ^^", sf::Color::Yellow);
-    //    gui.add(chatbox);
-
-    /*    sf::Texture texture;
-        sf::Sprite  sprite;
-        texture.loadFromFile("../../../Assets/Images/NeZhas_Logo.png");
-        sprite.setTexture(texture);
-        sprite.setScale(200.f / texture.getSize().x, 140.f / texture.getSize().y);
-
-        auto canvas = tgui::Canvas::create({ 200, 140 });
-        canvas->setPosition(0, 0);
-        canvas->clear();
-        canvas->draw(sprite);
-        canvas->display();
-        gui.add(canvas);*/
-
     }
     catch (const tgui::Exception & e)
     {
@@ -589,6 +513,8 @@ int LevelEditor::Run()
 
     while (window.isOpen())
     {
+        if (!runBtn->isEnabled())
+        runBtn->setEnabled(!engine->isRunning);
         for (auto i : gameObjects)
         {
             // select object using the hierarchy

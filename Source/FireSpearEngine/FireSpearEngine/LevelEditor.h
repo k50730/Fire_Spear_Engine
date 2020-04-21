@@ -284,7 +284,7 @@ private:
 	ChildWindowPtr editor;
 	ChildWindowPtr inspector;
 	ChildWindowPtr hierarchy;
-	void StartEngine();
+	void StartEngine(); // Call when press RUN button
 	
 	void ClickToolBar(std::string name);
 	std::vector<GameObjectEditor*> gameObjects; // game objects in editor
@@ -297,6 +297,7 @@ private:
 
 	std::string OpenFileExplorer(HWND hWnd);
 	std::string SaveFileExplorer(HWND hWnd);
+	std::shared_ptr<tgui::Button> runBtn;
 public:
 	LevelEditor(FireSpear* e);
 	~LevelEditor();

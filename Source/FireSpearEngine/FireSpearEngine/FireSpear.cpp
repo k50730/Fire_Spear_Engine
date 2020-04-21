@@ -327,6 +327,7 @@ void FireSpear::ProcessEvent()
 		{
 
 		case sf::Event::Closed:
+			isRunning = false;
 			_mainWindow.close();
 			if (CloseHandle(handle)) {
 				printf("Game Window Close");

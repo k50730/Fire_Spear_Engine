@@ -29,7 +29,7 @@ public:
 	ScriptingSystem* scriptingSystem;
 	InputSystem* inputSystem;
 	SceneManager* sceneManager;
-
+	bool isRunning = false;
 private:
 
 	bool IsExiting();
